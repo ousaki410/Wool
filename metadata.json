@@ -1,0 +1,6 @@
+{
+  "name": "WoolRadar 羊毛雷达",
+  "description": "高信息密度的中文羊毛与开发者福利情报终端，聚合云服务额度、AI API 赠金、软件订阅优惠与卡券活动。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
