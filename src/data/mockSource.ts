@@ -1,4 +1,5 @@
 import type { SourceChannel, WoolItem } from './woolData';
+import { ADDED_TEST_ITEMS } from './woolData.extra';
 import type { WoolSource, WoolSourceEvent, WoolSourceEventType } from './source';
 
 // ---------------------------------------------------------------------------
@@ -737,52 +738,6 @@ export const SEED_SOURCE_CHANNELS: SourceChannel[] = [
     verifiedRate: 58,
     enabled: true,
     description: '海外 AI 算力与模型路由平台早期空投线索，时效快但需二次核验防钓鱼。',
-  },
-];
-
-// ---------------------------------------------------------------------------
-// 新增的测试数据：另放文件，不会混入 seed 的 25 条中
-// ---------------------------------------------------------------------------
-export const ADDED_TEST_ITEMS: WoolItem[] = [
-  {
-    id: 'WR-2026-T1',
-    title: '测试新增：示例云厂商算力券',
-    reward: '¥50 云产品抵扣券',
-    estimatedValue: '¥50',
-    estimatedValueRmb: 50,
-    condition: '测试用新增条目',
-    category: '云服务与算力',
-    claimMethod: '直接领取',
-    verificationStatus: '未核验',
-    verificationNote: '仅用于单元测试',
-    expiresAt: '2026-12-31T23:59:59+08:00',
-    deadline: '2026-12-31T23:59:59+08:00',
-    publishedAt: new Date().toISOString(),
-    sourceId: 'src-test',
-    sourceName: '测试来源',
-    sourceUrl: 'https://example.test/',
-    steps: ['测试步骤一'],
-    tags: ['测试'],
-  },
-  {
-    id: 'WR-2026-T2',
-    title: '测试新增：示例订阅服务',
-    reward: '1 个月订阅体验',
-    estimatedValue: '¥30',
-    estimatedValueRmb: 30,
-    condition: '测试用新增条目',
-    category: '数字会员与影音',
-    claimMethod: '注册认证',
-    verificationStatus: '社区线索',
-    verificationNote: '仅用于单元测试',
-    expiresAt: '2026-12-31T23:59:59+08:00',
-    deadline: '2026-12-31T23:59:59+08:00',
-    publishedAt: new Date().toISOString(),
-    sourceId: 'src-test',
-    sourceName: '测试来源',
-    sourceUrl: 'https://example.test/',
-    steps: ['测试步骤二'],
-    tags: ['测试'],
   },
 ];
 
