@@ -9,6 +9,7 @@ import {
   buildTelegramDigestText,
   REFERENCE_NOW_ISO,
 } from './woolData';
+import { MockSource } from './mockSource';
 
 test('woolData provides exactly 25 realistic mock items with complete fields', () => {
   const items = getWoolItems();
@@ -77,4 +78,36 @@ test('source channels list is populated', () => {
   assert.ok(channels.length >= 6);
   const label = formatDeadlineLabel('2026-11-18T12:00:00+08:00', REFERENCE_NOW_ISO);
   assert.equal(label.state, 'expiring_soon');
+});
+
+test('event-driven source keeps item list and channel status in sync', () => {
+  const source = new MockSource({ seed: 11 });
+  const events: string[] = [];
+  source.subscribe((event) => events.push(event.type));
+
+  const initial = source.list();
+  assert.equal(initial.items.length, 25);
+
+  // 新增事件：列表立即增加一条，订阅方收到事件
+  source.trigger('added');
+  assert.equal(source.list().items.length, 26);
+  assert.equal(events.at(-1), 'added');
+
+  // 条件变化：列表内对应条目同步更新
+  source.trigger('updated');
+  assert.equal(events.at(-1), 'updated');
+
+  // 来源失败：渠道状态同步变为异常
+  source.trigger('source_failed');
+  assert.equal(events.at(-1), 'source_failed');
+  assert.ok(source.list().channels.some((channel) => channel.status !== '正常'));
+
+  // 来源恢复：对应渠道状态同步恢复
+  source.trigger('source_recovered');
+  assert.equal(events.at(-1), 'source_recovered');
+  assert.ok(source.list().channels.some((channel) => channel.status === '正常'));
+
+  // 过期：条目截止时间同步进入过去
+  source.trigger('expired');
+  assert.equal(events.at(-1), 'expired');
 });

@@ -888,11 +888,11 @@ export class MockSource implements WoolSource {
     this.listeners.forEach((cb) => cb(event));
   }
 
-  /** 手动触发一次随机事件（不受 pause 影响，便于随时演示） */
-  trigger(): WoolSourceEventType {
-    const type = this.rng.pick(ALL_EVENT_TYPES);
-    this.applyEvent(type);
-    return type;
+  /** 手动触发一次事件；可指定类型（默认随机），不受 pause 影响，便于随时演示 */
+  trigger(type?: WoolSourceEventType): WoolSourceEventType {
+    const nextType = type ?? this.rng.pick(ALL_EVENT_TYPES);
+    this.applyEvent(nextType);
+    return nextType;
   }
 
   private applyEvent(type: WoolSourceEventType) {
