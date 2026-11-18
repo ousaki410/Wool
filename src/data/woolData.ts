@@ -40,6 +40,14 @@ export interface WoolItem {
    */
   deadline: string | null;
   publishedAt: string;
+  /** 首次入库时间（ISO），用于“新增”标记的时效判断；缺省回退到 publishedAt */
+  createdAt?: string;
+  /** 最后变更时间（ISO），用于“已更新”标记的时效判断；缺省回退到 publishedAt */
+  updatedAt?: string;
+  /** 来源端标记为新增，查看或超时后淡化 */
+  isNew?: boolean;
+  /** 来源端标记为已更新，查看或超时后淡化 */
+  isUpdated?: boolean;
   sourceId: string;
   sourceName: string;
   sourceUrl: string;

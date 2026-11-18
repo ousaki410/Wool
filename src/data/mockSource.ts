@@ -1,5 +1,5 @@
 import type { SourceChannel, WoolItem } from './woolData';
-import { WoolSource, WoolSourceEventType } from './source';
+import type { WoolSource, WoolSourceEvent, WoolSourceEventType } from './source';
 
 // ---------------------------------------------------------------------------
 // 种子数据：保留现有 25 条 woolData 作为初始数据（过渡用，deadline 与 expiresAt 值一致）
@@ -836,7 +836,7 @@ const CHANNEL_STATUSES: SourceChannel['status'][] = ['正常', '延迟', '维护
 export class MockSource implements WoolSource {
   private items: WoolItem[];
   private channels: SourceChannel[];
-  private listeners = new Set<(event: any) => void>();
+  private listeners = new Set<(event: WoolSourceEvent) => void>();
   private timer: ReturnType<typeof setInterval> | null = null;
   private paused = false;
   private rng: SeededRng;
@@ -870,7 +870,7 @@ export class MockSource implements WoolSource {
     };
   }
 
-  subscribe(callback: (event: any) => void): () => void {
+  subscribe(callback: (event: WoolSourceEvent) => void): () => void {
     this.listeners.add(callback);
     return () => {
       this.listeners.delete(callback);
@@ -878,7 +878,7 @@ export class MockSource implements WoolSource {
   }
 
   private emit(type: WoolSourceEventType, item?: WoolItem, sourceId?: string) {
-    const event: any = {
+    const event: WoolSourceEvent = {
       type,
       itemId: item?.id,
       sourceId,
@@ -888,9 +888,8 @@ export class MockSource implements WoolSource {
     this.listeners.forEach((cb) => cb(event));
   }
 
-  /** 手动触发一次随机事件（支持按需触发） */
-  trigger(): WoolSourceEventType | null {
-    if (this.paused) return null;
+  /** 手动触发一次随机事件（不受 pause 影响，便于随时演示） */
+  trigger(): WoolSourceEventType {
     const type = this.rng.pick(ALL_EVENT_TYPES);
     this.applyEvent(type);
     return type;
@@ -900,14 +899,17 @@ export class MockSource implements WoolSource {
     switch (type) {
       case 'added': {
         const item = this.rng.pick(ADDED_TEST_ITEMS);
-        const next = {
+        const nowIso = new Date(this.now()).toISOString();
+        const next: WoolItem = {
           ...item,
           id: `WR-2026-N${this.nextItemId++}`,
-          publishedAt: new Date(this.now()).toISOString(),
+          publishedAt: nowIso,
+          createdAt: nowIso,
+          updatedAt: nowIso,
+          isNew: true,
+          isUpdated: false,
         };
         this.items.push(next);
-        this.fadedItemIds.delete(next.id);
-        this.viewedItemIds.delete(next.id);
         this.emit('added', next);
         break;
       }
@@ -922,9 +924,10 @@ export class MockSource implements WoolSource {
         if (target.reward) {
           target.reward = target.reward + ' · 已更新';
         }
-        target.publishedAt = new Date(this.now()).toISOString();
-        this.fadedItemIds.delete(target.id);
-        this.viewedItemIds.delete(target.id);
+        const nowIso = new Date(this.now()).toISOString();
+        target.publishedAt = nowIso;
+        target.updatedAt = nowIso;
+        target.isUpdated = true;
         this.emit('updated', target, before.sourceId);
         break;
       }
