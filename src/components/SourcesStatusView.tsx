@@ -17,7 +17,8 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
   const [vendorCollapsed, setVendorCollapsed] = useState(true);
 
   const sourceCount = channels.length;
-  const totalEntries = channels.reduce((sum, c) => sum + c.entryCount, 0);
+  // “已收录条目”只统计 wool 线索（今日羊毛），新闻在订阅表里单独显示
+  const totalEntries = items.length;
   const verifiedCount = items.filter(
     (i) => i.verificationStatus === '官方已核验'
   ).length;
