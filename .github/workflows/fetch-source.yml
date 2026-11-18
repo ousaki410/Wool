@@ -1,0 +1,50 @@
+name: Fetch free-llm-intel data source
+
+on:
+  workflow_dispatch:
+  # 待稳定验证后再打开定时：
+  # schedule:
+  #   - cron: '0 8 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ github.token }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Fetch free-llm-intel subscription
+        run: npx tsx scripts/fetch-source.ts
+
+      - name: Commit wool.json if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet public/data/wool.json; then
+            echo "public/data/wool.json 未变更，无需提交"
+          else
+            git add public/data/wool.json
+            git commit -m "data(source): refresh free-llm-intel wool.json"
+            git push
+          fi

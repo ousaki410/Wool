@@ -76,6 +76,7 @@ export default function App() {
     trigger,
     markViewed,
     getFreshMarks,
+    source,
   } = useWools();
 
   // Bookmarks State
@@ -305,6 +306,54 @@ export default function App() {
       />
 
       <main className="max-w-[1360px] mx-auto px-4 sm:px-6 pt-5 space-y-5">
+        {/* 数据来源状态条：显示当前数据源、最后同步时间与抓取失败原因 */}
+        {source.kind === 'real' && (
+          <section
+            className="flex flex-wrap items-center gap-2 gap-x-3 rounded-xl border px-3 py-2 text-xs"
+          >
+            <span className="font-semibold text-slate-600 dark:text-slate-300">
+              数据来源：
+            </span>
+            <span
+              className={`font-mono text-sm ${
+                source.real?.ok
+                  ? 'text-emerald-700 dark:text-emerald-400'
+                  : 'text-rose-700 dark:text-rose-400'
+              }`}
+            >
+              {source.name}
+            </span>
+            <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">
+              |
+            </span>
+            <span className="text-slate-500 dark:text-slate-400">
+              最后同步：
+              <span className="font-mono tabular-nums">
+                {source.real?.lastSyncAt || '—'}
+              </span>
+            </span>
+            {source.loading && (
+              <>
+                <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">
+                  |
+                </span>
+                <span className="text-amber-600 dark:text-amber-400 font-semibold animate-pulse">
+                  抓取中…
+                </span>
+              </>
+            )}
+            {source.real?.error && !source.real?.ok && (
+              <>
+                <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">
+                  |
+                </span>
+                <span className="text-rose-600 dark:text-rose-400 font-semibold">
+                  抓取失败：{source.real.error}
+                </span>
+              </>
+            )}
+          </section>
+        )}
         {/* TAB 1: 今日羊毛 */}
         {activeTab === 'today' && (
           <>
