@@ -11,6 +11,8 @@ import {
   PlayCircle,
   Zap,
   Activity,
+  AlertTriangle,
+  ChevronDown,
 } from 'lucide-react';
 import {
   getDefaultBookmarkIds,
@@ -26,6 +28,7 @@ import {
   PushSettingsConfig,
   WoolItem,
 } from './data/woolData';
+import { formatShanghaiDateTime } from './data/shanghaiTime';
 import { useWools } from './hooks/useWools';
 import { TopNav, ActiveTab } from './components/TopNav';
 import { FilterBar } from './components/FilterBar';
@@ -33,6 +36,8 @@ import { WoolCard } from './components/WoolCard';
 import { TelegramDigestView } from './components/TelegramDigestView';
 import { SourcesStatusView } from './components/SourcesStatusView';
 import { PushSettingsView } from './components/PushSettingsView';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { copyToClipboard } from './utils/clipboard';
 
 /** 收藏条目从来源消失时的兜底过期时间 */
 const FALLBACK_EXPIRED_AT = '2000-01-01T00:00:00+08:00';
@@ -76,6 +81,7 @@ export default function App() {
     trigger,
     markViewed,
     getFreshMarks,
+    source,
   } = useWools();
 
   // Bookmarks State
@@ -189,6 +195,7 @@ export default function App() {
   const [sortBy, setSortBy] = useState<'recommended' | 'value_desc' | 'deadline_asc' | 'latest'>(
     'recommended'
   );
+  const [clueCollapsed, setClueCollapsed] = useState(true);
 
   const handleResetFilters = () => {
     setSearchQuery('');
@@ -200,7 +207,7 @@ export default function App() {
     setSortBy('recommended');
   };
 
-  const filteredItems = useMemo(
+  const allFilteredItems = useMemo(
     () =>
       filterAndSortWoolItems(
         allItems,
@@ -226,6 +233,16 @@ export default function App() {
       sourceIdFilter,
       sortBy,
     ]
+  );
+
+  // 主列表仅显示官方已核验
+  const verifiedItems = allFilteredItems.filter(
+    (i) => i.verificationStatus === '官方已核验'
+  );
+
+  // 线索分区：非官方已核验（社区线索 + 未核验），默认折叠
+  const clueItems = allItems.filter(
+    (i) => i.verificationStatus !== '官方已核验'
   );
 
   // Summary metrics（按当前时间实时计算）
@@ -281,20 +298,24 @@ export default function App() {
 
   const [copiedBookmarks, setCopiedBookmarks] = useState(false);
 
-  const handleCopyBookmarksList = () => {
+  const handleCopyBookmarksList = async () => {
     const text = bookmarkedItems
       .map(
         (item, idx) =>
           `${idx + 1}. [${item.verificationStatus}] ${item.title} — 可得: ${item.reward}`
       )
       .join('\n');
-    navigator.clipboard?.writeText(text).catch(() => {});
+    const result = await copyToClipboard(text);
+    if (!result.success) {
+      console.warn('剪贴板复制失败：', result.error);
+    }
     setCopiedBookmarks(true);
     setTimeout(() => setCopiedBookmarks(false), 2000);
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-20 md:pb-12 transition-colors">
+    <ErrorBoundary>
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-20 md:pb-12 transition-colors">
       <TopNav
         activeTab={activeTab}
         onSelectTab={setActiveTab}
@@ -305,6 +326,54 @@ export default function App() {
       />
 
       <main className="max-w-[1360px] mx-auto px-4 sm:px-6 pt-5 space-y-5">
+        {/* 数据来源状态条：显示当前数据源、最后同步时间与抓取失败原因 */}
+        {source.kind === 'real' && (
+          <section
+            className="flex flex-wrap items-center gap-2 gap-x-3 rounded-xl border px-3 py-2 text-xs"
+          >
+            <span className="font-semibold text-slate-600 dark:text-slate-300">
+              数据来源：
+            </span>
+            <span
+              className={`font-mono text-sm ${
+                source.real?.ok
+                  ? 'text-emerald-700 dark:text-emerald-400'
+                  : 'text-rose-700 dark:text-rose-400'
+              }`}
+            >
+              {source.name}
+            </span>
+            <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">
+              |
+            </span>
+            <span className="text-slate-500 dark:text-slate-400">
+              最后同步：
+              <span className="font-mono tabular-nums">
+                {source.real?.lastSyncAt ? formatShanghaiDateTime(source.real.lastSyncAt) : '—'}
+              </span>
+            </span>
+            {source.loading && (
+              <>
+                <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">
+                  |
+                </span>
+                <span className="text-amber-600 dark:text-amber-400 font-semibold animate-pulse">
+                  抓取中…
+                </span>
+              </>
+            )}
+            {source.real?.error && !source.real?.ok && (
+              <>
+                <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">
+                  |
+                </span>
+                <span className="text-rose-600 dark:text-rose-400 font-semibold">
+                  抓取失败：{source.real.error}
+                </span>
+              </>
+            )}
+          </section>
+        )}
         {/* TAB 1: 今日羊毛 */}
         {activeTab === 'today' && (
           <>
@@ -371,52 +440,54 @@ export default function App() {
                 共 <strong className="font-mono tabular-nums">{allItems.length}</strong> 条
               </span>
 
-              <div className="ml-auto flex flex-wrap items-center gap-1.5">
-                <span
-                  className={`inline-flex items-center gap-1 font-medium ${
-                    paused
-                      ? 'text-amber-600 dark:text-amber-400'
-                      : 'text-emerald-600 dark:text-emerald-400'
-                  }`}
-                >
+              {source.kind === 'mock' && (
+                <div className="ml-auto flex flex-wrap items-center gap-1.5">
                   <span
-                    className={`w-1.5 h-1.5 rounded-full ${
-                      paused ? 'bg-amber-500' : 'bg-emerald-500'
+                    className={`inline-flex items-center gap-1 font-medium ${
+                      paused
+                        ? 'text-amber-600 dark:text-amber-400'
+                        : 'text-emerald-600 dark:text-emerald-400'
                     }`}
-                  />
-                  {paused ? '模拟已暂停' : '模拟运行中'}
-                </span>
+                  >
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        paused ? 'bg-amber-500' : 'bg-emerald-500'
+                      }`}
+                    />
+                    {paused ? '模拟已暂停' : '模拟运行中'}
+                  </span>
 
-                <button
-                  type="button"
-                  onClick={paused ? resume : pause}
-                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
-                >
-                  {paused ? (
-                    <PlayCircle className="w-3.5 h-3.5" />
-                  ) : (
-                    <PauseCircle className="w-3.5 h-3.5" />
-                  )}
-                  <span>{paused ? '继续模拟' : '暂停模拟'}</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={paused ? resume : pause}
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                  >
+                    {paused ? (
+                      <PlayCircle className="w-3.5 h-3.5" />
+                    ) : (
+                      <PauseCircle className="w-3.5 h-3.5" />
+                    )}
+                    <span>{paused ? '继续模拟' : '暂停模拟'}</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={trigger}
-                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/50 hover:bg-teal-100 dark:hover:bg-teal-950/80 transition-colors cursor-pointer"
-                >
-                  <Zap className="w-3.5 h-3.5" />
-                  <span>模拟一条事件</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={trigger}
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/50 hover:bg-teal-100 dark:hover:bg-teal-950/80 transition-colors cursor-pointer"
+                  >
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>模拟一条事件</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('digest')}
-                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 transition-colors cursor-pointer"
-                >
-                  <span>日报预览 →</span>
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('digest')}
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 transition-colors cursor-pointer"
+                  >
+                    <span>日报预览 →</span>
+                  </button>
+                </div>
+              )}
             </section>
 
             {/* Multi-dimensional Filter Bar */}
@@ -436,17 +507,17 @@ export default function App() {
               activeSourceName={activeSourceObj?.name || null}
               onClearSourceFilter={() => setSourceIdFilter('全部')}
               onResetAll={handleResetFilters}
-              totalMatching={filteredItems.length}
+              totalMatching={verifiedItems.length}
               totalCount={allItems.length}
             />
 
             {/* High-Density Cards Grid */}
-            {filteredItems.length > 0 ? (
+            {verifiedItems.length > 0 ? (
               <section
                 aria-label="羊毛情报列表"
                 className="grid grid-cols-1 lg:grid-cols-2 gap-4"
               >
-                {filteredItems.map((item) => {
+                {verifiedItems.map((item) => {
                   const marks = getFreshMarks(item);
                   return (
                     <WoolCard
@@ -466,7 +537,7 @@ export default function App() {
             ) : (
               <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-10 text-center space-y-3">
                 <div className="text-base font-bold text-slate-900 dark:text-slate-100">
-                  没有匹配当前筛选条件的羊毛情报
+                  暂无已核验的福利。下方 {clueItems.length} 条线索尚未核验，仅供参考。
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
                   您可以尝试放宽「核验状态」或「截止日期」条件，或点击下方按钮恢复显示全部情报。
@@ -482,6 +553,44 @@ export default function App() {
               </section>
             )}
           </>
+        )}
+
+        {/* TAB 1-续：线索分区（未核验） */}
+        {clueItems.length > 0 && (
+          <section className="mt-4">
+            <div
+              onClick={() => setClueCollapsed(!clueCollapsed)}
+              className="cursor-pointer flex items-center gap-2"
+            >
+              <h3 className="text-base font-bold text-rose-700 dark:text-rose-400 flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4" />
+                <span>未核验线索，仅供参考 ({clueItems.length})</span>
+                <ChevronDown
+                  className={`w-3 h-3 transition-transform ${clueCollapsed ? '' : 'rotate-180'}`}
+                />
+              </h3>
+            </div>
+            {!clueCollapsed && (
+              <div className="mt-2 grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {clueItems.map((item) => {
+                  const marks = getFreshMarks(item);
+                  return (
+                    <WoolCard
+                      key={item.id}
+                      item={item}
+                      isBookmarked={bookmarkIds.includes(item.id)}
+                      onToggleBookmark={handleToggleBookmark}
+                      onFilterBySource={(srcId) => setSourceIdFilter(srcId)}
+                      nowIso={nowIso}
+                      isNew={marks.isNew}
+                      isUpdated={marks.isUpdated}
+                      onViewed={markViewed}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </section>
         )}
 
         {/* TAB 2: 日报预览 (Telegram 消息样式) */}
@@ -614,5 +723,6 @@ export default function App() {
         )}
       </main>
     </div>
+    </ErrorBoundary>
   );
 }

@@ -22,6 +22,7 @@ import {
   formatShanghaiDateTime,
   formatShanghaiMonthDayWeek,
 } from '../data/shanghaiTime';
+import { copyToClipboard } from '../utils/clipboard';
 
 interface TelegramDigestViewProps {
   items: WoolItem[];
@@ -134,8 +135,11 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
     [items, onlyVerified, includeExpiringSection, templateStyle, nowIso]
   );
 
-  const handleCopyDigest = () => {
-    navigator.clipboard?.writeText(plainDigestText).catch(() => {});
+  const handleCopyDigest = async () => {
+    const result = await copyToClipboard(plainDigestText);
+    if (!result.success) {
+      console.warn('剪贴板复制失败：', result.error);
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

@@ -8,6 +8,7 @@ import {
   filterAndSortWoolItems,
   buildTelegramDigestText,
   countRecentWoolItems,
+  formatDirectionLabel,
 } from './woolData';
 import { REFERENCE_NOW_ISO } from './testFixtures';
 import { MockSource } from './mockSource';
@@ -21,8 +22,8 @@ test('woolData provides exactly 25 realistic mock items with complete fields', (
   for (const item of items) {
     assert.ok(item.id.startsWith('WR-2026-'));
     assert.ok(item.title.length > 0);
-    assert.ok(item.reward.length > 0);
-    assert.ok(item.condition.length > 0);
+    assert.ok(item.reward ? item.reward.length > 0 : false);
+    assert.ok(item.condition ? item.condition.length > 0 : false);
     assert.ok(['官方已核验', '社区线索', '未核验'].includes(item.verificationStatus));
     assert.ok(item.steps.length > 0);
   }
@@ -249,4 +250,17 @@ test('deadline filtering for push preview follows the same nowIso', () => {
 
   assert.ok(november.length > january.length);
   assert.ok(january.every((item) => item.expiresAt === null));
+});
+
+test('formatDirectionLabel returns correct labels', () => {
+  assert.equal(formatDirectionLabel('positive'), '新增福利');
+  assert.equal(formatDirectionLabel('negative'), '福利收紧');
+  assert.equal(formatDirectionLabel('neutral'), '其他变化');
+});
+
+test('formatDeadlineLabel with null expiresAt returns 截止时间未知', () => {
+  const result = formatDeadlineLabel(null, FIXED_NOW_MS.toString());
+  assert.equal(result.state, 'long_term');
+  assert.equal(result.badgeText, '截止时间未知');
+  assert.equal(result.dateText, '无固定截止日期');
 });
