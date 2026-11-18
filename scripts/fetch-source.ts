@@ -120,6 +120,24 @@ const DEAL_WEAK_NEGATIVE_KEYWORDS = ['更名', '微调'];
 /** deal 强否定词：未变、仍维持、不变 —— 在没有“新增”时否决 deal。 */
 const DEAL_STRONG_NEGATIVE_KEYWORDS = ['未变', '仍维持', '不变'];
 
+/** deal 绝对否决语境：标题中命中任一者，即使有强正向词也不判为 deal。
+ * 用于排除“新增付费模型/计划/限制”被误判为免费福利。 */
+const DEAL_BREAKER_CONTEXT = [
+  '不享受免费额度',
+  '不在免费层内',
+  '不适用于免费层',
+  '无免费层',
+  '无免费 API 额度',
+  '无免费试用',
+  '没有免费试用',
+  '需付费订阅',
+  '付费订阅',
+  'Not supported',
+  '下架',
+  '不免费',
+  '需付费',
+];
+
 /** 降价、更名、计费微调等价格/计费变动关键词。 */
 const PRICE_CHANGE_KEYWORDS = [
   '降价',
@@ -138,6 +156,9 @@ const PRICE_CHANGE_KEYWORDS = [
   '改为.*收费',
   '改为.*付费',
 ];
+
+/** 免费福利词：与价格付费语境共现时，表明该条目包含免费成分。 */
+const FREE_BENEFIT_WORDS = ['赠送', '赠金', '试用', '限时免费', '免费'];
 
 /** 链接文字正向关键词：命中则加分。 */
 const LINK_POSITIVE_KEYWORDS = [
@@ -290,6 +311,9 @@ export function selectOfficialLink(
  * - 强正向词：新增、新推出、上线、赠送、赠金、credits、试用、限时免费
  * - 弱否定词：更名、微调 —— 仅在没有强正向词时使 deal 降级
  * - 强否定词：未变、仍维持、不变 —— 在没有“新增”时否决 deal
+ * - 绝对否决语境：标题命中任一 deal-breaker 语境词，即使有强正向词也不判为 deal
+ *   （用于排除“新增付费模型/计划/限制”被误判为免费福利）
+ * - 价格付费检测：标题含 $\d+/月 或 $\d+/年 且无免费福利词，也不判为 deal
  *
  * 分类：
  * - deal：有强正向词，且不被强否定词否决（除非有“新增”）；弱否定词仅在无强正向词时降级
@@ -300,27 +324,49 @@ export function classifyKind(rss: RssItem): ItemKind {
   const title = rss.title;
   const text = `${title}\n${rss.description ?? ''}`.toLowerCase();
 
-  // 强正向词
-  const strongPositive = DEAL_STRONG_POSITIVE_KEYWORDS.some((kw) => title.includes(kw));
-  // 是否有“新增”（强否定词的豁免条件）
-  const hasNew增 = title.includes('新增');
-  // 强否定词：未变、仍维持、不变 —— 在没有“新增”时否决 deal
-  const strongNegative = DEAL_STRONG_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
-  // 弱否定词：更名、微调 —— 仅在没有强正向词时降级
-  const weakNegative = DEAL_WEAK_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
+  // 1. 绝对否决语境：即使有强正向词，也不判为 deal
+  const hasDealBreaker = DEAL_BREAKER_CONTEXT.some((kw) => title.includes(kw));
+  if (hasDealBreaker) {
+    // 绝对否决后，继续向下判断 price_change / change
+  } else {
+    // 强正向词
+    const strongPositive = DEAL_STRONG_POSITIVE_KEYWORDS.some((kw) => title.includes(kw));
+    // 是否有“新增”（强否定词的豁免条件）
+    const hasNew增 = title.includes('新增');
+    // 强否定词：未变、仍维持、不变 —— 在没有“新增”时否决 deal
+    const strongNegative = DEAL_STRONG_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
+    // 弱否定词：更名、微调 —— 仅在没有强正向词时降级
+    const weakNegative = DEAL_WEAK_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
 
-  // deal 判定：必须有强正向词
-  if (strongPositive) {
-    // 强否定词否决（除非有“新增”）
-    if (strongNegative && !hasNew增) {
-      // 被强否定词否决，继续向下判断 price_change / change
-    } else {
-      // 弱否定词不否决 deal（有强正向词时保留 deal）
-      return 'deal';
+    // deal 判定：必须有强正向词
+    if (strongPositive) {
+      // 强否定词否决（除非有“新增”）
+      // 特殊：若标题同时含“免费层”和“未变”，表明免费层本身未变，
+      // 此时“新增”不能豁免“未变”的否决（无新免费福利）
+      const 免费层未变 = title.includes('免费层') && title.includes('未变');
+      const strongNegativeVeto = strongNegative && (!hasNew增 || 免费层未变);
+
+      if (strongNegativeVeto) {
+        // 被强否定词否决，继续向下判断 price_change / change
+      } else {
+        // 弱否定词不否决 deal（有强正向词时保留 deal）
+        return 'deal';
+      }
     }
   }
 
-  // 非 deal：判断 price_change 或 change
+  // 2. 价格付费检测：标题含 $\d+/月 或 $\d+/年 且无免费福利词，则不判为 deal
+  //    （例如“$200/月不限量 Ultra 订阅”是付费订阅，不是免费福利）
+  const hasPaidPrice = /\$\d+\/(月|年)/.test(title);
+  const hasFreeBenefit = FREE_BENEFIT_WORDS.some((kw) => title.includes(kw));
+  if (hasPaidPrice && !hasFreeBenefit) {
+    // 价格付费语境，不判为 deal，继续向下判断 price_change / change
+  } else {
+    // 如果没有价格付费语境，且前面已经返回 deal 的情况已处理，
+    // 这里继续判断 price_change / change
+  }
+
+  // 3. 非 deal：判断 price_change 或 change
   for (const kw of PRICE_CHANGE_KEYWORDS) {
     if (new RegExp(kw, 'i').test(text)) return 'price_change';
   }
