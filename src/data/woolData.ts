@@ -876,6 +876,16 @@ export const DEFAULT_PUSH_SETTINGS: PushSettingsConfig = {
 };
 
 /**
+ * 读取条目的规范截止时间。
+ * 过渡期兼容旧字段 deadline；新代码应只使用 expiresAt。
+ */
+export function getItemExpiresAt(
+  item: Pick<WoolItem, 'expiresAt' | 'deadline'>
+): string | null {
+  return item.expiresAt ?? item.deadline;
+}
+
+/**
  * Pure helper to calculate the deadline state of a WoolItem relative to a reference ISO date.
  * - expired: deadline < now
  * - expiring_soon: deadline is within 72 hours (3 days) from now
@@ -1004,7 +1014,7 @@ export function filterAndSortWoolItems(
       return false;
     }
 
-    const dState = getDeadlineState(item.deadline, referenceNowIso);
+    const dState = getDeadlineState(getItemExpiresAt(item), referenceNowIso);
     if (deadlineFilter === '即将到期' && dState !== 'expiring_soon') {
       return false;
     }
@@ -1039,8 +1049,8 @@ export function filterAndSortWoolItems(
   });
 
   return [...filtered].sort((a, b) => {
-    const stateA = getDeadlineState(a.deadline, referenceNowIso);
-    const stateB = getDeadlineState(b.deadline, referenceNowIso);
+    const stateA = getDeadlineState(getItemExpiresAt(a), referenceNowIso);
+    const stateB = getDeadlineState(getItemExpiresAt(b), referenceNowIso);
 
     // Always sink expired items to bottom unless explicitly sorting by latest
     if (stateA === 'expired' && stateB !== 'expired') return 1;
@@ -1051,8 +1061,12 @@ export function filterAndSortWoolItems(
     }
 
     if (sortBy === 'deadline_asc') {
-      const endA = a.deadline ? new Date(a.deadline).getTime() : Number.MAX_SAFE_INTEGER;
-      const endB = b.deadline ? new Date(b.deadline).getTime() : Number.MAX_SAFE_INTEGER;
+      const endA = getItemExpiresAt(a)
+        ? new Date(getItemExpiresAt(a)!).getTime()
+        : Number.MAX_SAFE_INTEGER;
+      const endB = getItemExpiresAt(b)
+        ? new Date(getItemExpiresAt(b)!).getTime()
+        : Number.MAX_SAFE_INTEGER;
       return endA - endB;
     }
 
@@ -1086,14 +1100,14 @@ export function buildTelegramDigestText(
   referenceNowIso: string = REFERENCE_NOW_ISO
 ): string {
   const validItems = items.filter((item) => {
-    const st = getDeadlineState(item.deadline, referenceNowIso);
+    const st = getDeadlineState(getItemExpiresAt(item), referenceNowIso);
     if (st === 'expired') return false;
     if (options.onlyVerified && item.verificationStatus !== '官方已核验') return false;
     return true;
   });
 
   const expiringItems = validItems.filter(
-    (i) => getDeadlineState(i.deadline, referenceNowIso) === 'expiring_soon'
+    (i) => getDeadlineState(getItemExpiresAt(i), referenceNowIso) === 'expiring_soon'
   );
   const topVerifiedItems = validItems
     .filter((i) => i.verificationStatus === '官方已核验')
@@ -1109,7 +1123,7 @@ export function buildTelegramDigestText(
   if (options.includeExpiringSection && expiringItems.length > 0) {
     lines.push('⏰ 【72h 内即将截止 · 优先处理】');
     expiringItems.forEach((item, idx) => {
-      const dl = formatDeadlineLabel(item.deadline, referenceNowIso);
+      const dl = formatDeadlineLabel(getItemExpiresAt(item), referenceNowIso);
       const badge =
         item.verificationStatus === '官方已核验'
           ? '[官方核验]'
@@ -1128,7 +1142,7 @@ export function buildTelegramDigestText(
 
   lines.push('✅ 【今日精选已核验羊毛】');
   topVerifiedItems.forEach((item, idx) => {
-    const dl = formatDeadlineLabel(item.deadline, referenceNowIso);
+    const dl = formatDeadlineLabel(getItemExpiresAt(item), referenceNowIso);
     lines.push(`${idx + 1}. ${item.title}`);
     lines.push(`   🎁 权益：${item.reward}`);
     if (options.templateStyle === 'detailed') {

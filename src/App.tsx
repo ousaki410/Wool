@@ -7,28 +7,35 @@ import {
   Copy,
   Check,
   RotateCcw,
+  PauseCircle,
+  PlayCircle,
+  Zap,
+  Activity,
 } from 'lucide-react';
 import {
-  getWoolItems,
-  getSourceChannels,
   getDefaultBookmarkIds,
   DEFAULT_PUSH_SETTINGS,
   filterAndSortWoolItems,
   getDeadlineState,
+  getItemExpiresAt,
   WoolCategory,
   ClaimMethod,
   DeadlineFilter,
   VerificationStatus,
   SourceChannel,
   PushSettingsConfig,
-  REFERENCE_NOW_ISO,
+  WoolItem,
 } from './data/woolData';
+import { useWools } from './hooks/useWools';
 import { TopNav, ActiveTab } from './components/TopNav';
 import { FilterBar } from './components/FilterBar';
 import { WoolCard } from './components/WoolCard';
 import { TelegramDigestView } from './components/TelegramDigestView';
 import { SourcesStatusView } from './components/SourcesStatusView';
 import { PushSettingsView } from './components/PushSettingsView';
+
+/** 收藏条目从来源消失时的兜底过期时间 */
+const FALLBACK_EXPIRED_AT = '2000-01-01T00:00:00+08:00';
 
 export default function App() {
   // Theme state (default to dark mode or saved preference)
@@ -58,8 +65,18 @@ export default function App() {
   // Active Navigation Tab
   const [activeTab, setActiveTab] = useState<ActiveTab>('today');
 
-  // Centralized Wool Data
-  const allItems = useMemo(() => getWoolItems(), []);
+  // 唯一数据入口：列表、来源状态和每分钟时间刷新
+  const {
+    items: allItems,
+    channels: sourceChannels,
+    nowIso,
+    paused,
+    pause,
+    resume,
+    trigger,
+    markViewed,
+    getFreshMarks,
+  } = useWools();
 
   // Bookmarks State
   const [bookmarkIds, setBookmarkIds] = useState<string[]>(() => {
@@ -72,6 +89,17 @@ export default function App() {
     return getDefaultBookmarkIds();
   });
 
+  // 收藏快照：条目过期或从来源消失后，收藏页仍可展示
+  const [bookmarkSnapshots, setBookmarkSnapshots] = useState<Record<string, WoolItem>>(() => {
+    try {
+      const raw = localStorage.getItem('woolradar_bookmark_snapshots');
+      if (raw) return JSON.parse(raw);
+    } catch {
+      // ignore
+    }
+    return {};
+  });
+
   useEffect(() => {
     try {
       localStorage.setItem('woolradar_bookmarks', JSON.stringify(bookmarkIds));
@@ -80,33 +108,55 @@ export default function App() {
     }
   }, [bookmarkIds]);
 
+  useEffect(() => {
+    setBookmarkSnapshots((prev) => {
+      let changed = false;
+      const next = { ...prev };
+      for (const item of allItems) {
+        if (!bookmarkIds.includes(item.id)) continue;
+        if (JSON.stringify(next[item.id]) !== JSON.stringify(item)) {
+          next[item.id] = item;
+          changed = true;
+        }
+      }
+      return changed ? next : prev;
+    });
+  }, [allItems, bookmarkIds]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('woolradar_bookmark_snapshots', JSON.stringify(bookmarkSnapshots));
+    } catch {
+      // ignore
+    }
+  }, [bookmarkSnapshots]);
+
   const handleToggleBookmark = (id: string) => {
     setBookmarkIds((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [id, ...prev]
     );
   };
 
-  // Source Channels State
-  const [channels, setChannels] = useState<SourceChannel[]>(() => getSourceChannels());
+  // 来源通道状态来自 useWools；本地仅保存启用/停用偏好
+  const [channelEnabledOverrides, setChannelEnabledOverrides] = useState<
+    Record<string, boolean>
+  >({});
+
+  const channels = useMemo<SourceChannel[]>(
+    () =>
+      sourceChannels.map((ch) =>
+        channelEnabledOverrides[ch.id] === undefined
+          ? ch
+          : { ...ch, enabled: channelEnabledOverrides[ch.id] }
+      ),
+    [sourceChannels, channelEnabledOverrides]
+  );
 
   const handleToggleChannel = (id: string) => {
-    setChannels((prev) =>
-      prev.map((ch) => (ch.id === id ? { ...ch, enabled: !ch.enabled } : ch))
-    );
-  };
-
-  const handleSyncAllChannels = () => {
-    setChannels((prev) =>
-      prev.map((ch) =>
-        ch.enabled
-          ? {
-              ...ch,
-              status: '正常',
-              lastSyncAt: '2026-11-17 14:00',
-            }
-          : ch
-      )
-    );
+    setChannelEnabledOverrides((prev) => ({
+      ...prev,
+      [id]: !(prev[id] ?? sourceChannels.find((c) => c.id === id)?.enabled ?? true),
+    }));
   };
 
   // Push Settings State
@@ -152,17 +202,22 @@ export default function App() {
 
   const filteredItems = useMemo(
     () =>
-      filterAndSortWoolItems(allItems, {
-        searchQuery,
-        category,
-        claimMethod,
-        deadlineFilter,
-        verificationStatus,
-        sourceId: sourceIdFilter,
-        sortBy,
-      }),
+      filterAndSortWoolItems(
+        allItems,
+        {
+          searchQuery,
+          category,
+          claimMethod,
+          deadlineFilter,
+          verificationStatus,
+          sourceId: sourceIdFilter,
+          sortBy,
+        },
+        nowIso
+      ),
     [
       allItems,
+      nowIso,
       searchQuery,
       category,
       claimMethod,
@@ -173,13 +228,13 @@ export default function App() {
     ]
   );
 
-  // Summary metrics
+  // Summary metrics（按当前时间实时计算）
   const expiringSoonItems = useMemo(
     () =>
       allItems.filter(
-        (i) => getDeadlineState(i.deadline, REFERENCE_NOW_ISO) === 'expiring_soon'
+        (i) => getDeadlineState(getItemExpiresAt(i), nowIso) === 'expiring_soon'
       ),
-    [allItems]
+    [allItems, nowIso]
   );
 
   const officialVerifiedActiveItems = useMemo(
@@ -187,17 +242,14 @@ export default function App() {
       allItems.filter(
         (i) =>
           i.verificationStatus === '官方已核验' &&
-          getDeadlineState(i.deadline, REFERENCE_NOW_ISO) !== 'expired'
+          getDeadlineState(getItemExpiresAt(i), nowIso) !== 'expired'
       ),
-    [allItems]
+    [allItems, nowIso]
   );
 
-  const totalActiveValueRmb = useMemo(
-    () =>
-      allItems
-        .filter((i) => getDeadlineState(i.deadline, REFERENCE_NOW_ISO) !== 'expired')
-        .reduce((sum, i) => sum + i.estimatedValueRmb, 0),
-    [allItems]
+  const normalSourceCount = useMemo(
+    () => channels.filter((c) => c.status === '正常').length,
+    [channels]
   );
 
   const activeSourceObj = useMemo(
@@ -208,13 +260,23 @@ export default function App() {
     [channels, sourceIdFilter]
   );
 
-  // Bookmarked items list
+  // Bookmarked items list（含已过期/已消失条目的快照兜底）
   const bookmarkedItems = useMemo(
     () =>
       bookmarkIds
-        .map((id) => allItems.find((item) => item.id === id))
-        .filter((item): item is NonNullable<typeof item> => Boolean(item)),
-    [bookmarkIds, allItems]
+        .map((id) => {
+          const live = allItems.find((item) => item.id === id);
+          if (live) return live;
+          const snapshot = bookmarkSnapshots[id];
+          if (!snapshot) return null;
+          return {
+            ...snapshot,
+            expiresAt: FALLBACK_EXPIRED_AT,
+            deadline: FALLBACK_EXPIRED_AT,
+          };
+        })
+        .filter((item): item is WoolItem => Boolean(item)),
+    [bookmarkIds, allItems, bookmarkSnapshots]
   );
 
   const [copiedBookmarks, setCopiedBookmarks] = useState(false);
@@ -223,7 +285,7 @@ export default function App() {
     const text = bookmarkedItems
       .map(
         (item, idx) =>
-          `${idx + 1}. [${item.verificationStatus}] ${item.title} — 可得: ${item.reward} (${item.estimatedValue})`
+          `${idx + 1}. [${item.verificationStatus}] ${item.title} — 可得: ${item.reward}`
       )
       .join('\n');
     navigator.clipboard?.writeText(text).catch(() => {});
@@ -246,86 +308,115 @@ export default function App() {
         {/* TAB 1: 今日羊毛 */}
         {activeTab === 'today' && (
           <>
-            {/* Compact Interactive Situation Bar */}
+            {/* 紧凑统计条：首屏只占一行 */}
             <section
               aria-label="今日情报态势概览"
-              className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
+              className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2.5 text-xs"
             >
               <button
                 type="button"
-                onClick={() => {
-                  setDeadlineFilter(deadlineFilter === '即将到期' ? '全部' : '即将到期');
-                }}
-                className={`text-left p-4 rounded-xl border transition-colors cursor-pointer ${
+                onClick={() =>
+                  setDeadlineFilter(deadlineFilter === '即将到期' ? '全部' : '即将到期')
+                }
+                className={`inline-flex items-center gap-1.5 font-semibold transition-colors cursor-pointer ${
                   deadlineFilter === '即将到期'
-                    ? 'bg-amber-50/90 dark:bg-amber-950/40 border-amber-400 dark:border-amber-600'
-                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-amber-300 dark:hover:border-amber-700'
+                    ? 'text-amber-600 dark:text-amber-400'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400'
                 }`}
               >
-                <div className="flex items-center justify-between text-xs text-amber-700 dark:text-amber-400 font-semibold">
-                  <span>72h 内即将到期</span>
-                  <Flame className="w-4 h-4" />
-                </div>
-                <div className="mt-1 text-2xl font-bold font-mono text-slate-900 dark:text-slate-100 tabular-nums">
-                  {expiringSoonItems.length} <span className="text-xs font-normal text-slate-500">条急需处理</span>
-                </div>
-                <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                  点击快速筛选倒计时羊毛
-                </div>
+                <Flame className="w-3.5 h-3.5" />
+                <span>72h 内到期</span>
+                <strong className="font-mono tabular-nums">{expiringSoonItems.length}</strong>
               </button>
+
+              <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">|</span>
 
               <button
                 type="button"
-                onClick={() => {
+                onClick={() =>
                   setVerificationStatus(
                     verificationStatus === '官方已核验' ? '全部' : '官方已核验'
-                  );
-                }}
-                className={`text-left p-4 rounded-xl border transition-colors cursor-pointer ${
+                  )
+                }
+                className={`inline-flex items-center gap-1.5 font-semibold transition-colors cursor-pointer ${
                   verificationStatus === '官方已核验'
-                    ? 'bg-emerald-50/90 dark:bg-emerald-950/40 border-emerald-400 dark:border-emerald-600'
-                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-700'
+                    ? 'text-emerald-600 dark:text-emerald-400'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400'
                 }`}
               >
-                <div className="flex items-center justify-between text-xs text-emerald-700 dark:text-emerald-400 font-semibold">
-                  <span>官方已核验有效</span>
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <div className="mt-1 text-2xl font-bold font-mono text-slate-900 dark:text-slate-100 tabular-nums">
-                  {officialVerifiedActiveItems.length} <span className="text-xs font-normal text-slate-500">/ 21 条有效</span>
-                </div>
-                <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                  点击仅看 100% 实测可靠渠道
-                </div>
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>官方已核验</span>
+                <strong className="font-mono tabular-nums">
+                  {officialVerifiedActiveItems.length}
+                </strong>
               </button>
 
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                  在途可领权益总估值
-                </div>
-                <div className="mt-1 text-2xl font-bold font-mono text-teal-700 dark:text-teal-400 tabular-nums">
-                  ¥{totalActiveValueRmb.toLocaleString()}
-                </div>
-                <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                  涵盖算力额度、IDE 授权与消费立减
-                </div>
-              </div>
+              <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">|</span>
 
               <button
                 type="button"
-                onClick={() => setActiveTab('digest')}
-                className="text-left bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-teal-500 dark:hover:border-teal-500 rounded-xl p-4 transition-colors cursor-pointer"
+                onClick={() => setActiveTab('sources')}
+                className="inline-flex items-center gap-1.5 font-medium text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors cursor-pointer"
               >
-                <div className="text-xs text-teal-700 dark:text-teal-400 font-semibold">
-                  Telegram 日报已就绪
-                </div>
-                <div className="mt-1 text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 whitespace-nowrap">
-                  预览今日早报 →
-                </div>
-                <div className="mt-1 text-xs text-slate-500 dark:text-slate-400 tabular-nums">
-                  共收录 {allItems.length} 条（含 4 条归档）
-                </div>
+                <Activity className="w-3.5 h-3.5" />
+                <span>来源正常</span>
+                <strong className="font-mono tabular-nums">
+                  {normalSourceCount}/{channels.length}
+                </strong>
               </button>
+
+              <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">|</span>
+
+              <span className="text-slate-500 dark:text-slate-400">
+                共 <strong className="font-mono tabular-nums">{allItems.length}</strong> 条
+              </span>
+
+              <div className="ml-auto flex flex-wrap items-center gap-1.5">
+                <span
+                  className={`inline-flex items-center gap-1 font-medium ${
+                    paused
+                      ? 'text-amber-600 dark:text-amber-400'
+                      : 'text-emerald-600 dark:text-emerald-400'
+                  }`}
+                >
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      paused ? 'bg-amber-500' : 'bg-emerald-500'
+                    }`}
+                  />
+                  {paused ? '模拟已暂停' : '模拟运行中'}
+                </span>
+
+                <button
+                  type="button"
+                  onClick={paused ? resume : pause}
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                >
+                  {paused ? (
+                    <PlayCircle className="w-3.5 h-3.5" />
+                  ) : (
+                    <PauseCircle className="w-3.5 h-3.5" />
+                  )}
+                  <span>{paused ? '继续模拟' : '暂停模拟'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={trigger}
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/50 hover:bg-teal-100 dark:hover:bg-teal-950/80 transition-colors cursor-pointer"
+                >
+                  <Zap className="w-3.5 h-3.5" />
+                  <span>模拟一条事件</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('digest')}
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 transition-colors cursor-pointer"
+                >
+                  <span>日报预览 →</span>
+                </button>
+              </div>
             </section>
 
             {/* Multi-dimensional Filter Bar */}
@@ -371,7 +462,7 @@ export default function App() {
                   没有匹配当前筛选条件的羊毛情报
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
-                  您可以尝试放宽「核验状态」或「截止日期」条件，或点击下方按钮恢复显示全部 25 条情报。
+                  您可以尝试放宽「核验状态」或「截止日期」条件，或点击下方按钮恢复显示全部情报。
                 </p>
                 <button
                   type="button"
@@ -405,7 +496,7 @@ export default function App() {
           <SourcesStatusView
             channels={channels}
             onToggleChannel={handleToggleChannel}
-            onSyncAll={handleSyncAllChannels}
+            onSyncAll={trigger}
             onSelectSourceItems={(srcId) => {
               handleResetFilters();
               setSourceIdFilter(srcId);
@@ -434,7 +525,7 @@ export default function App() {
                   <span>我的羊毛收藏夹 ({bookmarkedItems.length})</span>
                 </h1>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  保存在本地浏览器的待办羊毛清单，优先展示即将截止的高价值权益。
+                  保存在本地浏览器的待办羊毛清单；已过期或已从来源消失的条目仍会保留并标记为已过期。
                 </p>
               </div>
 
