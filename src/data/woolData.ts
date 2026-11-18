@@ -26,6 +26,10 @@ export type ClaimMethod =
 
 export type VerificationStatus = '官方已核验' | '社区线索' | '未核验';
 
+/** 条目分类：deal 可领取的福利或额度 / change 额度与活动变化 / news 厂商新闻。
+ * 只有 deal 和 change 进入“今日羊毛”，news 保留在单独的“动态”分区。 */
+export type ItemKind = 'deal' | 'change' | 'news';
+
 export type DeadlineState = 'expiring_soon' | 'active' | 'long_term' | 'expired';
 
 export type DeadlineFilter = '全部' | '即将到期' | '有效期内' | '长期有效' | '已过期';
@@ -65,6 +69,8 @@ export interface WoolItem {
   promoCode?: string;
   riskNotes?: string;
   tags: string[];
+  /** 条目分类，由数据来源计算得出；mock 种子不设此字段。 */
+  kind?: ItemKind;
 }
 
 export interface SourceChannel {

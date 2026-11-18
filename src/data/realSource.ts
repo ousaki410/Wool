@@ -67,6 +67,7 @@ function normalizeItem(it: unknown, index: number): WoolItem {
     steps: Array.isArray(src.steps) ? (src.steps as string[]).filter((s) => typeof s === 'string') : [],
     riskNotes: (src.riskNotes as string) || '',
     tags: Array.isArray(src.tags) ? (src.tags as string[]) : [],
+    kind: (src.kind as WoolItem['kind']) || undefined,
   };
 }
 
