@@ -111,11 +111,14 @@ function toIso(rfc2822: string): string {
   return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
 }
 
-/** 可领取的福利或额度关键词（仅命中标题时才归为 deal）。 */
-const DEAL_POSITIVE_KEYWORDS = ['新增', '新推出', '上线', '赠送', '限时免费', '试用'];
+/** deal 强正向词：命中标题时优先归为 deal。 */
+const DEAL_STRONG_POSITIVE_KEYWORDS = ['新增', '新推出', '上线', '赠送', '赠金', 'credits', '试用', '限时免费'];
 
-/** deal 否定关键词：标题中含任一者，不得归为 deal。 */
-const DEAL_NEGATIVE_KEYWORDS = ['未变', '仍维持', '微调', '不变', '更名'];
+/** deal 弱否定词：更名、微调 —— 仅在没有强正向词时使 deal 降级。 */
+const DEAL_WEAK_NEGATIVE_KEYWORDS = ['更名', '微调'];
+
+/** deal 强否定词：未变、仍维持、不变 —— 在没有“新增”时否决 deal。 */
+const DEAL_STRONG_NEGATIVE_KEYWORDS = ['未变', '仍维持', '不变'];
 
 /** 降价、更名、计费微调等价格/计费变动关键词。 */
 const PRICE_CHANGE_KEYWORDS = [
@@ -149,9 +152,6 @@ const LINK_POSITIVE_KEYWORDS = [
 
 /** 链接文字负向关键词：命中则扣分（API Key、控制台、登录等非直达页面）。 */
 const LINK_NEGATIVE_KEYWORDS = ['API Key', '控制台', '登录', 'console', 'dashboard', 'api-keys'];
-
-/** 官方主页关键词：作为降级兜底。 */
-const HOMEPAGE_KEYWORDS = ['官方主页', '官方网站', '官网'];
 
 /** 从标题 "额度变化 · 厂商：内容" 中解析厂商名。解析失败返回 null。 */
 export function parseVendorFromTitle(title: string): string | null {
@@ -228,17 +228,13 @@ export function scoreLinkText(text: string): number {
   return score;
 }
 
-function isOfficialHomepage(text: string): boolean {
-  return HOMEPAGE_KEYWORDS.some((kw) => text.includes(kw));
-}
-
 /**
  * 用 RSS 解析出的厂商名去 README 映射中模糊匹配，并选出最佳官方链接。
  *
  * 选取规则：
- * 1. 在匹配到的厂商官方链接中，按链接文字打分，选得分最高的；
- * 2. 若最高分 <= 0（没有合适的正向链接），回退到“官方主页”链接；
- * 3. 仍没有则返回 null（hasOfficialLink=false）。
+ * 1. 在匹配到的厂商官方链接中，按链接文字打分，选得分最高的正分链接；
+ * 2. 没有正分时，选第一个不含负向关键词的链接（而非直接放弃）；
+ * 3. 全是负向关键词才返回 null（hasOfficialLink=false）。
  */
 export function selectOfficialLink(
   vendor: string | null,
@@ -266,40 +262,65 @@ export function selectOfficialLink(
 
   if (!bestVendor || bestVendor.officialLinks.length === 0) return null;
 
-  // 按链接文字打分，选得分最高的
-  let bestLink: OfficialLink | null = null;
-  let bestLinkScore = -Infinity;
+  // 第 1 优先级：得分最高的正分链接
+  let bestPositiveLink: OfficialLink | null = null;
+  let bestPositiveScore = 0;
   for (const link of bestVendor.officialLinks) {
     const s = scoreLinkText(link.text);
-    if (s > bestLinkScore) {
-      bestLinkScore = s;
-      bestLink = link;
+    if (s > bestPositiveScore) {
+      bestPositiveScore = s;
+      bestPositiveLink = link;
     }
   }
+  if (bestPositiveScore > 0 && bestPositiveLink) return bestPositiveLink;
 
-  // 若最高分 > 0，认为有合适的链接，直接使用
-  if (bestLinkScore > 0 && bestLink) return bestLink;
+  // 第 2 优先级：第一个不含负向关键词的链接
+  const firstNonNegativeLink = bestVendor.officialLinks.find(
+    (l) => !LINK_NEGATIVE_KEYWORDS.some((kw) => l.text.includes(kw) || l.text.toLowerCase().includes(kw.toLowerCase()))
+  );
+  if (firstNonNegativeLink) return firstNonNegativeLink;
 
-  // 否则回退到“官方主页”链接
-  const homepageLink = bestVendor.officialLinks.find((l) => isOfficialHomepage(l.text));
-  return homepageLink || null;
+  // 第 3 优先级：全是负向关键词，返回 null
+  return null;
 }
 
-/** 根据标题推断条目分类。
+/** 根据标题推断条目分类（打分制，不再一票否决）。
  *
  * 规则：
- * - deal：标题须含“新增/新推出/上线/赠送/限时免费/试用”之一，且不含“未变/仍维持/微调/不变/更名”；
- * - price_change：标题含降价/更名/计费微调等计费变动关键词；
- * - change：其他额度与活动变化。
+ * - 强正向词：新增、新推出、上线、赠送、赠金、credits、试用、限时免费
+ * - 弱否定词：更名、微调 —— 仅在没有强正向词时使 deal 降级
+ * - 强否定词：未变、仍维持、不变 —— 在没有“新增”时否决 deal
+ *
+ * 分类：
+ * - deal：有强正向词，且不被强否定词否决（除非有“新增”）；弱否定词仅在无强正向词时降级
+ * - price_change：标题含降价/更名/计费微调等计费变动关键词
+ * - change：其他额度与活动变化
  */
 export function classifyKind(rss: RssItem): ItemKind {
   const title = rss.title;
-  const hasNegative = DEAL_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
-  const hasPositive = DEAL_POSITIVE_KEYWORDS.some((kw) => title.includes(kw));
-
-  if (hasPositive && !hasNegative) return 'deal';
-
   const text = `${title}\n${rss.description ?? ''}`.toLowerCase();
+
+  // 强正向词
+  const strongPositive = DEAL_STRONG_POSITIVE_KEYWORDS.some((kw) => title.includes(kw));
+  // 是否有“新增”（强否定词的豁免条件）
+  const hasNew增 = title.includes('新增');
+  // 强否定词：未变、仍维持、不变 —— 在没有“新增”时否决 deal
+  const strongNegative = DEAL_STRONG_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
+  // 弱否定词：更名、微调 —— 仅在没有强正向词时降级
+  const weakNegative = DEAL_WEAK_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
+
+  // deal 判定：必须有强正向词
+  if (strongPositive) {
+    // 强否定词否决（除非有“新增”）
+    if (strongNegative && !hasNew增) {
+      // 被强否定词否决，继续向下判断 price_change / change
+    } else {
+      // 弱否定词不否决 deal（有强正向词时保留 deal）
+      return 'deal';
+    }
+  }
+
+  // 非 deal：判断 price_change 或 change
   for (const kw of PRICE_CHANGE_KEYWORDS) {
     if (new RegExp(kw, 'i').test(text)) return 'price_change';
   }
@@ -359,6 +380,7 @@ export function convertToWoolItem(
 ): WoolItem {
   const hasOfficialLink = selectedLink !== null;
   const sourceUrl = hasOfficialLink ? selectedLink.url : rss.link || rss.guid || SOURCE_URL;
+  const linkText = hasOfficialLink ? selectedLink.text : undefined;
   const publishedAt = toIso(rss.pubDate);
   const vendorName = vendor || '未知厂商';
 
@@ -392,6 +414,7 @@ export function convertToWoolItem(
     hasOfficialLink,
     deadlineHint: deadlineHint || undefined,
     intelSource: rss.link || undefined,
+    linkText,
   };
 }
 

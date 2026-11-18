@@ -78,6 +78,8 @@ export interface WoolItem {
   deadlineHint?: string;
   /** 情报出处：上游 RSS 的 GitHub 锚点链接。 */
   intelSource?: string;
+  /** 原始 README 中“官方直达”一栏的链接文字（用于审计链接是否对应正确厂商）。 */
+  linkText?: string;
 }
 
 export interface SourceChannel {

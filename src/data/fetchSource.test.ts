@@ -179,11 +179,24 @@ test('selectOfficialLink：API Key 链接被排除，回退到官方主页', () 
     assert.equal(together.text, '定价页面');
     assert.equal(together.url, 'https://www.together.ai/pricing');
 
-    // Morph Labs：有 "定价页（免费层说明）"（+4）和 "官方主页"（0）
-    // 最高分 > 0，应选定价页
-    const morph = selectOfficialLink('Morph Labs', vendorMap);
-    assert.ok(morph);
-    assert.equal(morph.text, '定价页（免费层说明）');
+    // Gemini Enterprise：应命中包含“定价”的正分链接
+    const geminiEnterprise = selectOfficialLink('Google Gemini Enterprise', vendorMap);
+    assert.ok(geminiEnterprise);
+    assert.ok(geminiEnterprise.url.includes('pricing'), `期望 pricing 链接，实际：${geminiEnterprise.url}`);
+
+    // Parallel Web API：应命中包含“定价”的正分链接
+    const parallel = selectOfficialLink('Parallel Web API', vendorMap);
+    assert.ok(parallel);
+    assert.ok(parallel.url.includes('pricing'), `期望 pricing 链接，实际：${parallel.url}`);
+
+    // MOSS：无正分链接，应回退到第一个不含负向关键词的链接（模型列表）
+    const moss = selectOfficialLink('复旦 MOSS (MOSI)', vendorMap);
+    assert.ok(moss);
+    assert.ok(
+      moss.url.includes('platform.mosi.cn') || moss.url.includes('platform.moss.cn'),
+      `期望 mosi.cn 链接，实际：${moss.url}`
+    );
+    assert.equal(moss.text, '模型列表（官方全文，含计费标准）');
 
     // 不存在的厂商
     const unknown = selectOfficialLink('不存在的厂商 XXXX', vendorMap);

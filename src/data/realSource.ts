@@ -71,6 +71,7 @@ function normalizeItem(it: unknown, index: number): WoolItem {
     hasOfficialLink: Boolean(src.hasOfficialLink),
     deadlineHint: (src.deadlineHint as string | undefined) || undefined,
     intelSource: (src.intelSource as string | undefined) || undefined,
+    linkText: (src.linkText as string | undefined) || undefined,
   };
 }
 

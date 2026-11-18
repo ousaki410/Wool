@@ -1,21 +1,21 @@
 {
   "source": "free-llm-intel 公开订阅",
   "sourceUrl": "https://free-llm-intel.aishort.top/",
-  "fetchedAt": "2026-11-18T09:02:54.777Z",
+  "fetchedAt": "2026-11-18T09:11:41.618Z",
   "count": 66,
   "stats": {
     "unknownVendorCount": 0,
-    "noOfficialLinkCount": 10,
+    "noOfficialLinkCount": 5,
     "kindCount": {
-      "deal": 33,
-      "price_change": 25,
-      "change": 8,
+      "deal": 39,
+      "price_change": 21,
+      "change": 6,
       "news": 0
     },
     "kindPct": {
-      "deal": 50,
-      "price_change": 38,
-      "change": 12,
+      "deal": 59,
+      "price_change": 32,
+      "change": 9,
       "news": 0
     }
   },
@@ -52,7 +52,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#28-google-gemini-google-ai-studio"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#28-google-gemini-google-ai-studio",
+      "linkText": "API 定价文档"
     },
     {
       "id": "fli-1c473d54",
@@ -84,9 +85,10 @@
         "Google Gemini Enterprise Agent Platform",
         "官方动态"
       ],
-      "kind": "change",
+      "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#63-google-gemini-enterprise-agent-platform"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#63-google-gemini-enterprise-agent-platform",
+      "linkText": "平台定价"
     },
     {
       "id": "fli-7d723c69",
@@ -118,9 +120,10 @@
         "Morph Labs",
         "官方动态"
       ],
-      "kind": "change",
+      "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#46-morph-labs"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#46-morph-labs",
+      "linkText": "定价页（免费层说明）"
     },
     {
       "id": "fli-4b6b0b16",
@@ -154,7 +157,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#50-anyscale"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#50-anyscale",
+      "linkText": "Pricing（$100 额度说明）"
     },
     {
       "id": "fli-66b7d3d4",
@@ -186,9 +190,10 @@
         "Parallel Web API",
         "官方动态"
       ],
-      "kind": "price_change",
+      "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#57-parallel-web-api-数据--搜索-api"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#57-parallel-web-api-数据--搜索-api",
+      "linkText": "定价页"
     },
     {
       "id": "fli-19b9ffa7",
@@ -223,7 +228,8 @@
       "kind": "deal",
       "hasOfficialLink": true,
       "deadlineHint": "2026-11-23",
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#25-阶跃星辰-stepfun"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#25-阶跃星辰-stepfun",
+      "linkText": "定价详情"
     },
     {
       "id": "fli-1f577256",
@@ -257,7 +263,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#47-relace"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#47-relace",
+      "linkText": "定价页（含 free tier 说明）"
     },
     {
       "id": "fli-5c25a7d3",
@@ -291,7 +298,8 @@
       ],
       "kind": "change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#2-通义千问-阿里云"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#2-通义千问-阿里云",
+      "linkText": "免费额度官方文档"
     },
     {
       "id": "fli-24695aef",
@@ -313,7 +321,7 @@
       "isUpdated": false,
       "sourceId": "src-fli-moss-mosi",
       "sourceName": "复旦 MOSS (MOSI)",
-      "sourceUrl": "https://github.com/rockbenben/free-llm-intel#18-复旦-moss-mosi",
+      "sourceUrl": "https://platform.mosi.cn/docs/models",
       "steps": [
         "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
@@ -324,8 +332,9 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "hasOfficialLink": false,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#18-复旦-moss-mosi"
+      "hasOfficialLink": true,
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#18-复旦-moss-mosi",
+      "linkText": "模型列表（官方全文，含计费标准）"
     },
     {
       "id": "fli-08c0e840",
@@ -359,7 +368,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai",
+      "linkText": "定价页面"
     },
     {
       "id": "fli-4c31cd24",
@@ -427,7 +437,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#1-deepseek-深度求索"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#1-deepseek-深度求索",
+      "linkText": "定价文档（人民币峰谷价）"
     },
     {
       "id": "fli-61ad7f5a",
@@ -461,7 +472,8 @@
       ],
       "kind": "change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#46-morph-labs"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#46-morph-labs",
+      "linkText": "定价页（免费层说明）"
     },
     {
       "id": "fli-1e49e439",
@@ -495,7 +507,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#79-github-copilot-free"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#79-github-copilot-free",
+      "linkText": "定价页（含 Free 层 FAQ）"
     },
     {
       "id": "fli-0839af2f",
@@ -529,7 +542,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#28-google-gemini-google-ai-studio"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#28-google-gemini-google-ai-studio",
+      "linkText": "API 定价文档"
     },
     {
       "id": "fli-1965a26c",
@@ -563,7 +577,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#4-kimi-月之暗面"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#4-kimi-月之暗面",
+      "linkText": "K3 定价"
     },
     {
       "id": "fli-7c1b8152",
@@ -598,7 +613,8 @@
       "kind": "price_change",
       "hasOfficialLink": true,
       "deadlineHint": "2026-11-01",
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#1-deepseek-深度求索"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#1-deepseek-深度求索",
+      "linkText": "定价文档（人民币峰谷价）"
     },
     {
       "id": "fli-07f0748a",
@@ -632,7 +648,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#2-通义千问-阿里云"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#2-通义千问-阿里云",
+      "linkText": "免费额度官方文档"
     },
     {
       "id": "fli-288dba62",
@@ -654,7 +671,7 @@
       "isUpdated": false,
       "sourceId": "src-fli-token-hub",
       "sourceName": "云知声 Token Hub",
-      "sourceUrl": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub",
+      "sourceUrl": "https://maas.unisound.com/docs/guide/quickstart",
       "steps": [
         "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
@@ -665,8 +682,9 @@
         "官方动态"
       ],
       "kind": "deal",
-      "hasOfficialLink": false,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub"
+      "hasOfficialLink": true,
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub",
+      "linkText": "快速入门（新人礼包说明）"
     },
     {
       "id": "fli-2af4dd92",
@@ -701,7 +719,8 @@
       "kind": "change",
       "hasOfficialLink": true,
       "deadlineHint": "2026-10-21",
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#7-小米-mimo"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#7-小米-mimo",
+      "linkText": "模型与定价总览"
     },
     {
       "id": "fli-3e9128fb",
@@ -735,7 +754,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#26-anthropic-claude"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#26-anthropic-claude",
+      "linkText": "定价中心"
     },
     {
       "id": "fli-110e197a",
@@ -769,7 +789,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#2-通义千问-阿里云"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#2-通义千问-阿里云",
+      "linkText": "免费额度官方文档"
     },
     {
       "id": "fli-78759c1b",
@@ -791,7 +812,7 @@
       "isUpdated": false,
       "sourceId": "src-fli-token-hub",
       "sourceName": "云知声 Token Hub",
-      "sourceUrl": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub",
+      "sourceUrl": "https://maas.unisound.com/docs/guide/quickstart",
       "steps": [
         "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
@@ -802,8 +823,9 @@
         "官方动态"
       ],
       "kind": "deal",
-      "hasOfficialLink": false,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub"
+      "hasOfficialLink": true,
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub",
+      "linkText": "快速入门（新人礼包说明）"
     },
     {
       "id": "fli-7dbe8e2f",
@@ -837,7 +859,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#4-kimi-月之暗面"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#4-kimi-月之暗面",
+      "linkText": "K3 定价"
     },
     {
       "id": "fli-2945b11a",
@@ -871,7 +894,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#34-cloudflare-workers-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#34-cloudflare-workers-ai",
+      "linkText": "定价说明"
     },
     {
       "id": "fli-71faacfa",
@@ -905,7 +929,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai",
+      "linkText": "定价页面"
     },
     {
       "id": "fli-5cf6fc1b",
@@ -939,7 +964,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#51-inceptionlabs"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#51-inceptionlabs",
+      "linkText": "文档 Quick Start（免费额度说明）"
     },
     {
       "id": "fli-3ecf4be9",
@@ -973,7 +999,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#49-mancer"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#49-mancer",
+      "linkText": "模型页（FREE 标注）"
     },
     {
       "id": "fli-3dcdf3bb",
@@ -1007,7 +1034,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#11-科大讯飞星火-spark-api"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#11-科大讯飞星火-spark-api",
+      "linkText": "星火 API 产品页（免费额度领取）"
     },
     {
       "id": "fli-41833d3f",
@@ -1041,7 +1069,8 @@
       ],
       "kind": "change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#36-nvidia-nim-api-catalog"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#36-nvidia-nim-api-catalog",
+      "linkText": "免费端点目录（Free Endpoint 筛选）"
     },
     {
       "id": "fli-0c5d0df2",
@@ -1075,7 +1104,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#1-deepseek-深度求索"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#1-deepseek-深度求索",
+      "linkText": "定价文档（人民币峰谷价）"
     },
     {
       "id": "fli-04351763",
@@ -1109,7 +1139,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai",
+      "linkText": "定价页面"
     },
     {
       "id": "fli-4f36a5d1",
@@ -1143,7 +1174,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#29-xai-grok"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#29-xai-grok",
+      "linkText": "API 定价"
     },
     {
       "id": "fli-00a67f11",
@@ -1177,7 +1209,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#1-deepseek-深度求索"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#1-deepseek-深度求索",
+      "linkText": "定价文档（人民币峰谷价）"
     },
     {
       "id": "fli-68e3fa87",
@@ -1211,7 +1244,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#32-hugging-face-inference-providers"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#32-hugging-face-inference-providers",
+      "linkText": "Inference Providers 定价"
     },
     {
       "id": "fli-0228b2de",
@@ -1245,7 +1279,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#33-openrouter-模型统一网关"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#33-openrouter-模型统一网关",
+      "linkText": "官方主页"
     },
     {
       "id": "fli-0996c3ba",
@@ -1277,9 +1312,10 @@
         "Fireworks AI",
         "官方动态"
       ],
-      "kind": "price_change",
+      "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#40-fireworks-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#40-fireworks-ai",
+      "linkText": "定价说明"
     },
     {
       "id": "fli-52a75c73",
@@ -1313,7 +1349,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#28-google-gemini-google-ai-studio"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#28-google-gemini-google-ai-studio",
+      "linkText": "API 定价文档"
     },
     {
       "id": "fli-058c17bf",
@@ -1347,7 +1384,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#5-minimax-稀宇科技"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#5-minimax-稀宇科技",
+      "linkText": "Token Plan 定价"
     },
     {
       "id": "fli-50cfdf69",
@@ -1381,7 +1419,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#40-fireworks-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#40-fireworks-ai",
+      "linkText": "定价说明"
     },
     {
       "id": "fli-60c90270",
@@ -1415,7 +1454,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#80-cursor-ai-代码编辑器--hobby-免费层"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#80-cursor-ai-代码编辑器--hobby-免费层",
+      "linkText": "定价页（Hobby Free 卡）"
     },
     {
       "id": "fli-2c7f9a86",
@@ -1483,7 +1523,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#14-硅基流动-siliconflow"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#14-硅基流动-siliconflow",
+      "linkText": "定价 / 免费模型清单"
     },
     {
       "id": "fli-7c35114c",
@@ -1517,7 +1558,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#42-nebius-token-factory--ai-cloud"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#42-nebius-token-factory--ai-cloud",
+      "linkText": "官方主页"
     },
     {
       "id": "fli-6c318e02",
@@ -1551,7 +1593,8 @@
       ],
       "kind": "change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#74-qoder-agentic-coding-platform--国际版"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#74-qoder-agentic-coding-platform--国际版",
+      "linkText": "定价与额度文档（含免费层表）"
     },
     {
       "id": "fli-02206282",
@@ -1585,7 +1628,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#78-文心快码-comate-百度智能云"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#78-文心快码-comate-百度智能云",
+      "linkText": "产品定价文档（个人版免费层）"
     },
     {
       "id": "fli-0c240cd8",
@@ -1619,7 +1663,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#82-zed-编辑器--ai-托管额度"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#82-zed-编辑器--ai-托管额度",
+      "linkText": "定价页（Personal 免费档）"
     },
     {
       "id": "fli-4c358ba7",
@@ -1721,7 +1766,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#26-anthropic-claude"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#26-anthropic-claude",
+      "linkText": "定价中心"
     },
     {
       "id": "fli-6fe31ca5",
@@ -1755,7 +1801,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai",
+      "linkText": "定价页面"
     },
     {
       "id": "fli-0f5feda0",
@@ -1777,7 +1824,7 @@
       "isUpdated": false,
       "sourceId": "src-fli-token-hub",
       "sourceName": "云知声 Token Hub",
-      "sourceUrl": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub",
+      "sourceUrl": "https://maas.unisound.com/docs/guide/quickstart",
       "steps": [
         "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
@@ -1788,8 +1835,9 @@
         "官方动态"
       ],
       "kind": "deal",
-      "hasOfficialLink": false,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub"
+      "hasOfficialLink": true,
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub",
+      "linkText": "快速入门（新人礼包说明）"
     },
     {
       "id": "fli-0c4d1e1a",
@@ -1823,7 +1871,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#51-inceptionlabs"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#51-inceptionlabs",
+      "linkText": "文档 Quick Start（免费额度说明）"
     },
     {
       "id": "fli-629feaf7",
@@ -1857,7 +1906,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#30-mistral-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#30-mistral-ai",
+      "linkText": "API 定价"
     },
     {
       "id": "fli-684b33c0",
@@ -1891,7 +1941,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai",
+      "linkText": "定价页面"
     },
     {
       "id": "fli-154839b7",
@@ -1925,7 +1976,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#26-anthropic-claude"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#26-anthropic-claude",
+      "linkText": "定价中心"
     },
     {
       "id": "fli-7f9c790a",
@@ -1959,7 +2011,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#26-anthropic-claude"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#26-anthropic-claude",
+      "linkText": "定价中心"
     },
     {
       "id": "fli-0f155ad2",
@@ -1993,7 +2046,8 @@
       ],
       "kind": "change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#61-amazon-bedrock-aws-free-tier"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#61-amazon-bedrock-aws-free-tier",
+      "linkText": "AWS Free Tier 官方页"
     },
     {
       "id": "fli-1939f248",
@@ -2027,7 +2081,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#21-中国电信-天翼云--息壤智算"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#21-中国电信-天翼云--息壤智算",
+      "linkText": "Tele-AI 官方文档站"
     },
     {
       "id": "fli-6b36c1c2",
@@ -2059,9 +2114,10 @@
         "Cloudflare Workers AI",
         "官方动态"
       ],
-      "kind": "price_change",
+      "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#34-cloudflare-workers-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#34-cloudflare-workers-ai",
+      "linkText": "定价说明"
     },
     {
       "id": "fli-593eb713",
@@ -2095,7 +2151,8 @@
       ],
       "kind": "price_change",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#46-morph-labs"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#46-morph-labs",
+      "linkText": "定价页（免费层说明）"
     },
     {
       "id": "fli-4c380412",
@@ -2127,10 +2184,11 @@
         "Nebius",
         "官方动态"
       ],
-      "kind": "price_change",
+      "kind": "deal",
       "hasOfficialLink": true,
       "deadlineHint": "2026-10-01",
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#42-nebius-token-factory--ai-cloud"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#42-nebius-token-factory--ai-cloud",
+      "linkText": "官方主页"
     },
     {
       "id": "fli-6af936a9",
@@ -2164,7 +2222,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai",
+      "linkText": "定价页面"
     },
     {
       "id": "fli-27e26524",
@@ -2186,7 +2245,7 @@
       "isUpdated": false,
       "sourceId": "src-fli-token-hub",
       "sourceName": "云知声 Token Hub",
-      "sourceUrl": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub",
+      "sourceUrl": "https://maas.unisound.com/docs/guide/quickstart",
       "steps": [
         "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
@@ -2197,8 +2256,9 @@
         "官方动态"
       ],
       "kind": "deal",
-      "hasOfficialLink": false,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub"
+      "hasOfficialLink": true,
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#16-云知声-token-hub",
+      "linkText": "快速入门（新人礼包说明）"
     },
     {
       "id": "fli-30203944",
@@ -2232,7 +2292,8 @@
       ],
       "kind": "deal",
       "hasOfficialLink": true,
-      "intelSource": "https://github.com/rockbenben/free-llm-intel#2-通义千问-阿里云"
+      "intelSource": "https://github.com/rockbenben/free-llm-intel#2-通义千问-阿里云",
+      "linkText": "免费额度官方文档"
     },
     {
       "id": "fli-4d5cb0bd",
