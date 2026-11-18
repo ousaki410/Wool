@@ -21,8 +21,8 @@ test('woolData provides exactly 25 realistic mock items with complete fields', (
   for (const item of items) {
     assert.ok(item.id.startsWith('WR-2026-'));
     assert.ok(item.title.length > 0);
-    assert.ok(item.reward.length > 0);
-    assert.ok(item.condition.length > 0);
+    assert.ok(item.reward ? item.reward.length > 0 : false);
+    assert.ok(item.condition ? item.condition.length > 0 : false);
     assert.ok(['官方已核验', '社区线索', '未核验'].includes(item.verificationStatus));
     assert.ok(item.steps.length > 0);
   }

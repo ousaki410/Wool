@@ -43,8 +43,8 @@ test('updated event changes condition/reward and marks isUpdated', () => {
   const updated = source.list().items.find((i) => i.id === events[0].itemId);
   assert.ok(updated);
   assert.equal(updated?.isUpdated, true);
-  assert.ok(updated?.condition.endsWith('（已调整）'));
-  assert.ok(updated?.reward.endsWith('· 已更新'));
+  assert.ok(updated?.condition?.endsWith('（已调整）'));
+  assert.ok(updated?.reward?.endsWith('· 已更新'));
 });
 
 test('expired event moves expiresAt into the past for a live item', () => {

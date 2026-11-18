@@ -2,9 +2,7 @@ name: Fetch free-llm-intel data source
 
 on:
   workflow_dispatch:
-  # 待稳定验证后再打开定时：
-  # schedule:
-  #   - cron: '0 8 * * *'
+  # 只做手动触发，不开 schedule
 
 permissions:
   contents: write
@@ -37,14 +35,19 @@ jobs:
       - name: Fetch free-llm-intel subscription
         run: npx tsx scripts/fetch-source.ts
 
-      - name: Commit wool.json if changed
+      - name: Commit wool.json and news.json if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet public/data/wool.json; then
-            echo "public/data/wool.json 未变更，无需提交"
+          if git diff --quiet public/data/wool.json public/data/news.json; then
+            echo "public/data/wool.json 和 public/data/news.json 未变更，无需提交"
           else
-            git add public/data/wool.json
-            git commit -m "data(source): refresh free-llm-intel wool.json"
+            git add public/data/wool.json public/data/news.json
+            git commit -m "data(source): refresh free-llm-intel wool.json and news.json"
             git push
           fi
+
+      - name: Trigger Pages deployment
+        run: gh workflow run deploy.yml
+        env:
+          GH_TOKEN: ${{ github.token }}

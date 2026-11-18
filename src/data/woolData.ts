@@ -31,6 +31,9 @@ export type VerificationStatus = '官方已核验' | '社区线索' | '未核验
  * 只有 deal 和 change 进入“今日羊毛”，price_change 与 news 保留在单独分区。 */
 export type ItemKind = 'deal' | 'price_change' | 'change' | 'news';
 
+/** 条目方向：positive 新增福利或延期 / negative 取消下线免费期结束不支持免费门槛提高 / neutral 其他。 */
+export type ItemDirection = 'positive' | 'negative' | 'neutral';
+
 export type DeadlineState = 'expiring_soon' | 'active' | 'long_term' | 'expired';
 
 export type DeadlineFilter = '全部' | '即将到期' | '有效期内' | '长期有效' | '已过期';
@@ -38,12 +41,12 @@ export type DeadlineFilter = '全部' | '即将到期' | '有效期内' | '长�
 export interface WoolItem {
   id: string;
   title: string;
-  reward: string;
-  estimatedValue: string;
-  estimatedValueRmb: number;
-  condition: string;
+  reward: string | null;
+  estimatedValue: string | null;
+  estimatedValueRmb: number | null;
+  condition: string | null;
   category: WoolCategory;
-  claimMethod: ClaimMethod;
+  claimMethod: ClaimMethod | null;
   verificationStatus: VerificationStatus;
   verificationNote: string;
   /** 规范字段：截止时间（ISO 字符串，null 表示长期有效）。剩余天数与“即将到期”按当前时间实时计算。 */
@@ -72,6 +75,8 @@ export interface WoolItem {
   tags: string[];
   /** 条目分类，由数据来源计算得出；mock 种子不设此字段。 */
   kind?: ItemKind;
+  /** 条目方向，由数据来源计算得出；mock 种子不设此字段。 */
+  direction?: ItemDirection;
   /** 是否命中官方直达链接（sourceUrl 指向官方页而非 GitHub 镜像）。 */
   hasOfficialLink?: boolean;
   /** 标题中出现的明确截止日期提示（如“顺延至 2026-11-23”），不写入 expiresAt。 */
@@ -348,7 +353,9 @@ export function filterAndSortWoolItems(
     if (stateA !== 'expired' && stateB === 'expired') return -1;
 
     if (sortBy === 'value_desc') {
-      return b.estimatedValueRmb - a.estimatedValueRmb;
+      const va = a.estimatedValueRmb ?? 0;
+      const vb = b.estimatedValueRmb ?? 0;
+      return vb - va;
     }
 
     if (sortBy === 'deadline_asc') {

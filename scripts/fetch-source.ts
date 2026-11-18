@@ -9,7 +9,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 
-import type { ItemKind, WoolItem } from '../src/data/woolData';
+import type { ItemDirection, ItemKind, WoolItem } from '../src/data/woolData';
 
 const CHANGES_RSS_URL = 'https://free-llm-intel.aishort.top/feeds/llm-intel-changes.xml';
 const NEWS_RSS_URL = 'https://free-llm-intel.aishort.top/feeds/llm-news-all.xml';
@@ -18,6 +18,9 @@ const WOOL_JSON_PATH = 'public/data/wool.json';
 const NEWS_JSON_PATH = 'public/data/news.json';
 const SOURCE_NAME = 'free-llm-intel 公开订阅';
 const SOURCE_URL = 'https://free-llm-intel.aishort.top/';
+
+/** 最近 72 小时（ms），用于判断 isNew。 */
+export const RECENT_HOURS_MS = 72 * 60 * 60 * 1000;
 
 export interface RssItem {
   title: string;
@@ -43,8 +46,11 @@ interface FetchStats {
   unknownVendorCount: number;
   noOfficialLinkCount: number;
   kindCount: Record<ItemKind, number>;
+  directionCount: Record<ItemDirection, number>;
   /** 各 kind 的占比（0-100），四舍五入取整 */
   kindPct: Record<ItemKind, number>;
+  /** 各 direction 的占比（0-100），四舍五入取整 */
+  directionPct: Record<ItemDirection, number>;
 }
 
 /** 抓取 RSS 文本。 */
@@ -69,7 +75,7 @@ export function parseRss(xml: string): RssItem[] {
     };
     const getAttr = (tag: string, attr: string): string => {
       const m = itemXml.match(
-        new RegExp(`<${tag}[^>]*\\s${attr}=["']([^"']*)["']`, 'i')
+        new RegExp(`<${tag}[^>]*\\s${attr}=["']([^'"]*)["']`, 'i')
       );
       return m ? m[1] : '';
     };
@@ -101,14 +107,21 @@ function vendorSlug(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
+/** 所有变化订阅条目统一归入“AI 与大模型”。 */
 function mapCategory(_vendor: string): WoolItem['category'] {
-  // 变化订阅不再细分厂商类别，统一归入“开发工具与 SaaS”，避免误判。
-  return '开发工具与 SaaS';
+  return 'AI 与大模型';
 }
 
 function toIso(rfc2822: string): string {
   const d = new Date(rfc2822);
   return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+}
+
+/** 判断 ISO 字符串是否在最近 72 小时内。 */
+export function isWithinRecentHours(iso: string, hoursMs: number): boolean {
+  const t = new Date(iso).getTime();
+  if (!Number.isFinite(t)) return false;
+  return Date.now() - t <= hoursMs && t <= Date.now();
 }
 
 /** deal 强正向词：命中标题时优先归为 deal。 */
@@ -138,6 +151,12 @@ const DEAL_BREAKER_CONTEXT = [
   '需付费',
 ];
 
+/** 付费订阅语境词：标题包含这些词表明核心是付费订阅/套餐/计划，不应归为 deal。 */
+const SUBSCRIPTION_CONTEXT_KEYWORDS = ['订阅', '套餐', '计划', '会员'];
+
+/** 免费福利词：与价格付费语境共现时，表明该条目包含免费成分。 */
+const FREE_BENEFIT_WORDS = ['赠送', '赠金', '试用', '限时免费', '免费'];
+
 /** 降价、更名、计费微调等价格/计费变动关键词。 */
 const PRICE_CHANGE_KEYWORDS = [
   '降价',
@@ -157,8 +176,18 @@ const PRICE_CHANGE_KEYWORDS = [
   '改为.*付费',
 ];
 
-/** 免费福利词：与价格付费语境共现时，表明该条目包含免费成分。 */
-const FREE_BENEFIT_WORDS = ['赠送', '赠金', '试用', '限时免费', '免费'];
+/** 正向方向词：新增福利或延期。 */
+const DIRECTION_POSITIVE_KEYWORDS = [
+  '新增', '新推出', '上线', '赠送', '赠金', 'credits', '试用', '限时免费',
+  '延期', '顺延', '延长', '恢复', '回归', '再次',
+];
+
+/** 负向方向词：取消、下线、免费期结束、不支持免费、门槛提高。 */
+const DIRECTION_NEGATIVE_KEYWORDS = [
+  '取消', '下架', '下线', '结束', '停止', '终止', '移除', '移出',
+  '不支持免费', '无免费', '不再免费', '取消免费', '免费期结束', '免费到期',
+  '门槛提高', '涨价', '调高', '不再提供', '停止免费',
+];
 
 /** 链接文字正向关键词：命中则加分。 */
 const LINK_POSITIVE_KEYWORDS = [
@@ -182,12 +211,20 @@ export function parseVendorFromTitle(title: string): string | null {
   return vendor || null;
 }
 
+/** 从标题中提取 reward：去掉"额度变化 · 厂商："前缀，保留变化内容，截断到 80 字。 */
+export function extractReward(title: string): string | null {
+  const m = title.match(/^额度变化\s*·\s*[^：\n]+?：(.*)$/);
+  if (!m) return null;
+  let withoutPrefix = m[1].trim();
+  if (!withoutPrefix) return null;
+  // 截断到 80 字
+  return withoutPrefix.length > 80 ? withoutPrefix.slice(0, 80) : withoutPrefix;
+}
+
 /** 把名称规范化为可比较的 Token 集合。 */
 function normalizeName(name: string): string[] {
   const lower = name.toLowerCase();
-  // 去掉括号及其内容（如 "(深度求索)"、"(Google AI Studio)"）
   const noParen = lower.replace(/\([^)]*\)/g, ' ').replace(/\[[^\]]*\]/g, ' ');
-  // 只保留字母数字与中文，其余切分为 Token
   const tokens = noParen
     .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, ' ')
     .split(/\s+/)
@@ -202,21 +239,17 @@ export async function fetchReadmeVendors(): Promise<Map<string, ReadmeVendor>> {
   try {
     readme = await fetchRssText(README_URL);
   } catch {
-    // README 抓取失败不阻断主流程，官方链接映射为空
     return map;
   }
 
-  // 按厂商标题 "### N. VendorName (中文名)" 切分
   const sections = readme.split(/\n### \d+\. /);
   for (const section of sections) {
     const headerMatch = section.match(/^([^\n]+?)\n/);
     if (!headerMatch) continue;
     const header = headerMatch[1].trim();
-    // 去掉可能的序号前缀与括号，保留厂商名
     const rawName = header.replace(/^\d+\.\s*/, '').replace(/\s*\([^)]*\)\s*$/, '').trim();
     if (!rawName) continue;
 
-    // 提取 **官方直达** 行，保留链接文字和 URL
     const officialRow = section.match(/\|\s*\*\*官方直达\*\*\s*\|([\s\S]*?)\|\n/);
     const officialLinks: OfficialLink[] = [];
     if (officialRow) {
@@ -313,31 +346,32 @@ export function selectOfficialLink(
  * - 强否定词：未变、仍维持、不变 —— 在没有“新增”时否决 deal
  * - 绝对否决语境：标题命中任一 deal-breaker 语境词，即使有强正向词也不判为 deal
  *   （用于排除“新增付费模型/计划/限制”被误判为免费福利）
+ * - 付费订阅语境：标题包含订阅/套餐/计划/会员，不判为 deal
  * - 价格付费检测：标题含 $\d+/月 或 $\d+/年 且无免费福利词，也不判为 deal
  *
  * 分类：
  * - deal：有强正向词，且不被强否定词否决（除非有“新增”）；弱否定词仅在无强正向词时降级
  * - price_change：标题含降价/更名/计费微调等计费变动关键词
- * - change：其他额度与活动变化
+ - change：其他额度与活动变化
  */
 export function classifyKind(rss: RssItem): ItemKind {
   const title = rss.title;
   const text = `${title}\n${rss.description ?? ''}`.toLowerCase();
+
+  // 强正向词
+  const strongPositive = DEAL_STRONG_POSITIVE_KEYWORDS.some((kw) => title.includes(kw));
+  // 是否有“新增”（强否定词的豁免条件）
+  const hasNew增 = title.includes('新增');
+  // 强否定词：未变、仍维持、不变 —— 在没有“新增”时否决 deal
+  const strongNegative = DEAL_STRONG_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
+  // 弱否定词：更名、微调 —— 仅在没有强正向词时降级
+  const weakNegative = DEAL_WEAK_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
 
   // 1. 绝对否决语境：即使有强正向词，也不判为 deal
   const hasDealBreaker = DEAL_BREAKER_CONTEXT.some((kw) => title.includes(kw));
   if (hasDealBreaker) {
     // 绝对否决后，继续向下判断 price_change / change
   } else {
-    // 强正向词
-    const strongPositive = DEAL_STRONG_POSITIVE_KEYWORDS.some((kw) => title.includes(kw));
-    // 是否有“新增”（强否定词的豁免条件）
-    const hasNew增 = title.includes('新增');
-    // 强否定词：未变、仍维持、不变 —— 在没有“新增”时否决 deal
-    const strongNegative = DEAL_STRONG_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
-    // 弱否定词：更名、微调 —— 仅在没有强正向词时降级
-    const weakNegative = DEAL_WEAK_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
-
     // deal 判定：必须有强正向词
     if (strongPositive) {
       // 强否定词否决（除非有“新增”）
@@ -346,32 +380,53 @@ export function classifyKind(rss: RssItem): ItemKind {
       const 免费层未变 = title.includes('免费层') && title.includes('未变');
       const strongNegativeVeto = strongNegative && (!hasNew增 || 免费层未变);
 
-      if (strongNegativeVeto) {
-        // 被强否定词否决，继续向下判断 price_change / change
-      } else {
-        // 弱否定词不否决 deal（有强正向词时保留 deal）
-        return 'deal';
+      if (!strongNegativeVeto) {
+        // 2. 付费订阅语境：标题包含订阅/套餐/计划/会员，不判为 deal
+        const hasSubscriptionContext = SUBSCRIPTION_CONTEXT_KEYWORDS.some((kw) => title.includes(kw));
+        if (hasSubscriptionContext) {
+          // 付费订阅语境，不判为 deal，继续向下判断 price_change / change
+        } else {
+          // 3. 价格付费检测：标题含 $\d+/月 或 $\d+/年 且无免费福利词，也不判为 deal
+          const hasPaidPrice = /\$\d+\/(月|年)/.test(title);
+          const hasFreeBenefit = FREE_BENEFIT_WORDS.some((kw) => title.includes(kw));
+          if (!(hasPaidPrice && !hasFreeBenefit)) {
+            // 弱否定词不否决 deal（有强正向词时保留 deal）
+            return 'deal';
+          }
+        }
       }
     }
   }
 
-  // 2. 价格付费检测：标题含 $\d+/月 或 $\d+/年 且无免费福利词，则不判为 deal
-  //    （例如“$200/月不限量 Ultra 订阅”是付费订阅，不是免费福利）
-  const hasPaidPrice = /\$\d+\/(月|年)/.test(title);
-  const hasFreeBenefit = FREE_BENEFIT_WORDS.some((kw) => title.includes(kw));
-  if (hasPaidPrice && !hasFreeBenefit) {
-    // 价格付费语境，不判为 deal，继续向下判断 price_change / change
-  } else {
-    // 如果没有价格付费语境，且前面已经返回 deal 的情况已处理，
-    // 这里继续判断 price_change / change
-  }
-
-  // 3. 非 deal：判断 price_change 或 change
+  // 非 deal：判断 price_change 或 change
   for (const kw of PRICE_CHANGE_KEYWORDS) {
     if (new RegExp(kw, 'i').test(text)) return 'price_change';
   }
 
   return 'change';
+}
+
+/** 根据标题推断条目方向。
+ *
+ * 规则：
+ * - positive：新增福利或延期（新增、新推出、上线、赠送、赠金、credits、试用、限时免费、延期、顺延、延长、恢复等）
+ * - negative：取消、下线、免费期结束、不支持免费、门槛提高（取消、下架、下线、结束、停止、终止、移除、不支持免费、无免费、不再免费、取消免费、免费期结束、门槛提高、涨价等）
+ * - neutral：其他
+ */
+export function classifyDirection(rss: RssItem): ItemDirection {
+  const title = rss.title;
+  const text = `${title}\n${rss.description ?? ''}`.toLowerCase();
+
+  const hasPositive = DIRECTION_POSITIVE_KEYWORDS.some((kw) => title.includes(kw));
+  const hasNegative = DIRECTION_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
+
+  if (hasPositive && !hasNegative) return 'positive';
+  if (hasNegative && !hasPositive) return 'negative';
+  if (hasPositive && hasNegative) {
+    // 既有正向又有负向，以负向为准（保守策略：不要把可能减少福利的条目标为正向）
+    return 'negative';
+  }
+  return 'neutral';
 }
 
 /** 是否应进入“今日羊毛”：deal / price_change / change 均进入，news 不进入。 */
@@ -430,15 +485,19 @@ export function convertToWoolItem(
   const publishedAt = toIso(rss.pubDate);
   const vendorName = vendor || '未知厂商';
 
+  const reward = extractReward(rss.title);
+  const direction = classifyDirection(rss);
+  const isNew = isWithinRecentHours(publishedAt, RECENT_HOURS_MS);
+
   return {
     id: `fli-${stableId(rss.guid || rss.link || rss.title)}`,
     title: rss.title,
-    reward: `官方动态：${vendorName} 发布新内容`,
-    estimatedValue: '¥0',
-    estimatedValueRmb: 0,
-    condition: '点击官方链接阅读原文，确认是否涉及免费额度或限时活动',
+    reward,
+    estimatedValue: null,
+    estimatedValueRmb: null,
+    condition: null,
     category: mapCategory(vendorName),
-    claimMethod: '直接领取',
+    claimMethod: null,
     verificationStatus: '未核验',
     verificationNote:
       '来自 free-llm-intel 公开 RSS 订阅，未独立核验，以官方页面为准；未生成兑换码。',
@@ -447,7 +506,7 @@ export function convertToWoolItem(
     publishedAt,
     createdAt: publishedAt,
     updatedAt: publishedAt,
-    isNew: true,
+    isNew,
     isUpdated: false,
     sourceId: `src-fli-${vendorSlug(vendorName)}`,
     sourceName: vendorName,
@@ -457,6 +516,7 @@ export function convertToWoolItem(
       '来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。',
     tags: [vendorName, '官方动态'],
     kind,
+    direction,
     hasOfficialLink,
     deadlineHint: deadlineHint || undefined,
     intelSource: rss.link || undefined,
@@ -472,7 +532,9 @@ export async function main(): Promise<void> {
     unknownVendorCount: 0,
     noOfficialLinkCount: 0,
     kindCount: { deal: 0, price_change: 0, change: 0, news: 0 },
+    directionCount: { positive: 0, negative: 0, neutral: 0 },
     kindPct: { deal: 0, price_change: 0, change: 0, news: 0 },
+    directionPct: { positive: 0, negative: 0, neutral: 0 },
   };
 
   // 变化订阅 → 今日羊毛（deal / price_change / change）
@@ -486,22 +548,32 @@ export async function main(): Promise<void> {
     if (!selectedLink) stats.noOfficialLinkCount += 1;
     const kind = classifyKind(r);
     stats.kindCount[kind] += 1;
+    const direction = classifyDirection(r);
+    stats.directionCount[direction] += 1;
     const deadlineHint = extractDeadlineHint(r.title);
     changesItems.push(convertToWoolItem(r, kind, nowMs, vendor, selectedLink, deadlineHint));
   }
   const todayItems = deduplicate(changesItems.filter((it) => shouldEnterToday(it.kind ?? 'change')));
-  // 统计基于进入文件的最终条目，使 count 与 kind 分布一致
+  // 统计基于进入文件的最终条目，使 count 与分布一致
   const finalStats: FetchStats = {
     unknownVendorCount: todayItems.filter((i) => i.sourceName === '未知厂商').length,
     noOfficialLinkCount: todayItems.filter((i) => !i.hasOfficialLink).length,
     kindCount: { deal: 0, price_change: 0, change: 0, news: 0 },
+    directionCount: { positive: 0, negative: 0, neutral: 0 },
     kindPct: { deal: 0, price_change: 0, change: 0, news: 0 },
+    directionPct: { positive: 0, negative: 0, neutral: 0 },
   };
-  for (const it of todayItems) finalStats.kindCount[it.kind ?? 'change'] += 1;
+  for (const it of todayItems) {
+    finalStats.kindCount[it.kind ?? 'change'] += 1;
+    finalStats.directionCount[it.direction ?? 'neutral'] += 1;
+  }
 
   const total = todayItems.length;
   for (const k of ['deal', 'price_change', 'change', 'news'] as const) {
     finalStats.kindPct[k] = total > 0 ? Math.round((finalStats.kindCount[k] / total) * 100) : 0;
+  }
+  for (const d of ['positive', 'negative', 'neutral'] as const) {
+    finalStats.directionPct[d] = total > 0 ? Math.round((finalStats.directionCount[d] / total) * 100) : 0;
   }
 
   // deal 占比超过 50% 时在日志里警告
@@ -530,7 +602,7 @@ export async function main(): Promise<void> {
   );
   // eslint-disable-next-line no-console
   console.log(
-    `[fetch-source] 统计：未知厂商 ${finalStats.unknownVendorCount} 条，无官方链接 ${finalStats.noOfficialLinkCount} 条，kind=${JSON.stringify(finalStats.kindCount)}，占比=${JSON.stringify(finalStats.kindPct)}`
+    `[fetch-source] 统计：未知厂商 ${finalStats.unknownVendorCount} 条，无官方链接 ${finalStats.noOfficialLinkCount} 条，kind=${JSON.stringify(finalStats.kindCount)}，kind占比=${JSON.stringify(finalStats.kindPct)}，direction=${JSON.stringify(finalStats.directionCount)}，direction占比=${JSON.stringify(finalStats.directionPct)}`
   );
   // eslint-disable-next-line no-console
   console.log(`[fetch-source] 已写入 ${WOOL_JSON_PATH} 与 ${NEWS_JSON_PATH}`);
