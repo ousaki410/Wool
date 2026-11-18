@@ -33,6 +33,8 @@ import { WoolCard } from './components/WoolCard';
 import { TelegramDigestView } from './components/TelegramDigestView';
 import { SourcesStatusView } from './components/SourcesStatusView';
 import { PushSettingsView } from './components/PushSettingsView';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { copyToClipboard } from './utils/clipboard';
 
 /** 收藏条目从来源消失时的兜底过期时间 */
 const FALLBACK_EXPIRED_AT = '2000-01-01T00:00:00+08:00';
@@ -289,13 +291,14 @@ export default function App() {
           `${idx + 1}. [${item.verificationStatus}] ${item.title} — 可得: ${item.reward}`
       )
       .join('\n');
-    navigator.clipboard?.writeText(text).catch(() => {});
+    copyToClipboard(text);
     setCopiedBookmarks(true);
     setTimeout(() => setCopiedBookmarks(false), 2000);
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-20 md:pb-12 transition-colors">
+    <ErrorBoundary>
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-20 md:pb-12 transition-colors">
       <TopNav
         activeTab={activeTab}
         onSelectTab={setActiveTab}
@@ -663,5 +666,6 @@ export default function App() {
         )}
       </main>
     </div>
+    </ErrorBoundary>
   );
 }

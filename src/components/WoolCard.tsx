@@ -16,6 +16,7 @@ import {
   Sparkles,
   RefreshCw,
 } from 'lucide-react';
+import { copyToClipboard } from '../utils/clipboard';
 import {
   WoolItem,
   formatDeadlineLabel,
@@ -57,7 +58,7 @@ export const WoolCard: React.FC<WoolCardProps> = ({
 
   const handleCopyCode = () => {
     if (!item.promoCode) return;
-    navigator.clipboard?.writeText(item.promoCode).catch(() => {});
+    copyToClipboard(item.promoCode);
     setCopiedCode(true);
     setTimeout(() => setCopiedCode(false), 1800);
   };
