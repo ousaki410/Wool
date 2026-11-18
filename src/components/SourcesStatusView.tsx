@@ -21,25 +21,28 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
   const verifiedCount = items.filter(
     (i) => i.verificationStatus === '官方已核验'
   ).length;
-  const lastFetchAt = channels.length > 0 ? channels[0].lastFetchAt : null;
+  // 最后抓取时间取所有来源中最新的一个
+  const lastFetchAt = channels.length > 0
+    ? channels.map((c) => c.lastFetchAt).filter(Boolean).sort().pop() || null
+    : null;
   const formattedLastSync = lastFetchAt
     ? formatShanghaiDateTime(lastFetchAt)
     : '—';
 
-  // 按来源名聚合“涉及厂商”数据，按条目数降序
+  // 按来源名聚合“涉及厂商”数据，数据来自 wool.json 条目，按条目数降序
   const vendorMap = new Map<
     string,
     { name: string; entryCount: number; url: string }
   >();
-  for (const ch of channels) {
-    const existing = vendorMap.get(ch.name);
+  for (const item of items) {
+    const existing = vendorMap.get(item.sourceName);
     if (existing) {
-      existing.entryCount += ch.entryCount;
+      existing.entryCount += 1;
     } else {
-      vendorMap.set(ch.name, {
-        name: ch.name,
-        entryCount: ch.entryCount,
-        url: ch.url,
+      vendorMap.set(item.sourceName, {
+        name: item.sourceName,
+        entryCount: 1,
+        url: item.sourceUrl,
       });
     }
   }
@@ -121,7 +124,7 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
                           href={ch.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`访问 ${ch.name} 官网`}
+                          aria-label={`访问 ${ch.name} 订阅`}
                           className="text-slate-400 hover:text-teal-600 dark:hover:text-teal-400"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
@@ -135,7 +138,9 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
                       {ch.entryCount}
                     </td>
                     <td className="py-3.5 px-4 text-right font-mono text-xs text-slate-500 dark:text-slate-400 tabular-nums whitespace-nowrap">
-                      {ch.lastFetchAt ? formatShanghaiDateTime(ch.lastFetchAt) : '—'}
+                      {ch.lastFetchAt
+                        ? formatShanghaiDateTime(ch.lastFetchAt)
+                        : '—'}
                     </td>
                     <td className="py-3.5 px-4 text-right whitespace-nowrap">
                       <a

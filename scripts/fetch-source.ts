@@ -609,28 +609,8 @@ export async function main(): Promise<void> {
     );
   }
 
-  // 聚合每个来源的条目数，写入 sources.json
-  const sourceMap = new Map<string, SourceInfo>();
-  for (const it of todayItems) {
-    const key = it.sourceId;
-    const existing = sourceMap.get(key);
-    if (existing) {
-      existing.entryCount += 1;
-    } else {
-      sourceMap.set(key, {
-        id: it.sourceId,
-        name: it.sourceName,
-        type: it.category,
-        url: it.sourceUrl,
-        entryCount: 1,
-        fetchedAt: new Date(nowMs).toISOString(),
-      });
-    }
-  }
-  const sources = Array.from(sourceMap.values()).sort((a, b) => b.entryCount - a.entryCount);
-  writeSourceJson(SOURCES_JSON_PATH, sources, nowMs);
-
   // 新闻订阅 → 单独“动态”分区，不进今日羊毛（news）
+  // 需在 sources 聚合前先拿到 newsItems 的条目数
   const newsXml = await fetchRssText(NEWS_RSS_URL);
   const newsRss = parseRss(newsXml);
   const newsItems: WoolItem[] = [];
@@ -638,6 +618,29 @@ export async function main(): Promise<void> {
     stats.kindCount['news'] += 1;
     newsItems.push(convertToWoolItem(r, 'news', nowMs, null, null, null));
   }
+
+  // 聚合每个来源的条目数，写入 sources.json
+  // 固定 2 条订阅：额度/活动变化、厂商新闻
+  const sources: SourceInfo[] = [
+    {
+      id: 'src-fli-changes',
+      name: '免费额度/活动变化',
+      type: '额度/活动变化',
+      url: CHANGES_RSS_URL,
+      entryCount: todayItems.length,
+      fetchedAt: new Date(nowMs).toISOString(),
+    },
+    {
+      id: 'src-fli-news',
+      name: '厂商新闻',
+      type: '厂商新闻',
+      url: NEWS_RSS_URL,
+      entryCount: newsItems.length,
+      fetchedAt: new Date(nowMs).toISOString(),
+    },
+  ];
+  writeSourceJson(SOURCES_JSON_PATH, sources, nowMs);
+
   writeWoolJson(NEWS_JSON_PATH, deduplicate(newsItems), nowMs);
 
   // eslint-disable-next-line no-console

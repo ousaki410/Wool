@@ -8,7 +8,6 @@ const BASE_URL =
     : '/';
 const WOOL_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/wool.json`;
 const SOURCES_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/sources.json`;
-const SOURCE_URL = 'https://free-llm-intel.aishort.top/';
 
 export interface RealSourceStatus {
   /** 上一次抓取是否成功 */
@@ -73,59 +72,53 @@ function isSourceInfo(value: unknown): value is SourceInfo {
 }
 
 function normalizeItem(it: unknown, index: number): WoolItem {
-  const src = it as Partial<WoolItem> & Record<string, unknown>;
+  const seed = it as Partial<WoolItem> & Record<string, unknown>;
   return {
-    id: (src.id as string) || `fli-${index}`,
-    title: (src.title as string) || '(无标题)',
-    reward: (src.reward as string) || '',
-    estimatedValue: (src.estimatedValue as string) || '¥0',
-    estimatedValueRmb: typeof src.estimatedValueRmb === 'number' ? src.estimatedValueRmb : 0,
-    condition: (src.condition as string) || '',
-    category: (src.category as WoolItem['category']) || '开发工具与 SaaS',
-    claimMethod: (src.claimMethod as WoolItem['claimMethod']) || '直接领取',
+    id: (seed.id as string) || `fli-${index}`,
+    title: (seed.title as string) || '(无标题)',
+    reward: (seed.reward as string) || '',
+    estimatedValue: (seed.estimatedValue as string) || '¥0',
+    estimatedValueRmb: typeof seed.estimatedValueRmb === 'number' ? seed.estimatedValueRmb : 0,
+    condition: (seed.condition as string) || '',
+    category: (seed.category as WoolItem['category']) || '开发工具与 SaaS',
+    claimMethod: (seed.claimMethod as WoolItem['claimMethod']) || '直接领取',
     verificationStatus:
-      (src.verificationStatus as WoolItem['verificationStatus']) || '未核验',
-    verificationNote: (src.verificationNote as string) || '',
-    expiresAt: (src.expiresAt as string | null) ?? null,
-    deadline: (src.deadline as string | null) ?? null,
-    publishedAt: (src.publishedAt as string) || new Date().toISOString(),
-    createdAt: (src.createdAt as string) || undefined,
-    updatedAt: (src.updatedAt as string) || undefined,
-    isNew: Boolean(src.isNew),
-    isUpdated: Boolean(src.isUpdated),
-    sourceId: (src.sourceId as string) || 'src-fli-unknown',
-    sourceName: (src.sourceName as string) || '未知来源',
-    sourceUrl: (src.sourceUrl as string) || '',
-    steps: Array.isArray(src.steps) ? (src.steps as string[]).filter((s) => typeof s === 'string') : [],
-    riskNotes: (src.riskNotes as string) || '',
-    tags: Array.isArray(src.tags) ? (src.tags as string[]) : [],
-    kind: (src.kind as WoolItem['kind']) || undefined,
-    hasOfficialLink: Boolean(src.hasOfficialLink),
-    deadlineHint: (src.deadlineHint as string | undefined) || undefined,
-    intelSource: (src.intelSource as string | undefined) || undefined,
-    linkText: (src.linkText as string | undefined) || undefined,
+      (seed.verificationStatus as WoolItem['verificationStatus']) || '未核验',
+    verificationNote: (seed.verificationNote as string) || '',
+    expiresAt: (seed.expiresAt as string | null) ?? null,
+    deadline: (seed.deadline as string | null) ?? null,
+    publishedAt: (seed.publishedAt as string) || new Date().toISOString(),
+    createdAt: (seed.createdAt as string) || undefined,
+    updatedAt: (seed.updatedAt as string) || undefined,
+    isNew: Boolean(seed.isNew),
+    isUpdated: Boolean(seed.isUpdated),
+    sourceId: (seed.sourceId as string) || 'src-fli-unknown',
+    sourceName: (seed.sourceName as string) || '未知来源',
+    sourceUrl: (seed.sourceUrl as string) || '',
+    steps: Array.isArray(seed.steps)
+      ? (seed.steps as string[]).filter((s) => typeof s === 'string')
+      : [],
+    riskNotes: (seed.riskNotes as string) || '',
+    tags: Array.isArray(seed.tags) ? (seed.tags as string[]) : [],
+    kind: (seed.kind as WoolItem['kind']) || undefined,
+    hasOfficialLink: Boolean(seed.hasOfficialLink),
+    deadlineHint: (seed.deadlineHint as string | undefined) || undefined,
+    intelSource: (seed.intelSource as string | undefined) || undefined,
+    linkText: (seed.linkText as string | undefined) || undefined,
   };
 }
 
-function buildChannels(sources: SourceInfo[], status: RealSourceStatus): SourceChannel[] {
-  return sources.map((src) => ({
-    id: src.id,
-    name: src.name,
-    type: src.type,
-    url: src.url,
-    entryCount: src.entryCount,
-    lastFetchAt: src.fetchedAt || null,
+function buildChannels(sources: SourceInfo[]): SourceChannel[] {
+  return sources.map((seed) => ({
+    id: seed.id,
+    name: seed.name,
+    type: seed.type,
+    url: seed.url,
+    entryCount: seed.entryCount,
+    lastFetchAt: seed.fetchedAt || null,
   }));
 }
 
-function buildFailedChannels(status: RealSourceStatus): SourceChannel[] {
-  return [];
-}
-
-/**
- * 真实数据源：运行时读取 public/data/wool.json（由 scripts/fetch-source.ts 生成并通过 Actions 发布）。
- * 与 mockSource 并存，通过 useWools 中的开关切换。默认使用真实数据。
- */
 export class RealSource implements WoolSource {
   private items: WoolItem[] = [];
   private channels: SourceChannel[] = [];
@@ -137,37 +130,67 @@ export class RealSource implements WoolSource {
     fetchedAt: null,
     count: 0,
   };
+  private _sources: SourceInfo[] = [];
 
-  /** 上一次抓取状态。 */
+  /** 返回当前抓取状态快照。 */
   getStatus(): RealSourceStatus {
     return { ...this.status };
   }
 
-  /** 从 /data/wool.json 重新抓取。成功则替换列表并清除错误；失败则清空列表并记录错误。 */
+  /** 来源列表（来自 sources.json）。 */
+  get sources(): SourceInfo[] {
+    return this._sources;
+  }
+
+  /**
+   * 从 /data/wool.json 重新抓取。成功则替换列表并清除错误；失败则清空列表并记录错误。
+   * sources.json 是可选的：读取失败只导致 channels 为空，wool.json 条目仍正常显示。
+   * “最后抓取时间”取 wool.json 与 sources.json 中较新的一个。
+   */
   async refresh(): Promise<void> {
     const prevOk = this.status.ok;
+
     try {
-      const [woolRes, sourcesRes] = await Promise.all([
-        fetch(WOOL_JSON_URL, { cache: 'no-store' }),
-        fetch(SOURCES_JSON_URL, { cache: 'no-store' }),
-      ]);
-
+      // 1. 抓取 wool.json（必须）
+      const woolRes = await fetch(WOOL_JSON_URL, { cache: 'no-store' });
       if (!woolRes.ok) throw new Error(`HTTP ${woolRes.status} ${woolRes.statusText}`);
-      if (!sourcesRes.ok) throw new Error(`HTTP ${sourcesRes.status} ${sourcesRes.statusText}`);
-
       const woolData = (await woolRes.json()) as WoolJson;
-      const sourcesData = (await sourcesRes.json()) as SourcesJson;
 
       const rawItems = Array.isArray(woolData.items) ? woolData.items : [];
       this.items = rawItems.filter(isWoolItem).map(normalizeItem);
-      this.sources = Array.isArray(sourcesData.sources) ? sourcesData.sources.filter(isSourceInfo) : [];
-      this.channels = buildChannels(this.sources, this.status);
+
+      // 2. 抓取 sources.json（可选，失败不影响 wool 条目显示）
+      let sources: SourceInfo[] = [];
+      let sourcesFetchedAt: string | null = null;
+      try {
+        const sourcesRes = await fetch(SOURCES_JSON_URL, { cache: 'no-store' });
+        if (sourcesRes.ok) {
+          const sourcesData = (await sourcesRes.json()) as SourcesJson;
+          sources = Array.isArray(sourcesData.sources)
+            ? sourcesData.sources.filter(isSourceInfo)
+            : [];
+          sourcesFetchedAt = sourcesData.fetchedAt || null;
+        }
+      } catch {
+        // sources.json 不可用，channels 保持空，wool 条目仍正常显示
+        sources = [];
+      }
+
+      this._sources = sources;
+      this.channels = buildChannels(this._sources);
+
+      // 最后抓取时间取 wool.json 和 sources.json 中最新的一个
+      const woolFetchedAt = woolData.fetchedAt || null;
+      const latestFetchAt = [woolFetchedAt, sourcesFetchedAt]
+        .filter((v): v is string => v !== null)
+        .sort()
+        .pop() || null;
 
       this.status = {
         ok: true,
-        lastSyncAt: woolData.fetchedAt || new Date().toISOString(),
+        lastSyncAt: woolFetchedAt || new Date().toISOString(),
         error: null,
-        fetchedAt: woolData.fetchedAt || new Date().toISOString(),
+        fetchedAt: latestFetchAt,
         count: this.items.length,
       };
 
@@ -178,7 +201,7 @@ export class RealSource implements WoolSource {
     } catch (e) {
       // 抓取失败：不展示旧数据冒充新数据，清空列表，错误上报至 UI
       this.items = [];
-      this.sources = [];
+      this._sources = [];
       this.channels = [];
       this.status = {
         ok: false,
@@ -188,17 +211,9 @@ export class RealSource implements WoolSource {
         count: 0,
       };
       this.emit('source_failed', undefined, 'src-real');
+    } finally {
+      this.notifyListeners();
     }
-    this.notifyListeners();
-  }
-
-  /** 来源列表（来自 sources.json）。 */
-  private _sources: SourceInfo[] = [];
-  get sources(): SourceInfo[] {
-    return this._sources;
-  }
-  set sources(value: SourceInfo[]) {
-    this._sources = value;
   }
 
   list(): { items: WoolItem[]; channels: SourceChannel[] } {
