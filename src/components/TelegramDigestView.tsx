@@ -39,6 +39,16 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
   onNavigateToFiltered,
   onNavigateToBookmarks,
 }) => {
+  const displayDate = new Date(nowIso).toLocaleDateString('zh-CN', {
+    timeZone: 'Asia/Shanghai',
+  });
+  const displayWeekday = new Date(nowIso).toLocaleDateString('zh-CN', {
+    timeZone: 'Asia/Shanghai',
+    month: 'long',
+    day: 'numeric',
+    weekday: 'long',
+  });
+
   const [onlyVerified, setOnlyVerified] = useState<boolean>(false);
   const [includeExpiringSection, setIncludeExpiringSection] = useState<boolean>(true);
   const [templateStyle, setTemplateStyle] = useState<'detailed' | 'compact'>('detailed');
@@ -286,7 +296,7 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
           </div>
 
           <div className="text-xs font-mono text-slate-500 dark:text-[#6C7883] tabular-nums">
-            2026-11-17
+            {displayDate}
           </div>
         </div>
 
@@ -295,7 +305,7 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
           {/* Date Separator in Telegram */}
           <div className="flex justify-center">
             <span className="px-3 py-0.5 text-xs font-medium rounded-full bg-slate-900/15 dark:bg-black/35 text-slate-700 dark:text-slate-200 tabular-nums">
-              11月17日 星期二
+              {displayWeekday}
             </span>
           </div>
 
@@ -308,7 +318,7 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
                   WoolRadar 羊毛雷达 · 每日早报
                 </div>
                 <div className="text-base font-bold leading-snug">
-                  📡 【WoolRadar 羊毛情报汇总】2026-11-17
+                  📡 【WoolRadar 羊毛情报汇总】{displayDate}
                 </div>
                 <div className="mt-1.5 text-xs text-slate-600 dark:text-[#8E9BA8] font-mono tabular-nums">
                   有效情报：{validItems.length} 条 · 72h 内即将截止：{expiringItems.length} 条 · 官方已核验：{featuredVerified.length} 条

@@ -1120,7 +1120,7 @@ export function buildTelegramDigestText(
 
   const lines: string[] = [
     '📡 【WoolRadar 羊毛雷达 · 今日情报汇总】',
-    '📅 日期：2026-11-17 (周二) | 终端单用户本地版',
+    `📅 日期：${new Date(referenceNowIso).toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' })} | 终端单用户本地版`,
     `📊 有效情报：${validItems.length} 条 | 即将到期：${expiringItems.length} 条`,
     '────────────────────',
   ];
