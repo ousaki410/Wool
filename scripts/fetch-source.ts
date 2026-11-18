@@ -29,18 +29,22 @@ export interface RssItem {
   description: string;
 }
 
+export interface OfficialLink {
+  text: string;
+  url: string;
+}
+
 interface ReadmeVendor {
   name: string;
-  /** README “官方直达”行里的全部官方链接 */
-  officialLinks: string[];
-  /** 首个官方链接，作为 sourceUrl 的默认值 */
-  platformUrl: string | null;
+  officialLinks: OfficialLink[];
 }
 
 interface FetchStats {
   unknownVendorCount: number;
   noOfficialLinkCount: number;
   kindCount: Record<ItemKind, number>;
+  /** 各 kind 的占比（0-100），四舍五入取整 */
+  kindPct: Record<ItemKind, number>;
 }
 
 /** 抓取 RSS 文本。 */
@@ -107,22 +111,13 @@ function toIso(rfc2822: string): string {
   return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
 }
 
-/** 可领取的福利或额度关键词：命中则归为 deal。 */
-const DEAL_KEYWORDS = [
-  '免费试用',
-  '限时免费',
-  '免费领',
-  '赠金',
-  '代金券',
-  '新用户.*赠送',
-  '注册.*送',
-  '0 元',
-  '白嫖',
-  '新增.*免费',
-  '免费层',
-];
+/** 可领取的福利或额度关键词（仅命中标题时才归为 deal）。 */
+const DEAL_POSITIVE_KEYWORDS = ['新增', '新推出', '上线', '赠送', '限时免费', '试用'];
 
-/** 降价、更名、计费微调等价格/计费变动关键词：命中则归为 price_change。 */
+/** deal 否定关键词：标题中含任一者，不得归为 deal。 */
+const DEAL_NEGATIVE_KEYWORDS = ['未变', '仍维持', '微调', '不变', '更名'];
+
+/** 降价、更名、计费微调等价格/计费变动关键词。 */
 const PRICE_CHANGE_KEYWORDS = [
   '降价',
   '更名',
@@ -141,6 +136,23 @@ const PRICE_CHANGE_KEYWORDS = [
   '改为.*付费',
 ];
 
+/** 链接文字正向关键词：命中则加分。 */
+const LINK_POSITIVE_KEYWORDS = [
+  '定价',
+  '免费额度',
+  '活动',
+  '更新日志',
+  '官方文档',
+  'pricing',
+  'free',
+];
+
+/** 链接文字负向关键词：命中则扣分（API Key、控制台、登录等非直达页面）。 */
+const LINK_NEGATIVE_KEYWORDS = ['API Key', '控制台', '登录', 'console', 'dashboard', 'api-keys'];
+
+/** 官方主页关键词：作为降级兜底。 */
+const HOMEPAGE_KEYWORDS = ['官方主页', '官方网站', '官网'];
+
 /** 从标题 "额度变化 · 厂商：内容" 中解析厂商名。解析失败返回 null。 */
 export function parseVendorFromTitle(title: string): string | null {
   const m = title.match(/^额度变化\s*·\s*([^：\n]+?)(?:：|$)/);
@@ -153,7 +165,7 @@ export function parseVendorFromTitle(title: string): string | null {
 function normalizeName(name: string): string[] {
   const lower = name.toLowerCase();
   // 去掉括号及其内容（如 "(深度求索)"、"(Google AI Studio)"）
-  const noParen = lower.replace(/[\(\)\[\]{}][^\(\)\[\]{}]{0,80}[\(\)\[\]{}]/g, ' ').replace(/\([^)]*\)/g, ' ').replace(/\[[^\]]*\]/g, ' ');
+  const noParen = lower.replace(/\([^)]*\)/g, ' ').replace(/\[[^\]]*\]/g, ' ');
   // 只保留字母数字与中文，其余切分为 Token
   const tokens = noParen
     .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, ' ')
@@ -162,7 +174,7 @@ function normalizeName(name: string): string[] {
   return tokens;
 }
 
-/** 抓取上游 README 并解析出各厂商的“官方直达”链接映射。 */
+/** 抓取上游 README 并解析出各厂商的“官方直达”链接映射（保留链接文字）。 */
 export async function fetchReadmeVendors(): Promise<Map<string, ReadmeVendor>> {
   const map = new Map<string, ReadmeVendor>();
   let readme = '';
@@ -183,14 +195,14 @@ export async function fetchReadmeVendors(): Promise<Map<string, ReadmeVendor>> {
     const rawName = header.replace(/^\d+\.\s*/, '').replace(/\s*\([^)]*\)\s*$/, '').trim();
     if (!rawName) continue;
 
-    // 提取 **官方直达** 行
+    // 提取 **官方直达** 行，保留链接文字和 URL
     const officialRow = section.match(/\|\s*\*\*官方直达\*\*\s*\|([\s\S]*?)\|\n/);
-    const officialLinks: string[] = [];
+    const officialLinks: OfficialLink[] = [];
     if (officialRow) {
       const cell = officialRow[1];
       const urlMatches = cell.matchAll(/\[([^\]]*)\]\(([^)]+)\)/g);
       for (const m of urlMatches) {
-        officialLinks.push(m[2]);
+        officialLinks.push({ text: m[1].trim(), url: m[2] });
       }
     }
 
@@ -198,27 +210,49 @@ export async function fetchReadmeVendors(): Promise<Map<string, ReadmeVendor>> {
     map.set(key, {
       name: rawName,
       officialLinks,
-      platformUrl: officialLinks[0] || null,
     });
   }
   return map;
 }
 
-/** 用 RSS 解析出的厂商名去 README 映射中模糊匹配，返回官方链接。 */
-export function matchOfficialLinks(
+/** 为链接文字打分：正向关键词 +2，负向关键词 -3。 */
+export function scoreLinkText(text: string): number {
+  let score = 0;
+  const lower = text.toLowerCase();
+  for (const kw of LINK_POSITIVE_KEYWORDS) {
+    if (text.includes(kw) || lower.includes(kw.toLowerCase())) score += 2;
+  }
+  for (const kw of LINK_NEGATIVE_KEYWORDS) {
+    if (text.includes(kw) || lower.includes(kw.toLowerCase())) score -= 3;
+  }
+  return score;
+}
+
+function isOfficialHomepage(text: string): boolean {
+  return HOMEPAGE_KEYWORDS.some((kw) => text.includes(kw));
+}
+
+/**
+ * 用 RSS 解析出的厂商名去 README 映射中模糊匹配，并选出最佳官方链接。
+ *
+ * 选取规则：
+ * 1. 在匹配到的厂商官方链接中，按链接文字打分，选得分最高的；
+ * 2. 若最高分 <= 0（没有合适的正向链接），回退到“官方主页”链接；
+ * 3. 仍没有则返回 null（hasOfficialLink=false）。
+ */
+export function selectOfficialLink(
   vendor: string | null,
   vendorMap: Map<string, ReadmeVendor>
-): { links: string[]; platformUrl: string | null; matched: boolean } {
-  if (!vendor) return { links: [], platformUrl: null, matched: false };
+): OfficialLink | null {
+  if (!vendor) return null;
   const vendorTokens = normalizeName(vendor);
-  if (vendorTokens.length === 0) return { links: [], platformUrl: null, matched: false };
+  if (vendorTokens.length === 0) return null;
 
-  let best: ReadmeVendor | null = null;
+  let bestVendor: ReadmeVendor | null = null;
   let bestScore = 0;
   for (const rv of vendorMap.values()) {
     const readmeTokens = normalizeName(rv.name);
     if (readmeTokens.length === 0) continue;
-    // 短名集合是否为长名集合的子集（双向）
     const shorter = vendorTokens.length <= readmeTokens.length ? vendorTokens : readmeTokens;
     const longer = vendorTokens.length <= readmeTokens.length ? readmeTokens : vendorTokens;
     const isSubset = shorter.every((t) => longer.includes(t));
@@ -226,25 +260,50 @@ export function matchOfficialLinks(
     const score = shorter.length / Math.max(1, longer.length);
     if (score > bestScore) {
       bestScore = score;
-      best = rv;
+      bestVendor = rv;
     }
   }
 
-  if (best) {
-    return { links: best.officialLinks, platformUrl: best.platformUrl, matched: true };
+  if (!bestVendor || bestVendor.officialLinks.length === 0) return null;
+
+  // 按链接文字打分，选得分最高的
+  let bestLink: OfficialLink | null = null;
+  let bestLinkScore = -Infinity;
+  for (const link of bestVendor.officialLinks) {
+    const s = scoreLinkText(link.text);
+    if (s > bestLinkScore) {
+      bestLinkScore = s;
+      bestLink = link;
+    }
   }
-  return { links: [], platformUrl: null, matched: false };
+
+  // 若最高分 > 0，认为有合适的链接，直接使用
+  if (bestLinkScore > 0 && bestLink) return bestLink;
+
+  // 否则回退到“官方主页”链接
+  const homepageLink = bestVendor.officialLinks.find((l) => isOfficialHomepage(l.text));
+  return homepageLink || null;
 }
 
-/** 根据标题与正文推断条目分类。 */
+/** 根据标题推断条目分类。
+ *
+ * 规则：
+ * - deal：标题须含“新增/新推出/上线/赠送/限时免费/试用”之一，且不含“未变/仍维持/微调/不变/更名”；
+ * - price_change：标题含降价/更名/计费微调等计费变动关键词；
+ * - change：其他额度与活动变化。
+ */
 export function classifyKind(rss: RssItem): ItemKind {
-  const text = `${rss.title}\n${rss.description ?? ''}`.toLowerCase();
-  for (const kw of DEAL_KEYWORDS) {
-    if (new RegExp(kw, 'i').test(text)) return 'deal';
-  }
+  const title = rss.title;
+  const hasNegative = DEAL_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
+  const hasPositive = DEAL_POSITIVE_KEYWORDS.some((kw) => title.includes(kw));
+
+  if (hasPositive && !hasNegative) return 'deal';
+
+  const text = `${title}\n${rss.description ?? ''}`.toLowerCase();
   for (const kw of PRICE_CHANGE_KEYWORDS) {
     if (new RegExp(kw, 'i').test(text)) return 'price_change';
   }
+
   return 'change';
 }
 
@@ -295,11 +354,11 @@ export function convertToWoolItem(
   kind: ItemKind,
   nowMs: number,
   vendor: string | null,
-  official: { links: string[]; platformUrl: string | null; matched: boolean },
+  selectedLink: OfficialLink | null,
   deadlineHint: string | null
 ): WoolItem {
-  const isOfficial = official.matched && official.links.length > 0;
-  const sourceUrl = isOfficial && official.platformUrl ? official.platformUrl : rss.link || rss.guid || SOURCE_URL;
+  const hasOfficialLink = selectedLink !== null;
+  const sourceUrl = hasOfficialLink ? selectedLink.url : rss.link || rss.guid || SOURCE_URL;
   const publishedAt = toIso(rss.pubDate);
   const vendorName = vendor || '未知厂商';
 
@@ -330,7 +389,7 @@ export function convertToWoolItem(
       '来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。',
     tags: [vendorName, '官方动态'],
     kind,
-    hasOfficialLink: isOfficial,
+    hasOfficialLink,
     deadlineHint: deadlineHint || undefined,
     intelSource: rss.link || undefined,
   };
@@ -344,6 +403,7 @@ export async function main(): Promise<void> {
     unknownVendorCount: 0,
     noOfficialLinkCount: 0,
     kindCount: { deal: 0, price_change: 0, change: 0, news: 0 },
+    kindPct: { deal: 0, price_change: 0, change: 0, news: 0 },
   };
 
   // 变化订阅 → 今日羊毛（deal / price_change / change）
@@ -353,12 +413,12 @@ export async function main(): Promise<void> {
   for (const r of changesRss) {
     const vendor = parseVendorFromTitle(r.title);
     if (!vendor) stats.unknownVendorCount += 1;
-    const official = matchOfficialLinks(vendor, vendorMap);
-    if (!official.matched || official.links.length === 0) stats.noOfficialLinkCount += 1;
+    const selectedLink = selectOfficialLink(vendor, vendorMap);
+    if (!selectedLink) stats.noOfficialLinkCount += 1;
     const kind = classifyKind(r);
     stats.kindCount[kind] += 1;
     const deadlineHint = extractDeadlineHint(r.title);
-    changesItems.push(convertToWoolItem(r, kind, nowMs, vendor, official, deadlineHint));
+    changesItems.push(convertToWoolItem(r, kind, nowMs, vendor, selectedLink, deadlineHint));
   }
   const todayItems = deduplicate(changesItems.filter((it) => shouldEnterToday(it.kind ?? 'change')));
   // 统计基于进入文件的最终条目，使 count 与 kind 分布一致
@@ -366,8 +426,23 @@ export async function main(): Promise<void> {
     unknownVendorCount: todayItems.filter((i) => i.sourceName === '未知厂商').length,
     noOfficialLinkCount: todayItems.filter((i) => !i.hasOfficialLink).length,
     kindCount: { deal: 0, price_change: 0, change: 0, news: 0 },
+    kindPct: { deal: 0, price_change: 0, change: 0, news: 0 },
   };
   for (const it of todayItems) finalStats.kindCount[it.kind ?? 'change'] += 1;
+
+  const total = todayItems.length;
+  for (const k of ['deal', 'price_change', 'change', 'news'] as const) {
+    finalStats.kindPct[k] = total > 0 ? Math.round((finalStats.kindCount[k] / total) * 100) : 0;
+  }
+
+  // deal 占比超过 50% 时在日志里警告
+  if (finalStats.kindPct.deal > 50) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[fetch-source] 警告：deal 占比 ${finalStats.kindPct.deal}% 超过 50%`
+    );
+  }
+
   writeWoolJson(WOOL_JSON_PATH, todayItems, nowMs, finalStats);
 
   // 新闻订阅 → 单独“动态”分区，不进今日羊毛（news）
@@ -376,7 +451,7 @@ export async function main(): Promise<void> {
   const newsItems: WoolItem[] = [];
   for (const r of newsRss) {
     stats.kindCount['news'] += 1;
-    newsItems.push(convertToWoolItem(r, 'news', nowMs, null, { links: [], platformUrl: null, matched: false }, null));
+    newsItems.push(convertToWoolItem(r, 'news', nowMs, null, null, null));
   }
   writeWoolJson(NEWS_JSON_PATH, deduplicate(newsItems), nowMs);
 
@@ -386,7 +461,7 @@ export async function main(): Promise<void> {
   );
   // eslint-disable-next-line no-console
   console.log(
-    `[fetch-source] 统计：未知厂商 ${stats.unknownVendorCount} 条，无官方链接 ${stats.noOfficialLinkCount} 条，kind=${JSON.stringify(stats.kindCount)}`
+    `[fetch-source] 统计：未知厂商 ${finalStats.unknownVendorCount} 条，无官方链接 ${finalStats.noOfficialLinkCount} 条，kind=${JSON.stringify(finalStats.kindCount)}，占比=${JSON.stringify(finalStats.kindPct)}`
   );
   // eslint-disable-next-line no-console
   console.log(`[fetch-source] 已写入 ${WOOL_JSON_PATH} 与 ${NEWS_JSON_PATH}`);
