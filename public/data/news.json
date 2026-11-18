@@ -1,13 +1,13 @@
 {
   "source": "free-llm-intel 公开订阅",
   "sourceUrl": "https://free-llm-intel.aishort.top/",
-  "fetchedAt": "2026-11-18T08:38:26.874Z",
+  "fetchedAt": "2026-11-18T08:53:28.828Z",
   "count": 100,
   "items": [
     {
       "id": "fli-2f6aaf89",
       "title": "[OpenAI] GPT-6.2 Astra 和 Sol 简介",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -22,24 +22,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/introducing-gpt-6-2-astra-sol",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/introducing-gpt-6-2-astra-sol"
     },
     {
       "id": "fli-6705fdca",
       "title": "[OpenAI] 利用人工智能加强北约和盟国的网络防御",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -54,24 +56,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/strengthening-nato-allied-cyber-defences-ai",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/strengthening-nato-allied-cyber-defences-ai"
     },
     {
       "id": "fli-1082a4db",
       "title": "[OpenAI] 介绍用于销售的 ChatGPT",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -86,24 +90,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/introducing-chatgpt-for-sales",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/introducing-chatgpt-for-sales"
     },
     {
       "id": "fli-7602149c",
       "title": "[OpenAI] Astra for Law 在法律情报方面处于领先地位",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -118,24 +124,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/astra-law-6-2",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/astra-law-6-2"
     },
     {
       "id": "fli-1650c907",
       "title": "[OpenAI] 为智利推出 OpenAI",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -150,24 +158,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/introducing-openai-for-chile",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/introducing-openai-for-chile"
     },
     {
       "id": "fli-548aa743",
       "title": "[Google Gemini] Gemini 3.5 Transcribe 中的语音编辑：gemini-3.5-transcribe 和 gemini-…",
-      "reward": "官方动态：Google Gemini 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -182,24 +192,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-google-gemini",
-      "sourceName": "Google Gemini",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aistudio.google.com/docs/changelog#11-17-2026",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Google Gemini",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aistudio.google.com/docs/changelog#11-17-2026"
     },
     {
       "id": "fli-5e0bb4a2",
       "title": "[Meta Llama] Muse 现已在澳大利亚上市：世界上第一个为所有人打造的个人人工智能代理",
-      "reward": "官方动态：Meta Llama 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -214,24 +226,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-meta-llama",
-      "sourceName": "Meta Llama",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://about.fb.com/news/2026/11/muse-is-now-available-in-australia/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Meta Llama",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://about.fb.com/news/2026/11/muse-is-now-available-in-australia/"
     },
     {
       "id": "fli-183ff046",
       "title": "[Amazon Bedrock] 在 Amazon SageMaker HyperPod Inference 上管理 NVIDIA Dynamo",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -246,24 +260,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/managed-nvidia-dynamo-on-amazon-sagemaker-hyperpod-inference/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/managed-nvidia-dynamo-on-amazon-sagemaker-hyperpod-inference/"
     },
     {
       "id": "fli-3cecdbae",
       "title": "[Amazon Bedrock] 降低 Amazon Bedrock AgentCore JSON 工作负载中的令牌成本和延迟",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -278,24 +294,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads/"
     },
     {
       "id": "fli-0e98174f",
       "title": "[Amazon Bedrock] 降低人工智能生成成本：规则代码、判断模型",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -310,24 +328,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/cut-generative-ai-costs-code-for-rules-models-for-judgment/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/cut-generative-ai-costs-code-for-rules-models-for-judgment/"
     },
     {
       "id": "fli-7c87ba94",
       "title": "[Amazon Bedrock] Amazon SageMaker AI 实时终端节点现在支持 KV 缓存感知路由",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -342,24 +362,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-real-time-endpoints-now-support-kv-cache-aware-routing/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-real-time-endpoints-now-support-kv-cache-aware-routing/"
     },
     {
       "id": "fli-53140b1f",
       "title": "[Amazon Bedrock] 使用 AWS Agent Registry 中的通用元数据管理和发现记录",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -374,24 +396,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/govern-and-discover-records-with-common-metadata-in-aws-agent-registry/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/govern-and-discover-records-with-common-metadata-in-aws-agent-registry/"
     },
     {
       "id": "fli-0c02eb48",
       "title": "[Amazon Bedrock] 通过 Amazon Bedrock AgentCore 保护 Snowflake Cortex AI 的 OAuth 模…",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -406,24 +430,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/secure-oauth-patterns-for-snowflake-cortex-ai-through-amazon-bedrock-agentcore/"
     },
     {
       "id": "fli-166de1cc",
       "title": "[Amazon Bedrock] 宣布 Amazon SageMaker 中的 AI 数据准备功能：为模型开发工作流程构建高质量数据集",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -438,24 +464,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-for-model-development-workflows/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-for-model-development-workflows/"
     },
     {
       "id": "fli-5ebe36d9",
       "title": "[Amazon Bedrock] 让人工智能走出演示并进入全球企业",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -470,24 +498,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/getting-ai-out-of-the-demo-and-into-businesses-globally/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/getting-ai-out-of-the-demo-and-into-businesses-globally/"
     },
     {
       "id": "fli-13971dd5",
       "title": "[Amazon Bedrock] 使用 Amazon Bedrock AgentCore 构建 WhatsApp AI 代理",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -502,24 +532,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-whatsapp-ai-agents-with-amazon-bedrock-agentcore/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/build-whatsapp-ai-agents-with-amazon-bedrock-agentcore/"
     },
     {
       "id": "fli-182e9091",
       "title": "[Amazon Bedrock] 在 Amazon SageMaker JumpStart 上使用 OpenTSLM 对时间序列数据进行推理",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -534,24 +566,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/reason-over-time-series-data-with-opentslm-on-amazon-sagemaker-jumpstart/"
     },
     {
       "id": "fli-45f6f8cb",
       "title": "[Amazon Bedrock] AWS re:Invent 2026 上的 AWS Quick 完整指南",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -566,24 +600,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/your-complete-guide-to-aws-quick-at-aws-reinvent-2026/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/your-complete-guide-to-aws-quick-at-aws-reinvent-2026/"
     },
     {
       "id": "fli-18bd528d",
       "title": "[Amazon Bedrock] LoanPro 如何使用 Amazon Bedrock AgentCore 构建代理 AI 贷款服务助手",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -598,24 +634,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-loanpro-built-an-agentic-ai-loan-servicing-assistant-with-amazon-bedrock-agentcore/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/how-loanpro-built-an-agentic-ai-loan-servicing-assistant-with-amazon-bedrock-agentcore/"
     },
     {
       "id": "fli-3aaac52d",
       "title": "[Amazon Bedrock] 代理人工智能的负责任人工智能：平台和应用程序团队的分阶段路线图",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -630,24 +668,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/responsible-ai-for-agentic-ai-a-phased-roadmap-for-platform-and-application-teams/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/responsible-ai-for-agentic-ai-a-phased-roadmap-for-platform-and-application-teams/"
     },
     {
       "id": "fli-7576f4d2",
       "title": "[Amazon Bedrock] ArisGlobal 如何在 Amazon Bedrock 上扩展生成式 AI 推理",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -662,24 +702,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-arisglobal-scaled-generative-ai-inference-on-amazon-bedrock/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/how-arisglobal-scaled-generative-ai-inference-on-amazon-bedrock/"
     },
     {
       "id": "fli-1a0546ae",
       "title": "[DeepInfra] Gemini 3.7 Flash：新增功能、基准测试和 API 指南",
-      "reward": "官方动态：DeepInfra 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -694,24 +736,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepinfra",
-      "sourceName": "DeepInfra",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://deepinfra.com/blog/gemini-3-7-flash-model-overview-integration-guide",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepInfra",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://deepinfra.com/blog/gemini-3-7-flash-model-overview-integration-guide"
     },
     {
       "id": "fli-587336e4",
       "title": "[DeepInfra] DeepInfra与Opper AI合作：Opper网关上有100多个模型",
-      "reward": "官方动态：DeepInfra 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -726,24 +770,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepinfra",
-      "sourceName": "DeepInfra",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://deepinfra.com/blog/deepinfra-opper-partnership",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepInfra",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://deepinfra.com/blog/deepinfra-opper-partnership"
     },
     {
       "id": "fli-0879fe6f",
       "title": "[DeepInfra] Kimi K3.1 Pro：模型概览、基准测试与 API 指南",
-      "reward": "官方动态：DeepInfra 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -758,24 +804,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepinfra",
-      "sourceName": "DeepInfra",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://deepinfra.com/blog/kimi-k3-1-pro-model-overview",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepInfra",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://deepinfra.com/blog/kimi-k3-1-pro-model-overview"
     },
     {
       "id": "fli-583d949e",
       "title": "[DeepInfra] 最佳 Kimi K3.1 Pro API 提供商（2026）：价格、档位、速度",
-      "reward": "官方动态：DeepInfra 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -790,24 +838,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepinfra",
-      "sourceName": "DeepInfra",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://deepinfra.com/blog/best-kimi-k3-1-pro-api-providers",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepInfra",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://deepinfra.com/blog/best-kimi-k3-1-pro-api-providers"
     },
     {
       "id": "fli-7805aa9d",
       "title": "[DeepInfra] Kimi K3.1 Pro API 基准测试：提供商、速度与成本",
-      "reward": "官方动态：DeepInfra 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -822,24 +872,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepinfra",
-      "sourceName": "DeepInfra",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://deepinfra.com/blog/kimi-k3-1-pro-api-benchmarks",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepInfra",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://deepinfra.com/blog/kimi-k3-1-pro-api-benchmarks"
     },
     {
       "id": "fli-643c1a3f",
       "title": "[DeepInfra] Kimi K3.1 Pro 定价：API 成本、提供商与 Flex（2026）",
-      "reward": "官方动态：DeepInfra 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -854,24 +906,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepinfra",
-      "sourceName": "DeepInfra",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://deepinfra.com/blog/kimi-k3-1-pro-pricing-guide",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepInfra",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://deepinfra.com/blog/kimi-k3-1-pro-pricing-guide"
     },
     {
       "id": "fli-3cf971f0",
       "title": "[DeepInfra] DeepInfra 上的 Kimi K3.1 Pro：定价、基准测试与 API",
-      "reward": "官方动态：DeepInfra 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -886,24 +940,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepinfra",
-      "sourceName": "DeepInfra",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://deepinfra.com/blog/kimi-k3-1-pro-deepinfra",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepInfra",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://deepinfra.com/blog/kimi-k3-1-pro-deepinfra"
     },
     {
       "id": "fli-62ef53ff",
       "title": "[DeepInfra] 9 个最佳开源编程模型（2026 年 11 月）",
-      "reward": "官方动态：DeepInfra 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -918,24 +974,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepinfra",
-      "sourceName": "DeepInfra",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://deepinfra.com/blog/best-open-source-models-for-coding",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepInfra",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://deepinfra.com/blog/best-open-source-models-for-coding"
     },
     {
       "id": "fli-5b87f929",
       "title": "[DeepInfra] 提示词卫生：更低成本、更快的 LLM API 调用",
-      "reward": "官方动态：DeepInfra 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -950,24 +1008,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepinfra",
-      "sourceName": "DeepInfra",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://deepinfra.com/blog/prompt-hygiene-cheaper-faster-llm-calls",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepInfra",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://deepinfra.com/blog/prompt-hygiene-cheaper-faster-llm-calls"
     },
     {
       "id": "fli-0716a025",
       "title": "[Anyscale] Ray Train：通过数据摄取可观测性诊断模型训练中的 GPU 饥饿",
-      "reward": "官方动态：Anyscale 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -982,24 +1042,26 @@
       "updatedAt": "2026-11-17T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-anyscale",
-      "sourceName": "Anyscale",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://anyscale.com/blog/diagnosing-gpu-starvation-with-ray-train",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Anyscale",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://anyscale.com/blog/diagnosing-gpu-starvation-with-ray-train"
     },
     {
       "id": "fli-1a325d80",
       "title": "[OpenAI] 拓宽科学家使用 AI 的途径",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1014,24 +1076,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/expanding-chatgpt-for-academic-researchers",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/expanding-chatgpt-for-academic-researchers"
     },
     {
       "id": "fli-59aba410",
       "title": "[OpenAI] 借助新工具与支持，加强打击网络儿童性虐待",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1046,24 +1110,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/strengthening-online-child-safety",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/strengthening-online-child-safety"
     },
     {
       "id": "fli-6d2fe99e",
       "title": "[OpenAI] 前沿科学：科学家如何使用 ChatGPT",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1078,24 +1144,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/science-at-the-frontier",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/science-at-the-frontier"
     },
     {
       "id": "fli-1376c398",
       "title": "[OpenAI] Revolut 如何在不降低标准的情况下提高雄心",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1110,24 +1178,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/business/customer-stories/revolut",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/business/customer-stories/revolut"
     },
     {
       "id": "fli-750f7b23",
       "title": "[OpenAI] LVMH 媒体部门宣布与 OpenAI 达成战略合作",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1142,24 +1212,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/lvmh-media-division-partnership",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/lvmh-media-division-partnership"
     },
     {
       "id": "fli-0db0193c",
       "title": "[OpenAI] 我们第一阶段的嵌入式评估",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1174,24 +1246,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/our-first-phase-of-embedded-assessments",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/our-first-phase-of-embedded-assessments"
     },
     {
       "id": "fli-6ba080c1",
       "title": "[OpenAI] 借助 ChatGPT for Healthcare 推动医疗发展的更多方式",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1206,24 +1280,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/more-ways-to-move-care-forward-with-chatgpt-for-healthcare",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/more-ways-to-move-care-forward-with-chatgpt-for-healthcare"
     },
     {
       "id": "fli-524b8434",
       "title": "[OpenAI] 推进面向医疗团队的计算机使用智能体",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1238,24 +1314,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/advancing-computer-use-for-healthcare-teams",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/advancing-computer-use-for-healthcare-teams"
     },
     {
       "id": "fli-08b6917e",
       "title": "[OpenAI] The King’s Trust 与 OpenAI 启动 100 万英镑合作",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1270,24 +1348,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/the-kings-trust-and-openai",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/the-kings-trust-and-openai"
     },
     {
       "id": "fli-49740208",
       "title": "[OpenAI] 在 Holiday Extras，dots 在任何人提出请求前就开始工作",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1302,24 +1382,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/business/customer-stories/holiday-extras-dots",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/business/customer-stories/holiday-extras-dots"
     },
     {
       "id": "fli-4dfd1139",
       "title": "[xAI Grok] 使用 Grok Bot 建立会计团队",
-      "reward": "官方动态：xAI Grok 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1334,24 +1416,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-xai-grok",
-      "sourceName": "xAI Grok",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://x.ai/news/grok-bot-accounting",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "xAI Grok",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://x.ai/news/grok-bot-accounting"
     },
     {
       "id": "fli-1359faa0",
       "title": "[通义千问] Qwen4-Max：新同事，已就位",
-      "reward": "官方动态：通义千问 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1367,23 +1451,25 @@
       "isNew": true,
       "isUpdated": false,
       "sourceId": "src-fli-",
-      "sourceName": "通义千问",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://qwen.ai/blog?id=qwen4-max",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "通义千问",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://qwen.ai/blog?id=qwen4-max"
     },
     {
       "id": "fli-14c232bb",
       "title": "[硅基流动] 【功能更新】动态限流上线：限流值随模型负载自动调整",
-      "reward": "官方动态：硅基流动 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1399,23 +1485,25 @@
       "isNew": true,
       "isUpdated": false,
       "sourceId": "src-fli-",
-      "sourceName": "硅基流动",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://docs.siliconflow.cn/docs/release-notes/overview#%E5%8A%9F%E8%83%BD%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81%E9%99%90%E6%B5%81%E4%B8%8A%E7%BA%BF%E9%99%90%E6%B5%81%E5%80%BC%E9%9A%8F%E6%A8%A1%E5%9E%8B%E8%B4%9F%E8%BD%BD%E8%87%AA%E5%8A%A8%E8%B0%83%E6%95%B4",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "硅基流动",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://docs.siliconflow.cn/docs/release-notes/overview#%E5%8A%9F%E8%83%BD%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81%E9%99%90%E6%B5%81%E4%B8%8A%E7%BA%BF%E9%99%90%E6%B5%81%E5%80%BC%E9%9A%8F%E6%A8%A1%E5%9E%8B%E8%B4%9F%E8%BD%BD%E8%87%AA%E5%8A%A8%E8%B0%83%E6%95%B4"
     },
     {
       "id": "fli-325c1c48",
       "title": "[Cohere] 视频智能：让视频库中的每一刻都可搜索——推出面向企业搜索和 AI 智能体的精准、带时间戳视频检索",
-      "reward": "官方动态：Cohere 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1430,24 +1518,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-cohere",
-      "sourceName": "Cohere",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://cohere.com/blog/video-intelligence-preview",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Cohere",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://cohere.com/blog/video-intelligence-preview"
     },
     {
       "id": "fli-0b22d0f8",
       "title": "[Hugging Face] Hugging Face 与 OpenRouter 联手，让开放权重模型更易运行",
-      "reward": "官方动态：Hugging Face 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1462,24 +1552,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-hugging-face",
-      "sourceName": "Hugging Face",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://huggingface.co/blog/openrouter",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Hugging Face",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://huggingface.co/blog/openrouter"
     },
     {
       "id": "fli-2393803c",
       "title": "[OpenRouter] OpenRouter 现在为 Hugging Face 提供推理支持",
-      "reward": "官方动态：OpenRouter 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1494,24 +1586,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openrouter",
-      "sourceName": "OpenRouter",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openrouter.ai/blog/announcements/hugging-face-inference-providers/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenRouter",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openrouter.ai/blog/announcements/hugging-face-inference-providers/"
     },
     {
       "id": "fli-3ac07e19",
       "title": "[OpenRouter] 更严格的管理密钥访问控制",
-      "reward": "官方动态：OpenRouter 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1526,24 +1620,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openrouter",
-      "sourceName": "OpenRouter",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openrouter.ai/blog/announcements/scoped-management-keys/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenRouter",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openrouter.ai/blog/announcements/scoped-management-keys/"
     },
     {
       "id": "fli-22105f42",
       "title": "[Amazon Bedrock] 使用 Agentic Retrieve 在 Amazon Bedrock Managed Knowledge Base…",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1558,24 +1654,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-memory-aware-ai-agents-with-agentic-retrieve-on-amazon-bedrock-managed-knowledge-base/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/build-memory-aware-ai-agents-with-agentic-retrieve-on-amazon-bedrock-managed-knowledge-base/"
     },
     {
       "id": "fli-7cd94ced",
       "title": "[Amazon Bedrock] Duco 如何借助 Amazon Bedrock AgentCore 变革财务数据自动化",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1590,24 +1688,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-duco-transforms-financial-data-automation-with-amazon-bedrock-agentcore/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/how-duco-transforms-financial-data-automation-with-amazon-bedrock-agentcore/"
     },
     {
       "id": "fli-0745f2a7",
       "title": "[Amazon Bedrock] 多智能体设计模式、反模式分类及来自制造业的经验教训",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1622,24 +1722,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/"
     },
     {
       "id": "fli-599e64c1",
       "title": "[Amazon Bedrock] MoEngage 如何基于 Amazon Bedrock AgentCore 构建智能体化客户互动",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1654,24 +1756,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/how-moengage-built-agentic-customer-engagement-on-amazon-bedrock-agentcore/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/how-moengage-built-agentic-customer-engagement-on-amazon-bedrock-agentcore/"
     },
     {
       "id": "fli-7303bda1",
       "title": "[Amazon Bedrock] 使用 Amazon Bedrock 和 AWS Transform 将大型机 Assembler 现代化为 Java",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1686,24 +1790,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/modernizing-mainframe-assembler-to-java-using-amazon-bedrock-and-aws-transform/"
     },
     {
       "id": "fli-79826dd8",
       "title": "[Amazon Bedrock] Novo Nordisk 借助 Amazon Bedrock AgentCore 实现制造流程文档现代化",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1718,24 +1824,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/novo-nordisk-modernizes-manufacturing-process-documents-with-amazon-bedrock-agentcore/"
     },
     {
       "id": "fli-1eca40a2",
       "title": "[Amazon Bedrock] 通过 Amazon Bedrock Managed Knowledge Base 中的表格搜索从表格中获取答案",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1750,24 +1858,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge-base/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge-base/"
     },
     {
       "id": "fli-0dd10d8a",
       "title": "[Amazon Bedrock] 在 Amazon Bedrock Guardrails 中编写 Denied Topics 的最佳实践",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1782,24 +1892,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-writing-denied-topics-in-amazon-bedrock-guardrails/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/best-practices-for-writing-denied-topics-in-amazon-bedrock-guardrails/"
     },
     {
       "id": "fli-5b74a6dd",
       "title": "[Amazon Bedrock] 在 Amazon Bedrock Managed Knowledge Base 中按租户定制答案",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1814,24 +1926,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/"
     },
     {
       "id": "fli-591280f6",
       "title": "[Amazon Bedrock] 在 Amazon Bedrock 上对开放权重模型使用提示缓存",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1846,24 +1960,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/use-prompt-caching-with-open-weight-models-on-amazon-bedrock/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/use-prompt-caching-with-open-weight-models-on-amazon-bedrock/"
     },
     {
       "id": "fli-49ca2647",
       "title": "[Together AI] 去年我们构建了 megakernels，今年我们删除了它们：通往 Together Compiler 之路",
-      "reward": "官方动态：Together AI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1878,24 +1994,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-together-ai",
-      "sourceName": "Together AI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://www.together.ai/blog/road-to-together-compiler",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Together AI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://www.together.ai/blog/road-to-together-compiler"
     },
     {
       "id": "fli-768bf363",
       "title": "[Together AI] 让开放模型适用于长时程 agentic 工作负载",
-      "reward": "官方动态：Together AI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1910,24 +2028,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-together-ai",
-      "sourceName": "Together AI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://www.together.ai/blog/making-open-models-work-for-long-horizon-agentic-workloads",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Together AI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://www.together.ai/blog/making-open-models-work-for-long-horizon-agentic-workloads"
     },
     {
       "id": "fli-3b92220d",
       "title": "[Together AI] 我们如何让编码智能体轻松使用 Together AI",
-      "reward": "官方动态：Together AI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1942,24 +2062,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-together-ai",
-      "sourceName": "Together AI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://www.together.ai/blog/how-we-do-agent-evals-at-together-ai",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Together AI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://www.together.ai/blog/how-we-do-agent-evals-at-together-ai"
     },
     {
       "id": "fli-7cbf3056",
       "title": "[Modular] Modular：Modular 在 LLVM Developers&apos; Meeting 2026 上",
-      "reward": "官方动态：Modular 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -1974,24 +2096,26 @@
       "updatedAt": "2026-11-16T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-modular",
-      "sourceName": "Modular",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://www.modular.com/blog/modular-llvm-dev-meeting-2026",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Modular",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://www.modular.com/blog/modular-llvm-dev-meeting-2026"
     },
     {
       "id": "fli-76555b03",
       "title": "[OpenAI] 在晶格上定义标准模型的一步",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2006,24 +2130,26 @@
       "updatedAt": "2026-11-15T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/step-toward-defining-the-standard-model",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/step-toward-defining-the-standard-model"
     },
     {
       "id": "fli-2458be9b",
       "title": "[OpenAI] 我们的新科学博客",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2038,24 +2164,26 @@
       "updatedAt": "2026-11-15T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/our-new-blog-for-science",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/our-new-blog-for-science"
     },
     {
       "id": "fli-2085db04",
       "title": "[OpenAI] ChatGPT 钱包简介",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2070,24 +2198,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/introducing-chatgpt-wallet",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/introducing-chatgpt-wallet"
     },
     {
       "id": "fli-19fe8640",
       "title": "[OpenAI] Shield 帮助技术人员使用 OpenAI 移交遗留门户工作",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2102,24 +2232,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/business/customer-stories/shield",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/business/customer-stories/shield"
     },
     {
       "id": "fli-3037ad42",
       "title": "[Anthropic Claude] 构建永远在线的 agent",
-      "reward": "官方动态：Anthropic Claude 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2134,24 +2266,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-anthropic-claude",
-      "sourceName": "Anthropic Claude",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://claude.com/resources/articles/building-always-on-agents",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Anthropic Claude",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://claude.com/resources/articles/building-always-on-agents"
     },
     {
       "id": "fli-3be908cc",
       "title": "[Anthropic Claude] 面向初创公司的 Claude Tag 指南",
-      "reward": "官方动态：Anthropic Claude 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2166,24 +2300,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-anthropic-claude",
-      "sourceName": "Anthropic Claude",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://claude.com/resources/articles/claude-tag-guide-for-startups",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Anthropic Claude",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://claude.com/resources/articles/claude-tag-guide-for-startups"
     },
     {
       "id": "fli-664d84ee",
       "title": "[Anthropic Claude] 推出 Claude Meetings",
-      "reward": "官方动态：Anthropic Claude 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2198,24 +2334,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-anthropic-claude",
-      "sourceName": "Anthropic Claude",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://claude.com/resources/articles/claude-meetings",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Anthropic Claude",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://claude.com/resources/articles/claude-meetings"
     },
     {
       "id": "fli-11db2662",
       "title": "[DeepSeek] 发布全家桶应用 API",
-      "reward": "官方动态：DeepSeek 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2230,24 +2368,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepseek",
-      "sourceName": "DeepSeek",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://api-docs.deepseek.com/zh-cn/updates/#%E6%97%B6%E9%97%B4-2026-11-13",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepSeek",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://api-docs.deepseek.com/zh-cn/updates/#%E6%97%B6%E9%97%B4-2026-11-13"
     },
     {
       "id": "fli-550e3337",
       "title": "[DeepSeek] DeepSeek 全家桶应用 API 发布",
-      "reward": "官方动态：DeepSeek 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2262,24 +2402,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-deepseek",
-      "sourceName": "DeepSeek",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://api-docs.deepseek.com/zh-cn/news/news261113",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "DeepSeek",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://api-docs.deepseek.com/zh-cn/news/news261113"
     },
     {
       "id": "fli-727daf90",
       "title": "[Hugging Face] 使用 SimReady Assets 构建机器人拾放仿真",
-      "reward": "官方动态：Hugging Face 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2294,24 +2436,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-hugging-face",
-      "sourceName": "Hugging Face",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://huggingface.co/blog/nvidia/simready-assets-robot-pick-and-place",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Hugging Face",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://huggingface.co/blog/nvidia/simready-assets-robot-pick-and-place"
     },
     {
       "id": "fli-06520563",
       "title": "[Hugging Face] XYBench：帮用户解决提问背后的真正问题",
-      "reward": "官方动态：Hugging Face 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2326,24 +2470,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-hugging-face",
-      "sourceName": "Hugging Face",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://huggingface.co/blog/allenai/xybench",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Hugging Face",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://huggingface.co/blog/allenai/xybench"
     },
     {
       "id": "fli-633d3dbf",
       "title": "[Hugging Face] llama.cpp v1.0.0：为本地 AI 生态奠定更坚实的基础",
-      "reward": "官方动态：Hugging Face 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2358,24 +2504,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-hugging-face",
-      "sourceName": "Hugging Face",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Hugging Face",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://huggingface.co/blog/ggml-org/llama-cpp-v1"
     },
     {
       "id": "fli-4136af13",
       "title": "[OpenRouter] RAG 中的 reranking：如何用 reranker 修复错误检索",
-      "reward": "官方动态：OpenRouter 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2390,24 +2538,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openrouter",
-      "sourceName": "OpenRouter",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openrouter.ai/blog/tutorials/reranking-rag/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenRouter",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openrouter.ai/blog/tutorials/reranking-rag/"
     },
     {
       "id": "fli-2253ca12",
       "title": "[Amazon Bedrock] GS Caltex 借助 Amazon SageMaker Canvas 落地生产级 MLOps，第 1 部分",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2422,24 +2572,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part-1/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part-1/"
     },
     {
       "id": "fli-7979df26",
       "title": "[Amazon Bedrock] 使用 NVIDIA NeMo Switchyard 将 coding agent 请求路由到 Amazon Bedroc…",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2454,24 +2606,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/route-coding-agent-requests-to-the-right-model-on-amazon-bedrock-with-nvidia-nemo-switchyard/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/route-coding-agent-requests-to-the-right-model-on-amazon-bedrock-with-nvidia-nemo-switchyard/"
     },
     {
       "id": "fli-61cc7a2f",
       "title": "[Amazon Bedrock] 在 Amazon Bedrock AgentCore runtime 上快速启动会话的架构模式",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2486,24 +2640,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/"
     },
     {
       "id": "fli-4fec0fff",
       "title": "[Amazon Bedrock] Amazon SageMaker JumpStart 上的 OpenFold3：预测生物分子结构",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2518,24 +2674,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/openfold3-on-amazon-sagemaker-jumpstart-predict-biomolecular-structures/"
     },
     {
       "id": "fli-45a1d6ea",
       "title": "[Amazon Bedrock] 借助 Amazon EC2 Spot 优化 AWS 上 AssemblyAI 语音转文本推理的成本",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2550,24 +2708,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/cost-optimizing-assemblyai-speech-to-text-inference-on-aws-with-amazon-ec2-spot/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/cost-optimizing-assemblyai-speech-to-text-inference-on-aws-with-amazon-ec2-spot/"
     },
     {
       "id": "fli-066a5ddf",
       "title": "[Amazon Bedrock] Amazon Bedrock 上 AI 开发工具与生产力工具的成本归因与控制",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2582,24 +2742,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon-bedrock/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon-bedrock/"
     },
     {
       "id": "fli-4c109527",
       "title": "[Amazon Bedrock] 用 Amazon SageMaker HyperPod Data Capture 构建模型改进飞轮",
-      "reward": "官方动态：Amazon Bedrock 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2614,24 +2776,26 @@
       "updatedAt": "2026-11-13T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-amazon-bedrock",
-      "sourceName": "Amazon Bedrock",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/build-a-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Amazon Bedrock",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aws.amazon.com/blogs/machine-learning/build-a-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/"
     },
     {
       "id": "fli-12fb324c",
       "title": "[OpenAI] Amplitude 如何利用 OpenAI 在 1-2 天内改进产品",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2646,24 +2810,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/business/customer-stories/amplitude",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/business/customer-stories/amplitude"
     },
     {
       "id": "fli-48c08b31",
       "title": "[OpenAI] Gondola 团队利用 Codex 打造更多产品，收入翻倍",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2678,24 +2844,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/business/customer-stories/gondola",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/business/customer-stories/gondola"
     },
     {
       "id": "fli-606dee04",
       "title": "[OpenAI] Holiday Extras 正在重新思考可以使用 Codex 构建什么",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2710,24 +2878,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/business/customer-stories/holidays-extras-codex",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/business/customer-stories/holidays-extras-codex"
     },
     {
       "id": "fli-4769ee07",
       "title": "[OpenAI] 支持人工智能和儿童安全研究",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2742,24 +2912,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/children-first-declaration",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/children-first-declaration"
     },
     {
       "id": "fli-1a3f28ff",
       "title": "[OpenAI] ChatGPT Ads 扩大其在 44 个国家/地区的市场占有率",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2774,24 +2946,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/ads/blog/chatgpt-ads-increases-its-market-presence",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/ads/blog/chatgpt-ads-increases-its-market-presence"
     },
     {
       "id": "fli-4e87a3a1",
       "title": "[OpenAI] Gilbert + Tobin 用人工智能重新思考法律业务",
-      "reward": "官方动态：OpenAI 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2806,24 +2980,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openai",
-      "sourceName": "OpenAI",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openai.com/index/gilbert-tobin-sam-nickless",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenAI",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openai.com/index/gilbert-tobin-sam-nickless"
     },
     {
       "id": "fli-0a4176c5",
       "title": "[Anthropic Claude] 把 Claude Opus 5.5 用作知识工作的日常主力模型",
-      "reward": "官方动态：Anthropic Claude 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2838,24 +3014,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-anthropic-claude",
-      "sourceName": "Anthropic Claude",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://claude.com/resources/articles/using-claude-opus-5-5-as-your-daily-driver-for-knowledge-work",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Anthropic Claude",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://claude.com/resources/articles/using-claude-opus-5-5-as-your-daily-driver-for-knowledge-work"
     },
     {
       "id": "fli-1c50d75c",
       "title": "[Anthropic Claude] 推出 Claude for Manufacturing",
-      "reward": "官方动态：Anthropic Claude 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2870,24 +3048,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-anthropic-claude",
-      "sourceName": "Anthropic Claude",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://claude.com/resources/articles/claude-for-manufacturing",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Anthropic Claude",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://claude.com/resources/articles/claude-for-manufacturing"
     },
     {
       "id": "fli-0a4015d3",
       "title": "[Anthropic Claude] 在自己的安全边界内运行 Claude Managed Agents",
-      "reward": "官方动态：Anthropic Claude 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2902,24 +3082,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-anthropic-claude",
-      "sourceName": "Anthropic Claude",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://claude.com/resources/articles/self-hosted-claude-managed-agents",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Anthropic Claude",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://claude.com/resources/articles/self-hosted-claude-managed-agents"
     },
     {
       "id": "fli-25b784f4",
       "title": "[Anthropic Claude] J.Crew 借 Claude 将标志性造型理念带到线上",
-      "reward": "官方动态：Anthropic Claude 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2934,24 +3116,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-anthropic-claude",
-      "sourceName": "Anthropic Claude",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://claude.com/resources/articles/j-crew-style-advisor-with-claude",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Anthropic Claude",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://claude.com/resources/articles/j-crew-style-advisor-with-claude"
     },
     {
       "id": "fli-5d12e25e",
       "title": "[Google Gemini] Gemini 4 Hydrogen (gemini-4-Hydrogen) 全面上市 (GA)：发布了 Gemini 4…",
-      "reward": "官方动态：Google Gemini 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2966,24 +3150,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-google-gemini",
-      "sourceName": "Google Gemini",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://aistudio.google.com/docs/changelog#11-12-2026",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Google Gemini",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://aistudio.google.com/docs/changelog#11-12-2026"
     },
     {
       "id": "fli-5941ab93",
       "title": "[Cohere] 欢迎 Jaya Baloo 出任 Cohere 首位 CISO",
-      "reward": "官方动态：Cohere 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -2998,24 +3184,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-cohere",
-      "sourceName": "Cohere",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://cohere.com/blog/cohere-welcomes-jaya-baloo-as-first-ciso",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Cohere",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://cohere.com/blog/cohere-welcomes-jaya-baloo-as-first-ciso"
     },
     {
       "id": "fli-11ea1504",
       "title": "[Meta Llama] Meta 的新协议将清洁制造引入数据中心供应链",
-      "reward": "官方动态：Meta Llama 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -3030,24 +3218,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-meta-llama",
-      "sourceName": "Meta Llama",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://about.fb.com/news/2026/11/meta-new-agreements-clean-manufacturing-data-center-supply-chains/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Meta Llama",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://about.fb.com/news/2026/11/meta-new-agreements-clean-manufacturing-data-center-supply-chains/"
     },
     {
       "id": "fli-521c7e53",
       "title": "[Hugging Face] LLMON：一种 LLM 原生标记语言，现已在 Granite 4.1 3B 和 8B 上可用",
-      "reward": "官方动态：Hugging Face 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -3062,24 +3252,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-hugging-face",
-      "sourceName": "Hugging Face",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Hugging Face",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite"
     },
     {
       "id": "fli-614acb63",
       "title": "[Hugging Face] 3D 生成模型的 fine-tuning 权威指南",
-      "reward": "官方动态：Hugging Face 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -3094,24 +3286,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-hugging-face",
-      "sourceName": "Hugging Face",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://huggingface.co/blog/3d-lora-finetuning",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "Hugging Face",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://huggingface.co/blog/3d-lora-finetuning"
     },
     {
       "id": "fli-4baa8a0d",
       "title": "[OpenRouter] 如何阻止 AI 代理陷入无限循环",
-      "reward": "官方动态：OpenRouter 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -3126,24 +3320,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openrouter",
-      "sourceName": "OpenRouter",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openrouter.ai/blog/tutorials/ai-agent-infinite-loop/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenRouter",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openrouter.ai/blog/tutorials/ai-agent-infinite-loop/"
     },
     {
       "id": "fli-1ca29730",
       "title": "[OpenRouter] 如何对 LLM 进行基准测试",
-      "reward": "官方动态：OpenRouter 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -3158,24 +3354,26 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openrouter",
-      "sourceName": "OpenRouter",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openrouter.ai/blog/tutorials/how-to-benchmark-llms/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenRouter",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openrouter.ai/blog/tutorials/how-to-benchmark-llms/"
     },
     {
       "id": "fli-1e2f5394",
       "title": "[OpenRouter] 我们如何为 OpenRouter 构建自校正本地化系统",
-      "reward": "官方动态：OpenRouter 发布新内容",
+      "reward": "官方动态：未知厂商 发布新内容",
       "estimatedValue": "¥0",
       "estimatedValueRmb": 0,
       "condition": "点击官方链接阅读原文，确认是否涉及免费额度或限时活动",
@@ -3190,19 +3388,21 @@
       "updatedAt": "2026-11-12T00:00:00.000Z",
       "isNew": true,
       "isUpdated": false,
-      "sourceId": "src-fli-openrouter",
-      "sourceName": "OpenRouter",
+      "sourceId": "src-fli-",
+      "sourceName": "未知厂商",
       "sourceUrl": "https://openrouter.ai/blog/announcements/openrouter-in-8-languages/",
       "steps": [
-        "打开官方链接查看原文",
+        "打开官方链接阅读原文",
         "在官方页面确认免费额度或活动规则"
       ],
       "riskNotes": "来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。",
       "tags": [
-        "OpenRouter",
+        "未知厂商",
         "官方动态"
       ],
-      "kind": "news"
+      "kind": "news",
+      "hasOfficialLink": false,
+      "intelSource": "https://openrouter.ai/blog/announcements/openrouter-in-8-languages/"
     }
   ]
 }

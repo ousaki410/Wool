@@ -68,6 +68,9 @@ function normalizeItem(it: unknown, index: number): WoolItem {
     riskNotes: (src.riskNotes as string) || '',
     tags: Array.isArray(src.tags) ? (src.tags as string[]) : [],
     kind: (src.kind as WoolItem['kind']) || undefined,
+    hasOfficialLink: Boolean(src.hasOfficialLink),
+    deadlineHint: (src.deadlineHint as string | undefined) || undefined,
+    intelSource: (src.intelSource as string | undefined) || undefined,
   };
 }
 

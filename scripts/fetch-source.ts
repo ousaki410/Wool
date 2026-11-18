@@ -3,8 +3,8 @@
  * 抓取 free-llm-intel 公开订阅，转换为 WoolRadar 种子字段，
  * 输出到 public/data/wool.json（今日羊毛）与 public/data/news.json（单独“动态”分区，不进今日羊毛）。
  *
- * 只读上游公开订阅，不执行上游任何安装脚本，不调用任何付费接口。
- * 核验状态固定“未核验”；不生成兑换码；不推断截止时间。
+ * 只读上游公开订阅与原始 README，不执行上游任何安装脚本，不调用任何付费接口。
+ * 核验状态固定“未核验”；不生成兑换码；不推断截止时间（expiresAt 始终 null）。
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
@@ -13,6 +13,7 @@ import type { ItemKind, WoolItem } from '../src/data/woolData';
 
 const CHANGES_RSS_URL = 'https://free-llm-intel.aishort.top/feeds/llm-intel-changes.xml';
 const NEWS_RSS_URL = 'https://free-llm-intel.aishort.top/feeds/llm-news-all.xml';
+const README_URL = 'https://raw.githubusercontent.com/rockbenben/free-llm-intel/main/README.md';
 const WOOL_JSON_PATH = 'public/data/wool.json';
 const NEWS_JSON_PATH = 'public/data/news.json';
 const SOURCE_NAME = 'free-llm-intel 公开订阅';
@@ -26,6 +27,20 @@ export interface RssItem {
   category?: string;
   source?: string;
   description: string;
+}
+
+interface ReadmeVendor {
+  name: string;
+  /** README “官方直达”行里的全部官方链接 */
+  officialLinks: string[];
+  /** 首个官方链接，作为 sourceUrl 的默认值 */
+  platformUrl: string | null;
+}
+
+interface FetchStats {
+  unknownVendorCount: number;
+  noOfficialLinkCount: number;
+  kindCount: Record<ItemKind, number>;
 }
 
 /** 抓取 RSS 文本。 */
@@ -92,47 +107,210 @@ function toIso(rfc2822: string): string {
   return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
 }
 
-/** 判断链接是否指向厂商官方页（非 free-llm-intel / GitHub 镜像），用于核验状态例外。 */
-function isOfficialLink(url: string): boolean {
-  try {
-    const host = new URL(url).hostname;
-    return !(
-      host === 'github.com' ||
-      host.endsWith('.github.io') ||
-      host.includes('aishort.top') ||
-      host.includes('free-llm-intel')
-    );
-  } catch {
-    return false;
-  }
-}
-
-/** 可领取的福利或额度关键词：命中则归为 deal，其余变化归为 change。 */
+/** 可领取的福利或额度关键词：命中则归为 deal。 */
 const DEAL_KEYWORDS = [
   '免费试用',
-  '免费领取',
+  '限时免费',
   '免费领',
+  '赠金',
   '代金券',
   '新用户.*赠送',
   '注册.*送',
   '0 元',
   '白嫖',
-  '限时免费活动',
-  '赠金',
+  '新增.*免费',
+  '免费层',
 ];
 
+/** 降价、更名、计费微调等价格/计费变动关键词：命中则归为 price_change。 */
+const PRICE_CHANGE_KEYWORDS = [
+  '降价',
+  '更名',
+  '计费微调',
+  '计费调整',
+  '微调.*计费',
+  '计费.*微调',
+  '定价',
+  '收费',
+  '付费',
+  '取消.*免费',
+  '无免费',
+  '不再.*免费',
+  '不享受.*免费',
+  '改为.*收费',
+  '改为.*付费',
+];
+
+/** 从标题 "额度变化 · 厂商：内容" 中解析厂商名。解析失败返回 null。 */
+export function parseVendorFromTitle(title: string): string | null {
+  const m = title.match(/^额度变化\s*·\s*([^：\n]+?)(?:：|$)/);
+  if (!m) return null;
+  const vendor = m[1].trim();
+  return vendor || null;
+}
+
+/** 把名称规范化为可比较的 Token 集合。 */
+function normalizeName(name: string): string[] {
+  const lower = name.toLowerCase();
+  // 去掉括号及其内容（如 "(深度求索)"、"(Google AI Studio)"）
+  const noParen = lower.replace(/[\(\)\[\]{}][^\(\)\[\]{}]{0,80}[\(\)\[\]{}]/g, ' ').replace(/\([^)]*\)/g, ' ').replace(/\[[^\]]*\]/g, ' ');
+  // 只保留字母数字与中文，其余切分为 Token
+  const tokens = noParen
+    .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, ' ')
+    .split(/\s+/)
+    .filter((t) => t.length > 0);
+  return tokens;
+}
+
+/** 抓取上游 README 并解析出各厂商的“官方直达”链接映射。 */
+export async function fetchReadmeVendors(): Promise<Map<string, ReadmeVendor>> {
+  const map = new Map<string, ReadmeVendor>();
+  let readme = '';
+  try {
+    readme = await fetchRssText(README_URL);
+  } catch {
+    // README 抓取失败不阻断主流程，官方链接映射为空
+    return map;
+  }
+
+  // 按厂商标题 "### N. VendorName (中文名)" 切分
+  const sections = readme.split(/\n### \d+\. /);
+  for (const section of sections) {
+    const headerMatch = section.match(/^([^\n]+?)\n/);
+    if (!headerMatch) continue;
+    const header = headerMatch[1].trim();
+    // 去掉可能的序号前缀与括号，保留厂商名
+    const rawName = header.replace(/^\d+\.\s*/, '').replace(/\s*\([^)]*\)\s*$/, '').trim();
+    if (!rawName) continue;
+
+    // 提取 **官方直达** 行
+    const officialRow = section.match(/\|\s*\*\*官方直达\*\*\s*\|([\s\S]*?)\|\n/);
+    const officialLinks: string[] = [];
+    if (officialRow) {
+      const cell = officialRow[1];
+      const urlMatches = cell.matchAll(/\[([^\]]*)\]\(([^)]+)\)/g);
+      for (const m of urlMatches) {
+        officialLinks.push(m[2]);
+      }
+    }
+
+    const key = normalizeName(rawName).join(' ');
+    map.set(key, {
+      name: rawName,
+      officialLinks,
+      platformUrl: officialLinks[0] || null,
+    });
+  }
+  return map;
+}
+
+/** 用 RSS 解析出的厂商名去 README 映射中模糊匹配，返回官方链接。 */
+export function matchOfficialLinks(
+  vendor: string | null,
+  vendorMap: Map<string, ReadmeVendor>
+): { links: string[]; platformUrl: string | null; matched: boolean } {
+  if (!vendor) return { links: [], platformUrl: null, matched: false };
+  const vendorTokens = normalizeName(vendor);
+  if (vendorTokens.length === 0) return { links: [], platformUrl: null, matched: false };
+
+  let best: ReadmeVendor | null = null;
+  let bestScore = 0;
+  for (const rv of vendorMap.values()) {
+    const readmeTokens = normalizeName(rv.name);
+    if (readmeTokens.length === 0) continue;
+    // 短名集合是否为长名集合的子集（双向）
+    const shorter = vendorTokens.length <= readmeTokens.length ? vendorTokens : readmeTokens;
+    const longer = vendorTokens.length <= readmeTokens.length ? readmeTokens : vendorTokens;
+    const isSubset = shorter.every((t) => longer.includes(t));
+    if (!isSubset) continue;
+    const score = shorter.length / Math.max(1, longer.length);
+    if (score > bestScore) {
+      bestScore = score;
+      best = rv;
+    }
+  }
+
+  if (best) {
+    return { links: best.officialLinks, platformUrl: best.platformUrl, matched: true };
+  }
+  return { links: [], platformUrl: null, matched: false };
+}
+
+/** 根据标题与正文推断条目分类。 */
+export function classifyKind(rss: RssItem): ItemKind {
+  const text = `${rss.title}\n${rss.description ?? ''}`.toLowerCase();
+  for (const kw of DEAL_KEYWORDS) {
+    if (new RegExp(kw, 'i').test(text)) return 'deal';
+  }
+  for (const kw of PRICE_CHANGE_KEYWORDS) {
+    if (new RegExp(kw, 'i').test(text)) return 'price_change';
+  }
+  return 'change';
+}
+
+/** 是否应进入“今日羊毛”：deal / price_change / change 均进入，news 不进入。 */
+export function shouldEnterToday(kind: ItemKind): boolean {
+  return kind !== 'news';
+}
+
+/** 从标题中提取明确截止日期提示（如“顺延至 2026-11-23”），不写入 expiresAt。
+ * 取标题中出现的最后一个日期，对应“顺延至 X”的新截止日期。 */
+export function extractDeadlineHint(title: string): string | null {
+  const matches = title.match(/\d{4}-\d{2}-\d{2}/g);
+  return matches ? matches[matches.length - 1] : null;
+}
+
+/** 按 id 去重，保留首次出现。id 由 guid 稳定生成，不同变更条目不会冲突。 */
+export function deduplicate(items: WoolItem[]): WoolItem[] {
+  const seen = new Set<string>();
+  const out: WoolItem[] = [];
+  for (const it of items) {
+    const key = it.id;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(it);
+  }
+  return out;
+}
+
+/** 把条目写入指定的 JSON 文件。 */
+export function writeWoolJson(path: string, items: WoolItem[], nowMs: number, stats?: FetchStats): void {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+
+  const out: Record<string, unknown> = {
+    source: SOURCE_NAME,
+    sourceUrl: SOURCE_URL,
+    fetchedAt: new Date(nowMs).toISOString(),
+    count: items.length,
+    ...(stats ? { stats } : {}),
+    items,
+  };
+  writeFileSync(path, JSON.stringify(out, null, 2) + '\n', 'utf8');
+}
+
 /** 把单条 RSS 条目转为 WoolItem。缺失字段不编造，核验状态固定“未核验”。 */
-export function convertToWoolItem(rss: RssItem, kind: ItemKind, nowMs: number): WoolItem {
-  const link = rss.link || rss.guid || SOURCE_URL;
+export function convertToWoolItem(
+  rss: RssItem,
+  kind: ItemKind,
+  nowMs: number,
+  vendor: string | null,
+  official: { links: string[]; platformUrl: string | null; matched: boolean },
+  deadlineHint: string | null
+): WoolItem {
+  const isOfficial = official.matched && official.links.length > 0;
+  const sourceUrl = isOfficial && official.platformUrl ? official.platformUrl : rss.link || rss.guid || SOURCE_URL;
   const publishedAt = toIso(rss.pubDate);
+  const vendorName = vendor || '未知厂商';
+
   return {
     id: `fli-${stableId(rss.guid || rss.link || rss.title)}`,
     title: rss.title,
-    reward: `官方动态：${rss.category || '未知厂商'} 发布新内容`,
+    reward: `官方动态：${vendorName} 发布新内容`,
     estimatedValue: '¥0',
     estimatedValueRmb: 0,
     condition: '点击官方链接阅读原文，确认是否涉及免费额度或限时活动',
-    category: mapCategory(rss.category || ''),
+    category: mapCategory(vendorName),
     claimMethod: '直接领取',
     verificationStatus: '未核验',
     verificationNote:
@@ -144,84 +322,71 @@ export function convertToWoolItem(rss: RssItem, kind: ItemKind, nowMs: number): 
     updatedAt: publishedAt,
     isNew: true,
     isUpdated: false,
-    sourceId: `src-fli-${vendorSlug(rss.category || 'unknown')}`,
-    sourceName: rss.category || '未知厂商',
-    sourceUrl: link,
-    steps: ['打开官方链接查看原文', '在官方页面确认免费额度或活动规则'],
+    sourceId: `src-fli-${vendorSlug(vendorName)}`,
+    sourceName: vendorName,
+    sourceUrl,
+    steps: ['打开官方链接阅读原文', '在官方页面确认免费额度或活动规则'],
     riskNotes:
       '来自第三方订阅，标题已汉化，未经官方确认，请以厂商官方页面为准。',
-    tags: [(rss.category || '未知厂商'), '官方动态'],
+    tags: [vendorName, '官方动态'],
     kind,
+    hasOfficialLink: isOfficial,
+    deadlineHint: deadlineHint || undefined,
+    intelSource: rss.link || undefined,
   };
-}
-
-/** 根据来源与内容推断条目分类。 */
-export function classifyKind(rss: RssItem, feedType: 'changes' | 'news'): ItemKind {
-  if (feedType === 'news') return 'news';
-  const text = `${rss.title}\n${rss.description}`.toLowerCase();
-  for (const kw of DEAL_KEYWORDS) {
-    if (new RegExp(kw, 'i').test(text)) return 'deal';
-  }
-  return 'change';
-}
-
-/** 是否应进入“今日羊毛”：只有 deal 和 change。 */
-export function shouldEnterToday(kind: ItemKind): boolean {
-  return kind === 'deal' || kind === 'change';
-}
-
-/** 按 guid 去重，保留首次出现。 */
-export function deduplicate(items: WoolItem[]): WoolItem[] {
-  const seen = new Set<string>();
-  const out: WoolItem[] = [];
-  for (const it of items) {
-    const key = it.sourceUrl || it.id;
-    if (seen.has(key)) continue;
-    seen.add(key);
-    out.push(it);
-  }
-  return out;
-}
-
-/** 把条目写入指定的 JSON 文件。 */
-export function writeWoolJson(path: string, items: WoolItem[], nowMs: number): void {
-  const dir = path.split('/').slice(0, -1).join('/');
-  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-
-  const out: Record<string, unknown> = {
-    source: SOURCE_NAME,
-    sourceUrl: SOURCE_URL,
-    fetchedAt: new Date(nowMs).toISOString(),
-    count: items.length,
-    items,
-  };
-  writeFileSync(path, JSON.stringify(out, null, 2) + '\n', 'utf8');
 }
 
 /** 主流程：抓取变化订阅（今日羊毛）与新闻订阅（单独动态分区）。 */
 export async function main(): Promise<void> {
   const nowMs = Date.now();
+  const vendorMap = await fetchReadmeVendors();
+  const stats: FetchStats = {
+    unknownVendorCount: 0,
+    noOfficialLinkCount: 0,
+    kindCount: { deal: 0, price_change: 0, change: 0, news: 0 },
+  };
 
-  // 变化订阅 → 今日羊毛（deal / change）
+  // 变化订阅 → 今日羊毛（deal / price_change / change）
   const changesXml = await fetchRssText(CHANGES_RSS_URL);
   const changesRss = parseRss(changesXml);
-  const changesItems = deduplicate(
-    changesRss.map((r) => convertToWoolItem(r, classifyKind(r, 'changes'), nowMs))
-  );
-  const todayItems = changesItems.filter((it) => shouldEnterToday(it.kind ?? 'change'));
-  writeWoolJson(WOOL_JSON_PATH, todayItems, nowMs);
+  const changesItems: WoolItem[] = [];
+  for (const r of changesRss) {
+    const vendor = parseVendorFromTitle(r.title);
+    if (!vendor) stats.unknownVendorCount += 1;
+    const official = matchOfficialLinks(vendor, vendorMap);
+    if (!official.matched || official.links.length === 0) stats.noOfficialLinkCount += 1;
+    const kind = classifyKind(r);
+    stats.kindCount[kind] += 1;
+    const deadlineHint = extractDeadlineHint(r.title);
+    changesItems.push(convertToWoolItem(r, kind, nowMs, vendor, official, deadlineHint));
+  }
+  const todayItems = deduplicate(changesItems.filter((it) => shouldEnterToday(it.kind ?? 'change')));
+  // 统计基于进入文件的最终条目，使 count 与 kind 分布一致
+  const finalStats: FetchStats = {
+    unknownVendorCount: todayItems.filter((i) => i.sourceName === '未知厂商').length,
+    noOfficialLinkCount: todayItems.filter((i) => !i.hasOfficialLink).length,
+    kindCount: { deal: 0, price_change: 0, change: 0, news: 0 },
+  };
+  for (const it of todayItems) finalStats.kindCount[it.kind ?? 'change'] += 1;
+  writeWoolJson(WOOL_JSON_PATH, todayItems, nowMs, finalStats);
 
   // 新闻订阅 → 单独“动态”分区，不进今日羊毛（news）
   const newsXml = await fetchRssText(NEWS_RSS_URL);
   const newsRss = parseRss(newsXml);
-  const newsItems = deduplicate(
-    newsRss.map((r) => convertToWoolItem(r, classifyKind(r, 'news'), nowMs))
-  );
-  writeWoolJson(NEWS_JSON_PATH, newsItems, nowMs);
+  const newsItems: WoolItem[] = [];
+  for (const r of newsRss) {
+    stats.kindCount['news'] += 1;
+    newsItems.push(convertToWoolItem(r, 'news', nowMs, null, { links: [], platformUrl: null, matched: false }, null));
+  }
+  writeWoolJson(NEWS_JSON_PATH, deduplicate(newsItems), nowMs);
 
   // eslint-disable-next-line no-console
   console.log(
     `[fetch-source] 抓取完成：变化 ${changesRss.length} 条（今日羊毛 ${todayItems.length} 条），新闻 ${newsRss.length} 条（单独动态分区，不进今日羊毛）`
+  );
+  // eslint-disable-next-line no-console
+  console.log(
+    `[fetch-source] 统计：未知厂商 ${stats.unknownVendorCount} 条，无官方链接 ${stats.noOfficialLinkCount} 条，kind=${JSON.stringify(stats.kindCount)}`
   );
   // eslint-disable-next-line no-console
   console.log(`[fetch-source] 已写入 ${WOOL_JSON_PATH} 与 ${NEWS_JSON_PATH}`);

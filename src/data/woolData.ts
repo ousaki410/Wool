@@ -26,9 +26,10 @@ export type ClaimMethod =
 
 export type VerificationStatus = '官方已核验' | '社区线索' | '未核验';
 
-/** 条目分类：deal 可领取的福利或额度 / change 额度与活动变化 / news 厂商新闻。
- * 只有 deal 和 change 进入“今日羊毛”，news 保留在单独的“动态”分区。 */
-export type ItemKind = 'deal' | 'change' | 'news';
+/** 条目分类：deal 可领取的福利或额度 / price_change 降价、更名、计费微调 /
+ * change 其他额度与活动变化 / news 厂商新闻。
+ * 只有 deal 和 change 进入“今日羊毛”，price_change 与 news 保留在单独分区。 */
+export type ItemKind = 'deal' | 'price_change' | 'change' | 'news';
 
 export type DeadlineState = 'expiring_soon' | 'active' | 'long_term' | 'expired';
 
@@ -71,6 +72,12 @@ export interface WoolItem {
   tags: string[];
   /** 条目分类，由数据来源计算得出；mock 种子不设此字段。 */
   kind?: ItemKind;
+  /** 是否命中官方直达链接（sourceUrl 指向官方页而非 GitHub 镜像）。 */
+  hasOfficialLink?: boolean;
+  /** 标题中出现的明确截止日期提示（如“顺延至 2026-11-23”），不写入 expiresAt。 */
+  deadlineHint?: string;
+  /** 情报出处：上游 RSS 的 GitHub 锚点链接。 */
+  intelSource?: string;
 }
 
 export interface SourceChannel {
