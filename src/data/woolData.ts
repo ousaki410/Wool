@@ -200,6 +200,32 @@ export function getDeadlineState(
   return 'active';
 }
 
+/** 方向标签文本：positive 新增福利 / negative 福利收紧 / neutral 其他变化。 */
+export function formatDirectionLabel(direction: ItemDirection): string {
+  switch (direction) {
+    case 'positive':
+      return '新增福利';
+    case 'negative':
+      return '福利收紧';
+    case 'neutral':
+      return '其他变化';
+  }
+}
+
+/**
+ * 根据 direction 返回对应的文本颜色类名。
+ */
+export function formatDirectionColor(direction: ItemDirection): string {
+  switch (direction) {
+    case 'positive':
+      return 'text-emerald-700 dark:text-emerald-400';
+    case 'negative':
+      return 'text-rose-700 dark:text-rose-400';
+    case 'neutral':
+      return 'text-slate-500 dark:text-slate-400';
+  }
+}
+
 /**
  * Formats a human-readable relative countdown or date label in Chinese.
  */
@@ -210,7 +236,7 @@ export function formatDeadlineLabel(
   if (!deadlineIso) {
     return {
       state: 'long_term',
-      badgeText: '长期有效',
+      badgeText: '截止时间未知',
       dateText: '无固定截止日期',
     };
   }

@@ -15,12 +15,15 @@ import {
   Infinity as InfinityIcon,
   Sparkles,
   RefreshCw,
+  Link,
 } from 'lucide-react';
 import { copyToClipboard } from '../utils/clipboard';
 import {
   WoolItem,
   formatDeadlineLabel,
   getItemExpiresAt,
+  formatDirectionLabel,
+  formatDirectionColor,
 } from '../data/woolData';
 
 interface WoolCardProps {
@@ -36,6 +39,27 @@ interface WoolCardProps {
   isUpdated?: boolean;
   /** 展开详情时回调，用于淡化新增/已更新标记 */
   onViewed?: (id: string) => void;
+}
+
+/** 按标点符号或空格截断文本，避免在词或数字中间截断，并保留完整金额。 */
+export function truncateReward(reward: string, maxLen = 60): string {
+  if (!reward || reward.length <= maxLen) return reward;
+
+  const cut = reward.slice(0, maxLen);
+  const lastPunct = Math.max(
+    cut.lastIndexOf('，'),
+    cut.lastIndexOf('、'),
+    cut.lastIndexOf('。'),
+    cut.lastIndexOf(' '),
+    cut.lastIndexOf(';'),
+    cut.lastIndexOf('/')
+  );
+
+  if (lastPunct >= 0 && lastPunct < maxLen - 1) {
+    return cut.slice(0, lastPunct + 1);
+  }
+
+  return cut;
 }
 
 export const WoolCard: React.FC<WoolCardProps> = ({
@@ -55,6 +79,9 @@ export const WoolCard: React.FC<WoolCardProps> = ({
   const isExpired = deadlineInfo.state === 'expired';
   const isExpiringSoon = deadlineInfo.state === 'expiring_soon';
   const isLongTerm = deadlineInfo.state === 'long_term';
+
+  const directionLabel = formatDirectionLabel(item.direction ?? 'neutral');
+  const directionColor = formatDirectionColor(item.direction ?? 'neutral');
 
   const handleCopyCode = () => {
     if (!item.promoCode) return;
@@ -80,12 +107,17 @@ export const WoolCard: React.FC<WoolCardProps> = ({
     ? 'bg-white dark:bg-slate-900 border-amber-300 dark:border-amber-700/80'
     : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700';
 
+  // 奖励文本：若与标题相同则不显示；否则截断
+  const rewardText = item.reward && item.reward !== item.title ? item.reward : null;
+  const showReward = rewardText !== null && rewardText.length > 0;
+  const showCondition = item.condition && item.condition.length > 0;
+
   return (
     <article
       className={`border rounded-xl p-4 sm:p-5 transition-colors flex flex-col justify-between ${cardSurfaceClass}`}
     >
       <div>
-        {/* 顶行：核验标记 + 变化提示 + 收藏 */}
+        {/* 顶行：核验标记 + 方向提示 + 收藏 */}
         <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-slate-100 dark:border-slate-800/80">
           <div className="flex flex-wrap items-center gap-2 text-xs">
             {/* 核验标记 */}
@@ -117,6 +149,13 @@ export const WoolCard: React.FC<WoolCardProps> = ({
               </span>
             )}
 
+            {/* 方向标签 */}
+            <span
+              className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-xs font-semibold whitespace-nowrap shrink-0 ${directionColor}`}
+            >
+              {directionLabel}
+            </span>
+
             {/* 新增 / 已更新标记（查看或超时后淡化） */}
             {isNew && (
               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-semibold whitespace-nowrap">
@@ -147,9 +186,9 @@ export const WoolCard: React.FC<WoolCardProps> = ({
               </span>
             )}
             {isLongTerm && (
-              <span className="inline-flex items-center gap-1 text-xs font-medium text-teal-700 dark:text-teal-400 tabular-nums whitespace-nowrap">
-                <InfinityIcon className="w-3.5 h-3.5 shrink-0" />
-                <span>长期有效</span>
+              <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400 tabular-nums whitespace-nowrap">
+                <CalendarOff className="w-3.5 h-3.5 shrink-0" />
+                <span>{deadlineInfo.badgeText}</span>
               </span>
             )}
             {deadlineInfo.state === 'active' && (
@@ -186,32 +225,34 @@ export const WoolCard: React.FC<WoolCardProps> = ({
           {item.title}
         </h3>
 
-        {/* 卡片正面只保留：能得到什么 / 领取条件 / 截止时间（核验标记在顶行） */}
+        {/* 卡片正面只保留：能得到什么 / 领取条件 / 截止时间 */}
         <dl className="mt-3 space-y-2 text-sm">
-          <div className="flex items-baseline gap-2">
-            <dt className="text-xs font-semibold text-teal-700 dark:text-teal-400 whitespace-nowrap shrink-0 w-16">
-              能得到什么
-            </dt>
-            <dd
-              className={`font-semibold ${
-                isExpired
-                  ? 'text-slate-500 dark:text-slate-400'
-                  : 'text-teal-900 dark:text-teal-300'
-              }`}
-            >
-              {item.reward}
-            </dd>
-          </div>
-
-          <div className="flex items-baseline gap-2">
-            <dt className="text-xs font-semibold text-slate-500 dark:text-slate-400 whitespace-nowrap shrink-0 w-16">
-              领取条件
-            </dt>
-            <dd className="text-slate-700 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
-              {item.condition}
-            </dd>
-          </div>
-
+          {showReward && (
+            <div className="flex items-baseline gap-2">
+              <dt className="text-xs font-semibold text-teal-700 dark:text-teal-400 whitespace-nowrap shrink-0 w-16">
+                能得到什么
+              </dt>
+              <dd
+                className={`font-semibold break-words ${
+                  isExpired
+                    ? 'text-slate-500 dark:text-slate-400'
+                    : 'text-teal-900 dark:text-teal-300'
+                }`}
+              >
+                {truncateReward(rewardText)}
+              </dd>
+            </div>
+          )}
+          {showCondition && (
+            <div className="flex items-baseline gap-2">
+              <dt className="text-xs font-semibold text-slate-500 dark:text-slate-400 whitespace-nowrap shrink-0 w-16">
+                领取条件
+              </dt>
+              <dd className="text-slate-700 dark:text-slate-300 text-xs sm:text-sm leading-relaxed break-words">
+                {item.condition}
+              </dd>
+            </div>
+          )}
           <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
             <dt className="font-semibold whitespace-nowrap shrink-0 w-16">截止时间</dt>
             <dd
@@ -229,7 +270,7 @@ export const WoolCard: React.FC<WoolCardProps> = ({
         </dl>
       </div>
 
-      {/* 展开区：核验记录、兑换码、步骤、风险、来源、标签 */}
+      {/* 展开区：核验记录、兑换码、步骤、风险、来源、标签、官方链接 */}
       {expanded && (
         <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80 space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
           <div>
@@ -278,6 +319,34 @@ export const WoolCard: React.FC<WoolCardProps> = ({
             </p>
           )}
 
+          {/* 官方直达链接（醒目） + 情报出处（次要） */}
+          <div className="flex flex-wrap items-start gap-2">
+            <div className="flex flex-col gap-1">
+              <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold">去官网</span>
+              <a
+                href={item.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 font-bold text-teal-700 dark:text-teal-400 hover:text-teal-500 dark:hover:text-teal-300 underline underline-offset-2 hover:underline whitespace-nowrap shrink-0"
+              >
+                {item.sourceUrl}
+                <ExternalLink className="w-3 h-3 ml-0.5" />
+              </a>
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold">情报出处</span>
+              {item.hasOfficialLink ? (
+                <span className="text-xs text-slate-600 dark:text-slate-300 break-words truncate">
+                  {item.intelSource || item.sourceUrl}
+                </span>
+              ) : (
+                <span className="text-xs text-rose-600 dark:text-rose-400 break-words truncate">
+                  暂无官方链接
+                </span>
+              )}
+            </div>
+          </div>
+
           <div className="flex flex-wrap items-center gap-1.5 text-slate-500 dark:text-slate-400">
             <span>来源:</span>
             {onFilterBySource ? (
@@ -306,15 +375,29 @@ export const WoolCard: React.FC<WoolCardProps> = ({
         </span>
 
         <div className="flex items-center gap-3 shrink-0">
-          <a
-            href={item.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 whitespace-nowrap shrink-0"
-          >
-            <span>原始页面</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
+          {item.hasOfficialLink ? (
+            <>
+              <a
+                href={item.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 font-medium text-teal-700 dark:text-teal-400 hover:text-teal-500 dark:hover:text-teal-300 whitespace-nowrap shrink-0"
+              >
+                <span>去官网</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+              <span className="text-xs text-slate-400 dark:text-slate-500">·</span>
+              <span className="text-xs text-slate-600 dark:text-slate-300 break-all truncate max-w-[120px]">
+                情报出处：{item.intelSource || item.sourceUrl}
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="text-xs text-rose-600 dark:text-rose-400 break-all truncate max-w-[200px]">
+                情报出处：暂无官方链接
+              </span>
+            </>
+          )}
 
           <button
             type="button"

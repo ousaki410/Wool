@@ -11,6 +11,8 @@ import {
   PlayCircle,
   Zap,
   Activity,
+  AlertTriangle,
+  ChevronDown,
 } from 'lucide-react';
 import {
   getDefaultBookmarkIds,
@@ -26,6 +28,7 @@ import {
   PushSettingsConfig,
   WoolItem,
 } from './data/woolData';
+import { formatShanghaiDateTime } from './data/shanghaiTime';
 import { useWools } from './hooks/useWools';
 import { TopNav, ActiveTab } from './components/TopNav';
 import { FilterBar } from './components/FilterBar';
@@ -192,6 +195,7 @@ export default function App() {
   const [sortBy, setSortBy] = useState<'recommended' | 'value_desc' | 'deadline_asc' | 'latest'>(
     'recommended'
   );
+  const [clueCollapsed, setClueCollapsed] = useState(true);
 
   const handleResetFilters = () => {
     setSearchQuery('');
@@ -203,7 +207,7 @@ export default function App() {
     setSortBy('recommended');
   };
 
-  const filteredItems = useMemo(
+  const allFilteredItems = useMemo(
     () =>
       filterAndSortWoolItems(
         allItems,
@@ -229,6 +233,16 @@ export default function App() {
       sourceIdFilter,
       sortBy,
     ]
+  );
+
+  // 主列表仅显示官方已核验
+  const verifiedItems = allFilteredItems.filter(
+    (i) => i.verificationStatus === '官方已核验'
+  );
+
+  // 线索分区：非官方已核验（社区线索 + 未核验），默认折叠
+  const clueItems = allItems.filter(
+    (i) => i.verificationStatus !== '官方已核验'
   );
 
   // Summary metrics（按当前时间实时计算）
@@ -332,7 +346,7 @@ export default function App() {
             <span className="text-slate-500 dark:text-slate-400">
               最后同步：
               <span className="font-mono tabular-nums">
-                {source.real?.lastSyncAt || '—'}
+                {source.real?.lastSyncAt ? formatShanghaiDateTime(source.real.lastSyncAt) : '—'}
               </span>
             </span>
             {source.loading && (
@@ -423,52 +437,54 @@ export default function App() {
                 共 <strong className="font-mono tabular-nums">{allItems.length}</strong> 条
               </span>
 
-              <div className="ml-auto flex flex-wrap items-center gap-1.5">
-                <span
-                  className={`inline-flex items-center gap-1 font-medium ${
-                    paused
-                      ? 'text-amber-600 dark:text-amber-400'
-                      : 'text-emerald-600 dark:text-emerald-400'
-                  }`}
-                >
+              {source.kind === 'mock' && (
+                <div className="ml-auto flex flex-wrap items-center gap-1.5">
                   <span
-                    className={`w-1.5 h-1.5 rounded-full ${
-                      paused ? 'bg-amber-500' : 'bg-emerald-500'
+                    className={`inline-flex items-center gap-1 font-medium ${
+                      paused
+                        ? 'text-amber-600 dark:text-amber-400'
+                        : 'text-emerald-600 dark:text-emerald-400'
                     }`}
-                  />
-                  {paused ? '模拟已暂停' : '模拟运行中'}
-                </span>
+                  >
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        paused ? 'bg-amber-500' : 'bg-emerald-500'
+                      }`}
+                    />
+                    {paused ? '模拟已暂停' : '模拟运行中'}
+                  </span>
 
-                <button
-                  type="button"
-                  onClick={paused ? resume : pause}
-                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
-                >
-                  {paused ? (
-                    <PlayCircle className="w-3.5 h-3.5" />
-                  ) : (
-                    <PauseCircle className="w-3.5 h-3.5" />
-                  )}
-                  <span>{paused ? '继续模拟' : '暂停模拟'}</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={paused ? resume : pause}
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                  >
+                    {paused ? (
+                      <PlayCircle className="w-3.5 h-3.5" />
+                    ) : (
+                      <PauseCircle className="w-3.5 h-3.5" />
+                    )}
+                    <span>{paused ? '继续模拟' : '暂停模拟'}</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={trigger}
-                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/50 hover:bg-teal-100 dark:hover:bg-teal-950/80 transition-colors cursor-pointer"
-                >
-                  <Zap className="w-3.5 h-3.5" />
-                  <span>模拟一条事件</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={trigger}
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/50 hover:bg-teal-100 dark:hover:bg-teal-950/80 transition-colors cursor-pointer"
+                  >
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>模拟一条事件</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('digest')}
-                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 transition-colors cursor-pointer"
-                >
-                  <span>日报预览 →</span>
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('digest')}
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 transition-colors cursor-pointer"
+                  >
+                    <span>日报预览 →</span>
+                  </button>
+                </div>
+              )}
             </section>
 
             {/* Multi-dimensional Filter Bar */}
@@ -488,17 +504,17 @@ export default function App() {
               activeSourceName={activeSourceObj?.name || null}
               onClearSourceFilter={() => setSourceIdFilter('全部')}
               onResetAll={handleResetFilters}
-              totalMatching={filteredItems.length}
+              totalMatching={verifiedItems.length}
               totalCount={allItems.length}
             />
 
             {/* High-Density Cards Grid */}
-            {filteredItems.length > 0 ? (
+            {verifiedItems.length > 0 ? (
               <section
                 aria-label="羊毛情报列表"
                 className="grid grid-cols-1 lg:grid-cols-2 gap-4"
               >
-                {filteredItems.map((item) => {
+                {verifiedItems.map((item) => {
                   const marks = getFreshMarks(item);
                   return (
                     <WoolCard
@@ -534,6 +550,44 @@ export default function App() {
               </section>
             )}
           </>
+        )}
+
+        {/* TAB 1-续：线索分区（未核验） */}
+        {clueItems.length > 0 && (
+          <section className="mt-4">
+            <div
+              onClick={() => setClueCollapsed(!clueCollapsed)}
+              className="cursor-pointer flex items-center gap-2"
+            >
+              <h3 className="text-base font-bold text-rose-700 dark:text-rose-400 flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4" />
+                <span>未核验线索，仅供参考 ({clueItems.length})</span>
+                <ChevronDown
+                  className={`w-3 h-3 transition-transform ${clueCollapsed ? '' : 'rotate-180'}`}
+                />
+              </h3>
+            </div>
+            {!clueCollapsed && (
+              <div className="mt-2 grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {clueItems.map((item) => {
+                  const marks = getFreshMarks(item);
+                  return (
+                    <WoolCard
+                      key={item.id}
+                      item={item}
+                      isBookmarked={bookmarkIds.includes(item.id)}
+                      onToggleBookmark={handleToggleBookmark}
+                      onFilterBySource={(srcId) => setSourceIdFilter(srcId)}
+                      nowIso={nowIso}
+                      isNew={marks.isNew}
+                      isUpdated={marks.isUpdated}
+                      onViewed={markViewed}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </section>
         )}
 
         {/* TAB 2: 日报预览 (Telegram 消息样式) */}

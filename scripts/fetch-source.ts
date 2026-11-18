@@ -417,8 +417,8 @@ export function classifyDirection(rss: RssItem): ItemDirection {
   const title = rss.title;
   const text = `${title}\n${rss.description ?? ''}`.toLowerCase();
 
-  const hasPositive = DIRECTION_POSITIVE_KEYWORDS.some((kw) => title.includes(kw));
-  const hasNegative = DIRECTION_NEGATIVE_KEYWORDS.some((kw) => title.includes(kw));
+  const hasPositive = DIRECTION_POSITIVE_KEYWORDS.some((kw) => text.includes(kw));
+  const hasNegative = DIRECTION_NEGATIVE_KEYWORDS.some((kw) => text.includes(kw));
 
   if (hasPositive && !hasNegative) return 'positive';
   if (hasNegative && !hasPositive) return 'negative';

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import type { WoolItem } from '../../src/data/woolData';
+import { truncateReward } from '../../src/components/WoolCard';
 import {
   parseRss,
   parseVendorFromTitle,
@@ -260,4 +261,84 @@ test('deduplicate：按 id 去重，保留首次出现', () => {
   const result = deduplicate([base, dup, distinct]);
   assert.equal(result.length, 2);
   assert.equal(result[0].id, base.id);
+});
+
+test('truncateReward: 按标点/空格截断，不在词中间断开', () => {
+  assert.equal(truncateReward('短文本'), '短文本');
+  const longText = '这是一个很长的奖励描述文本，包含逗号，应该在逗号处截断后面还有更多内容继续写更多内容继续写更多内容继续写更多内容继续写更多内容';
+  assert.equal(truncateReward(longText), '这是一个很长的奖励描述文本，包含逗号，');
+  assert.equal(
+    truncateReward(
+      '¥500 代金券 使用说明 详见官网 https://example.com/very/long/path/that/makes/it/long/and/even/more/path/segments/here'
+    ),
+    '¥500 代金券 使用说明 详见官网 https://example.com/very/long/path/that/'
+  );
+  const noPunct = 'This is a very long text without punctuation marks that should be truncated at space';
+  assert.equal(truncateReward(noPunct), 'This is a very long text without punctuation marks that ');
+  assert.equal(truncateReward('', 60), '');
+  assert.equal(truncateReward(null as unknown as string, 60), null);
+});
+
+test('classifyDirection: 正向/负向/中性分类', () => {
+  assert.equal(
+    classifyDirection({
+      title: '测试',
+      link: '',
+      guid: '',
+      pubDate: '',
+      description: '新增免费额度',
+    }),
+    'positive'
+  );
+  assert.equal(
+    classifyDirection({
+      title: '测试',
+      link: '',
+      guid: '',
+      pubDate: '',
+      description: '限时免费活动',
+    }),
+    'positive'
+  );
+  assert.equal(
+    classifyDirection({
+      title: '测试',
+      link: '',
+      guid: '',
+      pubDate: '',
+      description: '下架免费模型',
+    }),
+    'negative'
+  );
+  assert.equal(
+    classifyDirection({
+      title: '测试',
+      link: '',
+      guid: '',
+      pubDate: '',
+      description: '不支持免费',
+    }),
+    'negative'
+  );
+  assert.equal(
+    classifyDirection({
+      title: '测试',
+      link: '',
+      guid: '',
+      pubDate: '',
+      description: '策略调整，文案更新',
+    }),
+    'neutral'
+  );
+  // 既有正向又有负向，以负向为准
+  assert.equal(
+    classifyDirection({
+      title: '测试',
+      link: '',
+      guid: '',
+      pubDate: '',
+      description: '新增免费试用但下架旧模型',
+    }),
+    'negative'
+  );
 });
