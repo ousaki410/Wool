@@ -4,8 +4,11 @@ import fs from 'fs';
 import path from 'path';
 import {defineConfig} from 'vite';
 
-export default defineConfig(() => {
+export default defineConfig(({command}) => {
   return {
+    // GitHub Pages project site: https://ousaki410.github.io/Wool/
+    // Only production builds use the subpath; local dev stays at the root.
+    base: command === 'build' ? '/Wool/' : '/',
     plugins: [
       react(),
       tailwindcss(),
