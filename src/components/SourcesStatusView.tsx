@@ -33,8 +33,14 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
 
   const enabledCount = channels.filter((c) => c.enabled).length;
   const todayTotal = channels.reduce((sum, c) => sum + c.todayCount, 0);
+  const normalCount = channels.filter((c) => c.status === '正常').length;
+  const faultyCount = channels.filter((c) => c.status !== '正常').length;
   const avgVerifiedRate = Math.round(
-    channels.reduce((sum, c) => sum + c.verifiedRate, 0) / channels.length
+    channels.reduce((sum, c) => sum + c.verifiedRate, 0) / Math.max(1, channels.length)
+  );
+  const latestSyncAt = channels.reduce(
+    (latest, c) => (c.lastSyncAt > latest ? c.lastSyncAt : latest),
+    ''
   );
 
   const handleManualSync = () => {
@@ -55,7 +61,7 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
             {enabledCount} <span className="text-sm font-normal text-slate-400">/ {channels.length}</span>
           </div>
           <div className="mt-1 text-xs text-emerald-700 dark:text-emerald-400">
-            7 个源正常 · 1 个源轻微延迟
+            {normalCount} 个源正常 · {faultyCount} 个源异常
           </div>
         </div>
 
@@ -65,7 +71,7 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
             {todayTotal} <span className="text-sm font-normal text-slate-400">条</span>
           </div>
           <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-            去重后入库 25 条情报
+            累计收录 {channels.reduce((sum, c) => sum + c.totalCount, 0)} 条情报
           </div>
         </div>
 
@@ -75,7 +81,7 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
             {avgVerifiedRate}%
           </div>
           <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-            官方公告源核验率达 99%
+            各渠道核验率均值，随来源事件实时更新
           </div>
         </div>
 
@@ -83,7 +89,7 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
           <div>
             <div className="text-xs text-slate-500 dark:text-slate-400">本地索引同步</div>
             <div className="mt-1 text-sm font-semibold text-slate-900 dark:text-slate-100 font-mono tabular-nums">
-              2026-11-17 13:58
+              {latestSyncAt || "—"}
             </div>
           </div>
           <button

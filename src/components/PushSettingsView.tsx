@@ -13,7 +13,7 @@ import {
   WoolCategory,
   WoolItem,
   getDeadlineState,
-  REFERENCE_NOW_ISO,
+  getItemExpiresAt,
 } from '../data/woolData';
 
 interface PushSettingsViewProps {
@@ -21,13 +21,22 @@ interface PushSettingsViewProps {
   onSaveSettings: (next: PushSettingsConfig) => void;
   onResetDefaults: () => void;
   items: WoolItem[];
+  /** 当前时间（ISO），由 useWools 每分钟刷新 */
+  nowIso: string;
 }
+
+const VERIFICATION_ORDER: Record<WoolItem['verificationStatus'], number> = {
+  官方已核验: 0,
+  社区线索: 1,
+  未核验: 2,
+};
 
 export const PushSettingsView: React.FC<PushSettingsViewProps> = ({
   settings,
   onSaveSettings,
   onResetDefaults,
   items,
+  nowIso,
 }) => {
   const [draft, setDraft] = useState<PushSettingsConfig>(settings);
   const [savedNotice, setSavedNotice] = useState(false);
@@ -47,26 +56,39 @@ export const PushSettingsView: React.FC<PushSettingsViewProps> = ({
     });
   };
 
-  // Calculate how many active items match the current draft push rules
-  const matchingRuleCount = useMemo(() => {
-    if (!draft.enabled) return 0;
-    return items.filter((item) => {
-      const st = getDeadlineState(item.deadline, REFERENCE_NOW_ISO);
-      if (st === 'expired') return false;
-      if (!draft.subscribedCategories.includes(item.category)) return false;
-      if (item.estimatedValueRmb < draft.minEstimatedValueRmb) return false;
-      if (draft.onlyVerified && item.verificationStatus !== '官方已核验') return false;
-      if (
-        !draft.onlyVerified &&
-        !draft.includeCommunityClues &&
-        item.verificationStatus !== '官方已核验'
-      ) {
-        return false;
-      }
-      if (draft.mode === 'urgent_only' && st !== 'expiring_soon') return false;
-      return true;
-    }).length;
-  }, [draft, items]);
+  // 命中预演：不按预估价值过滤，按核验状态与截止时间排序
+  const matchingItems = useMemo(() => {
+    if (!draft.enabled) return [];
+    return items
+      .filter((item) => {
+        const st = getDeadlineState(getItemExpiresAt(item), nowIso);
+        if (st === 'expired') return false;
+        if (!draft.subscribedCategories.includes(item.category)) return false;
+        if (draft.onlyVerified && item.verificationStatus !== '官方已核验') return false;
+        if (
+          !draft.onlyVerified &&
+          !draft.includeCommunityClues &&
+          item.verificationStatus !== '官方已核验'
+        ) {
+          return false;
+        }
+        if (draft.mode === 'urgent_only' && st !== 'expiring_soon') return false;
+        return true;
+      })
+      .sort((a, b) => {
+        const verifyDiff =
+          VERIFICATION_ORDER[a.verificationStatus] - VERIFICATION_ORDER[b.verificationStatus];
+        if (verifyDiff !== 0) return verifyDiff;
+        const aExpires = getItemExpiresAt(a);
+        const bExpires = getItemExpiresAt(b);
+        return (
+          (aExpires ? new Date(aExpires).getTime() : Number.MAX_SAFE_INTEGER) -
+          (bExpires ? new Date(bExpires).getTime() : Number.MAX_SAFE_INTEGER)
+        );
+      });
+  }, [draft, items, nowIso]);
+
+  const matchingRuleCount = matchingItems.length;
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,29 +292,6 @@ export const PushSettingsView: React.FC<PushSettingsViewProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             <div>
               <label
-                htmlFor="min-value-select"
-                className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5"
-              >
-                最低预估价值过滤门槛
-              </label>
-              <select
-                id="min-value-select"
-                value={draft.minEstimatedValueRmb}
-                onChange={(e) =>
-                  setDraft({ ...draft, minEstimatedValueRmb: Number(e.target.value) })
-                }
-                className="w-full text-sm font-mono bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-900 dark:text-slate-100 cursor-pointer"
-              >
-                <option value={0}>不限金额（全部推送）</option>
-                <option value={20}>≥ ¥20（过滤小额蚊子腿）</option>
-                <option value={50}>≥ ¥50（中等以上权益）</option>
-                <option value={200}>≥ ¥200（高价值云额度与年卡）</option>
-                <option value={1000}>≥ ¥1,000（重磅算力与开发者礼包）</option>
-              </select>
-            </div>
-
-            <div>
-              <label
                 htmlFor="expiring-hours-select"
                 className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5"
               >
@@ -370,18 +369,35 @@ export const PushSettingsView: React.FC<PushSettingsViewProps> = ({
             当前规则命中预演
           </h3>
           <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            根据左侧勾选的过滤条件，实时计算当前 25 条本地情报中将触发推送的条目数。
+            根据左侧勾选的过滤条件，实时计算当前收录情报中将触发推送的条目数。
           </p>
         </div>
 
         <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
           <div className="text-xs text-slate-500 dark:text-slate-400">符合推送规则的有效情报</div>
           <div className="text-3xl font-bold font-mono text-teal-700 dark:text-teal-400 tabular-nums">
-            {matchingRuleCount} <span className="text-sm font-normal text-slate-500">/ 21 条有效</span>
+            {matchingRuleCount}{' '}
+            <span className="text-sm font-normal text-slate-500">/ {items.length} 条收录</span>
           </div>
           <div className="text-xs text-slate-500 dark:text-slate-400">
-            已自动剔除 4 条已过期历史归档情报
+            已剔除过期条目，按核验状态与截止时间排序
           </div>
+
+          {matchingItems.length > 0 && (
+            <ul className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
+              {matchingItems.slice(0, 3).map((item) => (
+                <li
+                  key={item.id}
+                  className="flex items-center justify-between gap-2 text-xs text-slate-600 dark:text-slate-300"
+                >
+                  <span className="truncate">{item.title}</span>
+                  <span className="shrink-0 font-medium text-slate-500 dark:text-slate-400">
+                    {item.verificationStatus}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <dl className="text-xs space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300">
@@ -398,10 +414,6 @@ export const PushSettingsView: React.FC<PushSettingsViewProps> = ({
             <dd className="font-mono tabular-nums">
               {draft.quietHoursStart} – {draft.quietHoursEnd}
             </dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-slate-500 dark:text-slate-400">最低价值门槛</dt>
-            <dd className="font-mono tabular-nums">¥{draft.minEstimatedValueRmb}</dd>
           </div>
         </dl>
 

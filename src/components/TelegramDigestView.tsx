@@ -11,13 +11,15 @@ import {
 import {
   WoolItem,
   getDeadlineState,
+  getItemExpiresAt,
   formatDeadlineLabel,
   buildTelegramDigestText,
-  REFERENCE_NOW_ISO,
 } from '../data/woolData';
 
 interface TelegramDigestViewProps {
   items: WoolItem[];
+  /** 当前时间（ISO），用于实时计算剩余天数与“即将到期” */
+  nowIso: string;
   onNavigateToFiltered: (options: {
     deadlineFilter?: '全部' | '即将到期';
     verificationStatus?: '全部' | '官方已核验';
@@ -25,8 +27,15 @@ interface TelegramDigestViewProps {
   onNavigateToBookmarks: () => void;
 }
 
+const VERIFICATION_ORDER: Record<WoolItem['verificationStatus'], number> = {
+  官方已核验: 0,
+  社区线索: 1,
+  未核验: 2,
+};
+
 export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
   items,
+  nowIso,
   onNavigateToFiltered,
   onNavigateToBookmarks,
 }) => {
@@ -39,20 +48,39 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
   >([]);
 
   const validItems = useMemo(() => {
-    return items.filter((item) => {
-      const st = getDeadlineState(item.deadline, REFERENCE_NOW_ISO);
-      if (st === 'expired') return false;
-      if (onlyVerified && item.verificationStatus !== '官方已核验') return false;
-      return true;
-    });
-  }, [items, onlyVerified]);
+    return items
+      .filter((item) => {
+        const st = getDeadlineState(getItemExpiresAt(item), nowIso);
+        if (st === 'expired') return false;
+        if (onlyVerified && item.verificationStatus !== '官方已核验') return false;
+        return true;
+      })
+      .sort((a, b) => {
+        // 改按核验状态与截止时间排序，不再使用预估价值
+        const verifyDiff =
+          VERIFICATION_ORDER[a.verificationStatus] - VERIFICATION_ORDER[b.verificationStatus];
+        if (verifyDiff !== 0) return verifyDiff;
+        const aExpires = getItemExpiresAt(a);
+        const bExpires = getItemExpiresAt(b);
+        return (
+          (aExpires ? new Date(aExpires).getTime() : Number.MAX_SAFE_INTEGER) -
+          (bExpires ? new Date(bExpires).getTime() : Number.MAX_SAFE_INTEGER)
+        );
+      });
+  }, [items, onlyVerified, nowIso]);
 
   const expiringItems = useMemo(
     () =>
-      validItems.filter(
-        (item) => getDeadlineState(item.deadline, REFERENCE_NOW_ISO) === 'expiring_soon'
-      ),
-    [validItems]
+      validItems
+        .filter(
+          (item) => getDeadlineState(getItemExpiresAt(item), nowIso) === 'expiring_soon'
+        )
+        .sort(
+          (a, b) =>
+            new Date(getItemExpiresAt(a)!).getTime() -
+            new Date(getItemExpiresAt(b)!).getTime()
+        ),
+    [validItems, nowIso]
   );
 
   const featuredVerified = useMemo(
@@ -64,13 +92,30 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
   );
 
   const plainDigestText = useMemo(
-    () =>
-      buildTelegramDigestText(items, {
-        onlyVerified,
-        includeExpiringSection,
-        templateStyle,
-      }),
-    [items, onlyVerified, includeExpiringSection, templateStyle]
+    () => {
+      // 传给文本生成器的列表也按核验状态与截止时间排序
+      const sorted = [...items].sort((a, b) => {
+        const verifyDiff =
+          VERIFICATION_ORDER[a.verificationStatus] - VERIFICATION_ORDER[b.verificationStatus];
+        if (verifyDiff !== 0) return verifyDiff;
+        const aExpires = getItemExpiresAt(a);
+        const bExpires = getItemExpiresAt(b);
+        return (
+          (aExpires ? new Date(aExpires).getTime() : Number.MAX_SAFE_INTEGER) -
+          (bExpires ? new Date(bExpires).getTime() : Number.MAX_SAFE_INTEGER)
+        );
+      });
+      return buildTelegramDigestText(
+        sorted,
+        {
+          onlyVerified,
+          includeExpiringSection,
+          templateStyle,
+        },
+        nowIso
+      );
+    },
+    [items, onlyVerified, includeExpiringSection, templateStyle, nowIso]
   );
 
   const handleCopyDigest = () => {
@@ -235,7 +280,7 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
                 </span>
               </div>
               <div className="text-xs text-slate-500 dark:text-[#6C7883] tabular-nums">
-                本地单用户情报频道 · 实时编译自 25 条本地数据源
+                本地单用户情报频道 · 实时编译自 {items.length} 条本地数据源
               </div>
             </div>
           </div>
@@ -278,7 +323,7 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
                   </div>
                   <div className="space-y-2.5">
                     {expiringItems.map((item, idx) => {
-                      const dl = formatDeadlineLabel(item.deadline, REFERENCE_NOW_ISO);
+                      const dl = formatDeadlineLabel(getItemExpiresAt(item), nowIso);
                       return (
                         <div
                           key={item.id}
@@ -304,9 +349,6 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
                             <span className="text-teal-700 dark:text-[#5AC8FA] font-semibold">
                               {item.reward}
                             </span>{' '}
-                            <span className="font-mono text-xs opacity-80">
-                              (约 {item.estimatedValue})
-                            </span>
                           </div>
                           {templateStyle === 'detailed' && (
                             <div className="text-xs text-slate-500 dark:text-[#9AA7B4]">
@@ -330,7 +372,7 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
                 </div>
                 <div className="space-y-2.5">
                   {featuredVerified.map((item, idx) => {
-                    const dl = formatDeadlineLabel(item.deadline, REFERENCE_NOW_ISO);
+                    const dl = formatDeadlineLabel(getItemExpiresAt(item), nowIso);
                     return (
                       <div
                         key={item.id}
@@ -341,10 +383,7 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
                         </div>
                         <div className="text-slate-700 dark:text-[#D1D9E0]">
                           🎁 <strong>可得：</strong>
-                          {item.reward}{' '}
-                          <span className="font-mono text-xs text-emerald-700 dark:text-emerald-400">
-                            [{item.estimatedValue}]
-                          </span>
+                          {item.reward}
                         </div>
                         {templateStyle === 'detailed' && (
                           <div className="text-xs text-slate-500 dark:text-[#9AA7B4]">

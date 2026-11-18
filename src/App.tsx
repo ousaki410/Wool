@@ -446,15 +446,22 @@ export default function App() {
                 aria-label="羊毛情报列表"
                 className="grid grid-cols-1 lg:grid-cols-2 gap-4"
               >
-                {filteredItems.map((item) => (
-                  <WoolCard
-                    key={item.id}
-                    item={item}
-                    isBookmarked={bookmarkIds.includes(item.id)}
-                    onToggleBookmark={handleToggleBookmark}
-                    onFilterBySource={(srcId) => setSourceIdFilter(srcId)}
-                  />
-                ))}
+                {filteredItems.map((item) => {
+                  const marks = getFreshMarks(item);
+                  return (
+                    <WoolCard
+                      key={item.id}
+                      item={item}
+                      isBookmarked={bookmarkIds.includes(item.id)}
+                      onToggleBookmark={handleToggleBookmark}
+                      onFilterBySource={(srcId) => setSourceIdFilter(srcId)}
+                      nowIso={nowIso}
+                      isNew={marks.isNew}
+                      isUpdated={marks.isUpdated}
+                      onViewed={markViewed}
+                    />
+                  );
+                })}
               </section>
             ) : (
               <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-10 text-center space-y-3">
@@ -481,6 +488,7 @@ export default function App() {
         {activeTab === 'digest' && (
           <TelegramDigestView
             items={allItems}
+            nowIso={nowIso}
             onNavigateToFiltered={({ deadlineFilter: df, verificationStatus: vs }) => {
               handleResetFilters();
               if (df) setDeadlineFilter(df);
@@ -512,6 +520,7 @@ export default function App() {
             onSaveSettings={handleSavePushSettings}
             onResetDefaults={() => handleSavePushSettings(DEFAULT_PUSH_SETTINGS)}
             items={allItems}
+            nowIso={nowIso}
           />
         )}
 
@@ -563,19 +572,26 @@ export default function App() {
 
             {bookmarkedItems.length > 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {bookmarkedItems.map((item) => (
-                  <WoolCard
-                    key={item.id}
-                    item={item}
-                    isBookmarked={true}
-                    onToggleBookmark={handleToggleBookmark}
-                    onFilterBySource={(srcId) => {
-                      handleResetFilters();
-                      setSourceIdFilter(srcId);
-                      setActiveTab('today');
-                    }}
-                  />
-                ))}
+                {bookmarkedItems.map((item) => {
+                  const marks = getFreshMarks(item);
+                  return (
+                    <WoolCard
+                      key={item.id}
+                      item={item}
+                      isBookmarked={true}
+                      onToggleBookmark={handleToggleBookmark}
+                      onFilterBySource={(srcId) => {
+                        handleResetFilters();
+                        setSourceIdFilter(srcId);
+                        setActiveTab('today');
+                      }}
+                      nowIso={nowIso}
+                      isNew={marks.isNew}
+                      isUpdated={marks.isUpdated}
+                      onViewed={markViewed}
+                    />
+                  );
+                })}
               </div>
             ) : (
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-10 text-center space-y-3">

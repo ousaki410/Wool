@@ -1074,7 +1074,7 @@ export function filterAndSortWoolItems(
       return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
     }
 
-    // Default 'recommended': expiring_soon first, then official verified, then value
+    // Default 'recommended': expiring_soon first, then official verified, then nearest deadline
     const priorityState = { expiring_soon: 0, active: 1, long_term: 2, expired: 3 };
     if (priorityState[stateA] !== priorityState[stateB]) {
       return priorityState[stateA] - priorityState[stateB];
@@ -1083,7 +1083,12 @@ export function filterAndSortWoolItems(
     if (priorityVerify[a.verificationStatus] !== priorityVerify[b.verificationStatus]) {
       return priorityVerify[a.verificationStatus] - priorityVerify[b.verificationStatus];
     }
-    return b.estimatedValueRmb - a.estimatedValueRmb;
+    const endA = getItemExpiresAt(a);
+    const endB = getItemExpiresAt(b);
+    return (
+      (endA ? new Date(endA).getTime() : Number.MAX_SAFE_INTEGER) -
+      (endB ? new Date(endB).getTime() : Number.MAX_SAFE_INTEGER)
+    );
   });
 }
 
@@ -1131,7 +1136,7 @@ export function buildTelegramDigestText(
           ? '[社区线索]'
           : '[未核验]';
       lines.push(`${idx + 1}. ${badge} ${item.title}`);
-      lines.push(`   🎁 可得：${item.reward}（约 ${item.estimatedValue}）`);
+      lines.push(`   🎁 可得：${item.reward}`);
       if (options.templateStyle === 'detailed') {
         lines.push(`   📋 条件：${item.condition}`);
       }

@@ -116,8 +116,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               }
               className="text-xs font-medium bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-teal-600 dark:focus:border-teal-400 cursor-pointer"
             >
-              <option value="recommended">智能优先级（即将到期/已核验优先）</option>
-              <option value="value_desc">预估价值（从高到低）</option>
+              <option value="recommended">智能优先级（核验状态/截止时间）</option>
               <option value="deadline_asc">截止时间（最近截止优先）</option>
               <option value="latest">发布时间（最新收录优先）</option>
             </select>
