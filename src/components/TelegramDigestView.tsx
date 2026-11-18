@@ -135,8 +135,11 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
     [items, onlyVerified, includeExpiringSection, templateStyle, nowIso]
   );
 
-  const handleCopyDigest = () => {
-    copyToClipboard(plainDigestText);
+  const handleCopyDigest = async () => {
+    const result = await copyToClipboard(plainDigestText);
+    if (!result.success) {
+      console.warn('剪贴板复制失败：', result.error);
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

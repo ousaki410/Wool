@@ -11,15 +11,16 @@ export interface CopyResult {
 }
 
 /**
- * 尝试将文本复制到剪贴板。
+ * 尝试将文本复制到剪贴板（异步）。
  * 优先使用 Clipboard API，不可用时回退到 textarea 选中方式。
  * 两者均失败时返回失败结果，不抛出异常。
+ * 返回的 success 必须反映真实结果，调用方按 Promise 处理。
  */
-export function copyToClipboard(text: string): CopyResult {
+export async function copyToClipboard(text: string): Promise<CopyResult> {
   // 优先使用现代 Clipboard API
   if (typeof navigator !== 'undefined' && navigator.clipboard) {
     try {
-      navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(text);
       return { success: true, method: 'clipboard' };
     } catch {
       // 继续尝试 textarea 兜底

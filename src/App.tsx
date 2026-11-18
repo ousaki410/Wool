@@ -298,14 +298,17 @@ export default function App() {
 
   const [copiedBookmarks, setCopiedBookmarks] = useState(false);
 
-  const handleCopyBookmarksList = () => {
+  const handleCopyBookmarksList = async () => {
     const text = bookmarkedItems
       .map(
         (item, idx) =>
           `${idx + 1}. [${item.verificationStatus}] ${item.title} — 可得: ${item.reward}`
       )
       .join('\n');
-    copyToClipboard(text);
+    const result = await copyToClipboard(text);
+    if (!result.success) {
+      console.warn('剪贴板复制失败：', result.error);
+    }
     setCopiedBookmarks(true);
     setTimeout(() => setCopiedBookmarks(false), 2000);
   };
@@ -534,7 +537,7 @@ export default function App() {
             ) : (
               <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-10 text-center space-y-3">
                 <div className="text-base font-bold text-slate-900 dark:text-slate-100">
-                  没有匹配当前筛选条件的羊毛情报
+                  暂无已核验的福利。下方 {clueItems.length} 条线索尚未核验，仅供参考。
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
                   您可以尝试放宽「核验状态」或「截止日期」条件，或点击下方按钮恢复显示全部情报。

@@ -83,9 +83,12 @@ export const WoolCard: React.FC<WoolCardProps> = ({
   const directionLabel = formatDirectionLabel(item.direction ?? 'neutral');
   const directionColor = formatDirectionColor(item.direction ?? 'neutral');
 
-  const handleCopyCode = () => {
+  const handleCopyCode = async () => {
     if (!item.promoCode) return;
-    copyToClipboard(item.promoCode);
+    const result = await copyToClipboard(item.promoCode);
+    if (!result.success) {
+      console.warn('剪贴板复制失败：', result.error);
+    }
     setCopiedCode(true);
     setTimeout(() => setCopiedCode(false), 1800);
   };
