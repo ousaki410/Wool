@@ -1,3 +1,12 @@
+import {
+  formatShanghaiDate,
+  formatShanghaiDateTime,
+  formatShanghaiDateTimeWithSeconds,
+  formatShanghaiWeekday,
+  getShanghaiCalendarDayDiff,
+  isWithinPastHours,
+} from './shanghaiTime';
+
 export type WoolCategory =
   | 'AI 与大模型'
   | '云服务与算力'
@@ -85,9 +94,6 @@ export interface PushSettingsConfig {
   subscribedCategories: WoolCategory[];
   templateStyle: 'compact' | 'detailed';
 }
-
-// Reference "now" anchored to current environment date (2026-11-17T14:00:00+08:00)
-export const REFERENCE_NOW_ISO = '2026-11-17T14:00:00+08:00';
 
 export const WOOL_CATEGORIES: WoolCategory[] = [
   'AI 与大模型',
@@ -894,7 +900,7 @@ export function getItemExpiresAt(
  */
 export function getDeadlineState(
   deadlineIso: string | null,
-  referenceNowIso: string = REFERENCE_NOW_ISO
+  referenceNowIso: string
 ): DeadlineState {
   if (!deadlineIso) {
     return 'long_term';
@@ -918,7 +924,7 @@ export function getDeadlineState(
  */
 export function formatDeadlineLabel(
   deadlineIso: string | null,
-  referenceNowIso: string = REFERENCE_NOW_ISO
+  referenceNowIso: string
 ): { state: DeadlineState; badgeText: string; dateText: string } {
   if (!deadlineIso) {
     return {
@@ -932,12 +938,15 @@ export function formatDeadlineLabel(
   const endMs = new Date(deadlineIso).getTime();
   const diffMs = endMs - nowMs;
 
-  // Extract YYYY-MM-DD HH:mm directly from the +08:00 ISO string for timezone-independent display
-  const match = deadlineIso.match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/);
-  const dateText = match ? `${match[1]} ${match[2]}` : deadlineIso;
+  // 截止时间统一按 Asia/Shanghai 展示
+  const dateText = formatShanghaiDateTime(deadlineIso);
 
   if (diffMs < 0) {
-    const pastDays = Math.max(1, Math.ceil(Math.abs(diffMs) / (24 * 60 * 60 * 1000)));
+    // 过期天数按上海日历日计算，23:59 → 00:01 会正确跳到下一天
+    const pastDays = Math.max(
+      1,
+      Math.abs(getShanghaiCalendarDayDiff(referenceNowIso, deadlineIso))
+    );
     return {
       state: 'expired',
       badgeText: `已过期 ${pastDays} 天`,
@@ -946,15 +955,18 @@ export function formatDeadlineLabel(
   }
 
   const diffHours = Math.floor(diffMs / (60 * 60 * 1000));
-  if (diffHours <= 72) {
-    if (diffHours < 24) {
+  if (diffMs <= 72 * 60 * 60 * 1000) {
+    if (diffMs < 24 * 60 * 60 * 1000) {
       return {
         state: 'expiring_soon',
         badgeText: `剩 ${Math.max(1, diffHours)} 小时到期`,
         dateText,
       };
     }
-    const diffDays = Math.ceil(diffHours / 24);
+    const diffDays = Math.max(
+      1,
+      getShanghaiCalendarDayDiff(referenceNowIso, deadlineIso)
+    );
     return {
       state: 'expiring_soon',
       badgeText: `即将到期 · 剩 ${diffDays} 天`,
@@ -962,7 +974,10 @@ export function formatDeadlineLabel(
     };
   }
 
-  const remainingDays = Math.ceil(diffMs / (24 * 60 * 60 * 1000));
+  const remainingDays = Math.max(
+    1,
+    getShanghaiCalendarDayDiff(referenceNowIso, deadlineIso)
+  );
   return {
     state: 'active',
     badgeText: `剩余 ${remainingDays} 天`,
@@ -986,7 +1001,7 @@ export interface WoolFilterCriteria {
 export function filterAndSortWoolItems(
   items: WoolItem[],
   criteria: WoolFilterCriteria,
-  referenceNowIso: string = REFERENCE_NOW_ISO
+  referenceNowIso: string
 ): WoolItem[] {
   const {
     searchQuery = '',
@@ -1093,7 +1108,23 @@ export function filterAndSortWoolItems(
 }
 
 /**
- * Generates plain-text Telegram message content for the Daily Digest preview.
+ * 统计 nowIso 之前 hours 小时内新增/入库的条目数。
+ * 优先使用 createdAt，缺省回退 publishedAt；不读取系统当前时间。
+ */
+export function countRecentWoolItems(
+  items: WoolItem[],
+  nowIso: string,
+  hours = 24
+): number {
+  return items.filter((item) =>
+    isWithinPastHours(item.createdAt ?? item.publishedAt, nowIso, hours)
+  ).length;
+}
+
+/**
+ * 生成 Telegram 日报文本。
+ * 所有与“当前时间”有关的展示（日期、星期、生成时间、24h 新增、剩余天数、
+ * 即将到期判断）都只能使用调用方传入的 referenceNowIso。
  */
 export function buildTelegramDigestText(
   items: WoolItem[],
@@ -1102,7 +1133,7 @@ export function buildTelegramDigestText(
     includeExpiringSection: boolean;
     templateStyle: 'compact' | 'detailed';
   },
-  referenceNowIso: string = REFERENCE_NOW_ISO
+  referenceNowIso: string
 ): string {
   const validItems = items.filter((item) => {
     const st = getDeadlineState(getItemExpiresAt(item), referenceNowIso);
@@ -1117,10 +1148,13 @@ export function buildTelegramDigestText(
   const topVerifiedItems = validItems
     .filter((i) => i.verificationStatus === '官方已核验')
     .slice(0, 6);
+  const recentAddedCount = countRecentWoolItems(items, referenceNowIso, 24);
 
   const lines: string[] = [
     '📡 【WoolRadar 羊毛雷达 · 今日情报汇总】',
-    `📅 日期：${new Date(referenceNowIso).toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' })} | 终端单用户本地版`,
+    `📅 日期：${formatShanghaiDate(referenceNowIso)} ${formatShanghaiWeekday(referenceNowIso)} | 终端单用户本地版`,
+    `🕒 生成时间：${formatShanghaiDateTimeWithSeconds(referenceNowIso)} (Asia/Shanghai)`,
+    `🆕 最近 24 小时新增：${recentAddedCount} 条`,
     `📊 有效情报：${validItems.length} 条 | 即将到期：${expiringItems.length} 条`,
     '────────────────────',
   ];

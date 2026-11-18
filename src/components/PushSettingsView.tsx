@@ -14,7 +14,9 @@ import {
   WoolItem,
   getDeadlineState,
   getItemExpiresAt,
+  formatDeadlineLabel,
 } from '../data/woolData';
+import { formatShanghaiDateTime } from '../data/shanghaiTime';
 
 interface PushSettingsViewProps {
   settings: PushSettingsConfig;
@@ -382,6 +384,10 @@ export const PushSettingsView: React.FC<PushSettingsViewProps> = ({
           <div className="text-xs text-slate-500 dark:text-slate-400">
             已剔除过期条目，按核验状态与截止时间排序
           </div>
+          <div className="text-xs text-slate-500 dark:text-slate-400">
+            预演基准时间：<span className="font-mono tabular-nums">{formatShanghaiDateTime(nowIso)}</span>
+            （Asia/Shanghai）
+          </div>
 
           {matchingItems.length > 0 && (
             <ul className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
@@ -392,7 +398,7 @@ export const PushSettingsView: React.FC<PushSettingsViewProps> = ({
                 >
                   <span className="truncate">{item.title}</span>
                   <span className="shrink-0 font-medium text-slate-500 dark:text-slate-400">
-                    {item.verificationStatus}
+                    {item.verificationStatus} · {formatDeadlineLabel(getItemExpiresAt(item), nowIso).badgeText}
                   </span>
                 </li>
               ))}

@@ -14,7 +14,14 @@ import {
   getItemExpiresAt,
   formatDeadlineLabel,
   buildTelegramDigestText,
+  countRecentWoolItems,
 } from '../data/woolData';
+import {
+  formatShanghaiClock,
+  formatShanghaiDate,
+  formatShanghaiDateTime,
+  formatShanghaiMonthDayWeek,
+} from '../data/shanghaiTime';
 
 interface TelegramDigestViewProps {
   items: WoolItem[];
@@ -39,15 +46,9 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
   onNavigateToFiltered,
   onNavigateToBookmarks,
 }) => {
-  const displayDate = new Date(nowIso).toLocaleDateString('zh-CN', {
-    timeZone: 'Asia/Shanghai',
-  });
-  const displayWeekday = new Date(nowIso).toLocaleDateString('zh-CN', {
-    timeZone: 'Asia/Shanghai',
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long',
-  });
+  const displayDate = formatShanghaiDate(nowIso);
+  const displayDateTime = formatShanghaiDateTime(nowIso);
+  const displayWeekday = formatShanghaiMonthDayWeek(nowIso);
 
   const [onlyVerified, setOnlyVerified] = useState<boolean>(false);
   const [includeExpiringSection, setIncludeExpiringSection] = useState<boolean>(true);
@@ -101,6 +102,11 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
     [validItems]
   );
 
+  const recentAddedCount = useMemo(
+    () => countRecentWoolItems(items, nowIso, 24),
+    [items, nowIso]
+  );
+
   const plainDigestText = useMemo(
     () => {
       // 传给文本生成器的列表也按核验状态与截止时间排序
@@ -135,15 +141,12 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
   };
 
   const handleSimulatePush = () => {
-    const now = new Date();
-    const hh = String(now.getHours()).padStart(2, '0');
-    const mm = String(now.getMinutes()).padStart(2, '0');
-    const ss = String(now.getSeconds()).padStart(2, '0');
+    const time = formatShanghaiClock(nowIso, true);
     setSimulatedMessages((prev) => [
       ...prev,
       {
-        id: `sim-${Date.now()}`,
-        time: `${hh}:${mm}:${ss}`,
+        id: `sim-${nowIso}-${prev.length}`,
+        time,
         note: `已按「${templateStyle === 'detailed' ? '详细版' : '精简版'} · ${
           onlyVerified ? '仅官方已核验' : '全量有效线索'
         }」生成快照并投递至本地预览流（共包含 ${validItems.length} 条有效羊毛）。`,
@@ -295,8 +298,11 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
             </div>
           </div>
 
-          <div className="text-xs font-mono text-slate-500 dark:text-[#6C7883] tabular-nums">
-            {displayDate}
+          <div
+            className="text-xs font-mono text-slate-500 dark:text-[#6C7883] tabular-nums"
+            title="生成时间（Asia/Shanghai）"
+          >
+            {displayDateTime}
           </div>
         </div>
 
@@ -321,7 +327,7 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
                   📡 【WoolRadar 羊毛情报汇总】{displayDate}
                 </div>
                 <div className="mt-1.5 text-xs text-slate-600 dark:text-[#8E9BA8] font-mono tabular-nums">
-                  有效情报：{validItems.length} 条 · 72h 内即将截止：{expiringItems.length} 条 · 官方已核验：{featuredVerified.length} 条
+                  有效情报：{validItems.length} 条 · 72h 内即将截止：{expiringItems.length} 条 · 官方已核验：{featuredVerified.length} 条 · 最近 24 小时新增：{recentAddedCount} 条
                 </div>
               </div>
 
@@ -428,8 +434,8 @@ export const TelegramDigestView: React.FC<TelegramDigestViewProps> = ({
               {/* Telegram Footer Timestamp & Views */}
               <div className="pt-2 border-t border-slate-100 dark:border-[#243447] flex items-center justify-between text-[11px] text-slate-400 dark:text-[#6C7883] font-mono tabular-nums">
                 <span>💡 领完试用订阅后请检查自动续费设置，防反撸</span>
-                <span className="inline-flex items-center gap-1">
-                  <span>08:30</span>
+                <span className="inline-flex items-center gap-1" title="生成时间（Asia/Shanghai）">
+                  <span>{formatShanghaiClock(nowIso, true)}</span>
                   <CheckCheck className="w-3.5 h-3.5 text-[#2AABEE]" />
                 </span>
               </div>

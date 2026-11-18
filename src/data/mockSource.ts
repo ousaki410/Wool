@@ -1,6 +1,7 @@
 import type { SourceChannel, WoolItem } from './woolData';
 import { ADDED_TEST_ITEMS } from './woolData.extra';
 import type { WoolSource, WoolSourceEvent, WoolSourceEventType } from './source';
+import { formatShanghaiDateTime } from './shanghaiTime';
 
 // ---------------------------------------------------------------------------
 // 种子数据：保留现有 25 条 woolData 作为初始数据（过渡用，deadline 与 expiresAt 值一致）
@@ -880,7 +881,7 @@ export class MockSource implements WoolSource {
           target.reward = target.reward + ' · 已更新';
         }
         const nowIso = new Date(this.now()).toISOString();
-        target.publishedAt = nowIso;
+        // 只更新 updatedAt，保留原始 publishedAt，避免“已更新”被误算成“24h 新增”
         target.updatedAt = nowIso;
         target.isUpdated = true;
         this.emit('updated', target, before.sourceId);
@@ -904,9 +905,7 @@ export class MockSource implements WoolSource {
         const ch = this.rng.pick(enabled);
         if (!ch) return;
         ch.status = this.rng.pick(['延迟', '维护中']);
-        ch.lastSyncAt = new Date(this.now()).toLocaleString('zh-CN', {
-          hour12: false,
-        });
+        ch.lastSyncAt = formatShanghaiDateTime(new Date(this.now()).toISOString());
         this.emit('source_failed', undefined, ch.id);
         break;
       }
@@ -917,9 +916,7 @@ export class MockSource implements WoolSource {
         const ch = this.rng.pick(faulty);
         if (!ch) return;
         ch.status = '正常';
-        ch.lastSyncAt = new Date(this.now()).toLocaleString('zh-CN', {
-          hour12: false,
-        });
+        ch.lastSyncAt = formatShanghaiDateTime(new Date(this.now()).toISOString());
         this.emit('source_recovered', undefined, ch.id);
         break;
       }
