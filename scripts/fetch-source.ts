@@ -609,6 +609,9 @@ export async function main(): Promise<void> {
     );
   }
 
+  // 今日羊毛 → 写入 public/data/wool.json
+  writeWoolJson(WOOL_JSON_PATH, todayItems, nowMs, finalStats);
+
   // 新闻订阅 → 单独“动态”分区，不进今日羊毛（news）
   // 需在 sources 聚合前先拿到 newsItems 的条目数
   const newsXml = await fetchRssText(NEWS_RSS_URL);
@@ -652,7 +655,7 @@ export async function main(): Promise<void> {
     `[fetch-source] 统计：未知厂商 ${finalStats.unknownVendorCount} 条，无官方链接 ${finalStats.noOfficialLinkCount} 条，kind=${JSON.stringify(finalStats.kindCount)}，kind占比=${JSON.stringify(finalStats.kindPct)}，direction=${JSON.stringify(finalStats.directionCount)}，direction占比=${JSON.stringify(finalStats.directionPct)}`
   );
   // eslint-disable-next-line no-console
-  console.log(`[fetch-source] 已写入 ${WOOL_JSON_PATH} 与 ${NEWS_JSON_PATH}`);
+  console.log(`[fetch-source] 已写入 ${WOOL_JSON_PATH}、${NEWS_JSON_PATH} 与 ${SOURCES_JSON_PATH}`);
 }
 
 if (typeof process !== 'undefined' && process.argv[1] && process.argv[1].endsWith('fetch-source.ts')) {
