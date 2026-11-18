@@ -98,7 +98,7 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
             className="mt-2 inline-flex items-center justify-center gap-1.5 py-1.5 px-3 text-xs font-semibold text-white bg-teal-600 hover:bg-teal-700 rounded-lg transition-colors cursor-pointer whitespace-nowrap"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${syncing ? 'animate-spin' : ''}`} />
-            <span>{syncing ? '正在刷新本地索引...' : '刷新全部来源状态'}</span>
+            <span>{syncing ? '正在模拟来源事件...' : '模拟一次来源事件'}</span>
           </button>
         </div>
       </div>

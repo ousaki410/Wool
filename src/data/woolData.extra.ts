@@ -1,10 +1,22 @@
 import type { WoolItem } from './woolData';
 
 /**
+ * “新增”事件模板：只保存内容与相对到期小时数，不保存绝对时间。
+ * mockSource 在事件发生时用数据源时钟换算成 ISO。
+ */
+export interface AddedWoolSeed
+  extends Omit<
+    WoolItem,
+    'publishedAt' | 'expiresAt' | 'deadline' | 'createdAt' | 'updatedAt'
+  > {
+  expiresInHours: number;
+}
+
+/**
  * 仅用于前端模拟“新增”事件的数据，与 25 条初始数据分开放置。
  * 不接后端、不调用任何 AI 服务、不包含任何密钥。
  */
-export const ADDED_TEST_ITEMS: WoolItem[] = [
+export const ADDED_TEST_ITEMS: AddedWoolSeed[] = [
   {
     id: 'WR-2026-T1',
     title: '示例新增：云厂商算力券补货',
@@ -16,9 +28,7 @@ export const ADDED_TEST_ITEMS: WoolItem[] = [
     claimMethod: '直接领取',
     verificationStatus: '未核验',
     verificationNote: '前端模拟事件生成，仅用于演示',
-    expiresAt: '2026-12-31T23:59:59+08:00',
-    deadline: '2026-12-31T23:59:59+08:00',
-    publishedAt: '2026-11-17T14:00:00+08:00',
+    expiresInHours: 72,
     sourceId: 'src-test',
     sourceName: '模拟来源',
     sourceUrl: 'https://example.test/',
@@ -37,9 +47,7 @@ export const ADDED_TEST_ITEMS: WoolItem[] = [
     claimMethod: '注册认证',
     verificationStatus: '社区线索',
     verificationNote: '前端模拟事件生成，仅用于演示',
-    expiresAt: '2026-12-31T23:59:59+08:00',
-    deadline: '2026-12-31T23:59:59+08:00',
-    publishedAt: '2026-11-17T14:00:00+08:00',
+    expiresInHours: 120,
     sourceId: 'src-test',
     sourceName: '模拟来源',
     sourceUrl: 'https://example.test/',

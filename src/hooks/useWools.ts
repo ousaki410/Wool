@@ -38,7 +38,7 @@ export function useWools(): UseWoolsResult {
   const [channels, setChannels] = useState<SourceChannel[]>(
     () => mockSource.list().channels
   );
-  const [nowIso, setNowIso] = useState<string>(() => new Date().toISOString());
+  const [nowIso, setNowIso] = useState<string>(() => mockSource.nowIso());
   const [events, setEvents] = useState<WoolSourceEvent[]>([]);
   const [paused, setPaused] = useState<boolean>(() => mockSource.isPaused());
   const [fadeVersion, setFadeVersion] = useState(0);
@@ -70,7 +70,7 @@ export function useWools(): UseWoolsResult {
   // 每分钟刷新当前时间：只更新这一个状态，列表引用保持不变
   useEffect(() => {
     const timer = setInterval(() => {
-      setNowIso(new Date().toISOString());
+      setNowIso(mockSource.nowIso());
     }, 60_000);
     return () => clearInterval(timer);
   }, []);
@@ -99,7 +99,7 @@ export function useWools(): UseWoolsResult {
       // 依赖 fadeVersion：查看后立即重新计算
       void fadeVersion;
       const referenceIso = item.updatedAt ?? item.publishedAt;
-      const ageMs = Date.now() - new Date(referenceIso).getTime();
+      const ageMs = Date.parse(mockSource.nowIso()) - new Date(referenceIso).getTime();
       const stillFresh = Number.isFinite(ageMs) && ageMs < FRESH_MARK_TTL_MS;
       const faded = mockSource.isFaded(item.id);
       return {

@@ -12,8 +12,10 @@ import {
 import { REFERENCE_NOW_ISO } from './testFixtures';
 import { MockSource } from './mockSource';
 
+const FIXED_NOW_MS = Date.parse(REFERENCE_NOW_ISO);
+
 test('woolData provides exactly 25 realistic mock items with complete fields', () => {
-  const items = getWoolItems();
+  const items = getWoolItems(FIXED_NOW_MS);
   assert.equal(items.length, 25);
 
   for (const item of items) {
@@ -34,7 +36,7 @@ test('getDeadlineState distinguishes expiring_soon, active, long_term, and expir
 });
 
 test('filterAndSortWoolItems filters by category, claimMethod, deadlineFilter, and verificationStatus', () => {
-  const items = getWoolItems();
+  const items = getWoolItems(FIXED_NOW_MS);
 
   const verifiedOnly = filterAndSortWoolItems(
     items,
@@ -57,7 +59,7 @@ test('filterAndSortWoolItems filters by category, claimMethod, deadlineFilter, a
     { deadlineFilter: '已过期' },
     REFERENCE_NOW_ISO
   );
-  assert.equal(expiredOnly.length, 4);
+  assert.equal(expiredOnly.length, 3);
   assert.ok(expiredOnly.every((i) => getDeadlineState(i.deadline, REFERENCE_NOW_ISO) === 'expired'));
 
   const codeClaim = filterAndSortWoolItems(
@@ -70,7 +72,7 @@ test('filterAndSortWoolItems filters by category, claimMethod, deadlineFilter, a
 });
 
 test('buildTelegramDigestText renders structured Telegram digest', () => {
-  const items = getWoolItems();
+  const items = getWoolItems(FIXED_NOW_MS);
   const digest = buildTelegramDigestText(
     items,
     {
@@ -87,7 +89,7 @@ test('buildTelegramDigestText renders structured Telegram digest', () => {
 });
 
 test('source channels list is populated', () => {
-  const channels = getSourceChannels();
+  const channels = getSourceChannels(FIXED_NOW_MS);
   assert.ok(channels.length >= 6);
   const label = formatDeadlineLabel('2026-11-18T12:00:00+08:00', REFERENCE_NOW_ISO);
   assert.equal(label.state, 'expiring_soon');
@@ -126,7 +128,7 @@ test('event-driven source keeps item list and channel status in sync', () => {
 });
 
 test('digest title, weekday and generation time follow nowIso across midnight', () => {
-  const items = getWoolItems();
+  const items = getWoolItems(FIXED_NOW_MS);
   const options = {
     onlyVerified: false,
     includeExpiringSection: true,
@@ -151,7 +153,7 @@ test('digest title, weekday and generation time follow nowIso across midnight', 
 });
 
 test('digest 24-hour new-item window moves with nowIso', () => {
-  const items = getWoolItems();
+  const items = getWoolItems(FIXED_NOW_MS);
   const options = {
     onlyVerified: false,
     includeExpiringSection: true,
@@ -210,7 +212,7 @@ test('deadline labels recalculate remaining days across month and year boundarie
 });
 
 test('digest never emits the fixed 2026-11-17 date unless nowIso is that day', () => {
-  const items = getWoolItems();
+  const items = getWoolItems(FIXED_NOW_MS);
   const options = {
     onlyVerified: false,
     includeExpiringSection: true,
@@ -233,7 +235,7 @@ test('digest never emits the fixed 2026-11-17 date unless nowIso is that day', (
 });
 
 test('deadline filtering for push preview follows the same nowIso', () => {
-  const items = getWoolItems();
+  const items = getWoolItems(FIXED_NOW_MS);
   const november = filterAndSortWoolItems(
     items,
     { deadlineFilter: '有效期内' },

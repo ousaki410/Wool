@@ -33,6 +33,8 @@ export interface WoolSourceEvent {
 export interface WoolSource {
   /** 返回当前快照（不含订阅关系） */
   list(): { items: WoolItem[]; channels: SourceChannel[] };
+  /** 数据源自己的当前时间（ISO）；UI 的所有“当前时间”展示都应以此为准 */
+  nowIso(): string;
   /**
    * 订阅来源事件，每次产生事件时回调。
    * 返回取消订阅函数。
