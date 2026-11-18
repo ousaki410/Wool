@@ -2,7 +2,6 @@ import type { SourceChannel, WoolItem } from './woolData';
 import { ADDED_TEST_ITEMS } from './woolData.extra';
 import type { WoolSource, WoolSourceEvent, WoolSourceEventType } from './source';
 import { materializeSeedData } from './woolSeed';
-import { formatShanghaiDateTime } from './shanghaiTime';
 
 // ---------------------------------------------------------------------------
 // 简易可复现随机数（种子可设，测试不依赖真实随机）
@@ -177,22 +176,15 @@ export class MockSource implements WoolSource {
         break;
       }
       case 'source_failed': {
-        const enabled = this.channels.filter((c) => c.enabled && c.status === '正常');
-        const ch = this.rng.pick(enabled);
+        // 真实数据源不再跟踪运行状态，此处仅记录事件
+        const ch = this.rng.pick(this.channels);
         if (!ch) return;
-        ch.status = this.rng.pick(['延迟', '维护中']);
-        ch.lastSyncAt = formatShanghaiDateTime(new Date(this.now()).toISOString());
         this.emit('source_failed', undefined, ch.id);
         break;
       }
       case 'source_recovered': {
-        const faulty = this.channels.filter(
-          (c) => c.enabled && c.status !== '正常'
-        );
-        const ch = this.rng.pick(faulty);
+        const ch = this.rng.pick(this.channels);
         if (!ch) return;
-        ch.status = '正常';
-        ch.lastSyncAt = formatShanghaiDateTime(new Date(this.now()).toISOString());
         this.emit('source_recovered', undefined, ch.id);
         break;
       }

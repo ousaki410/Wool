@@ -64,33 +64,28 @@ test('expired event moves expiresAt into the past for a live item', () => {
   assert.equal(expired?.deadline, expired?.expiresAt);
 });
 
-test('source failure and recovery update channel status synchronously', () => {
+test('source failure and recovery events are emitted', () => {
   const source = new MockSource({ seed: 5 });
   const events: WoolSourceEvent[] = [];
   source.subscribe((event) => events.push(event));
 
-  const before = source.list().channels.filter((c) => c.status === '正常').length;
+  const beforeChannels = source.list().channels.length;
 
   source.trigger('source_failed');
   const failedEvent = events.at(-1);
   assert.equal(failedEvent?.type, 'source_failed');
+  assert.ok(failedEvent?.sourceId);
   const failedChannel = source
     .list()
     .channels.find((c) => c.id === failedEvent?.sourceId);
   assert.ok(failedChannel);
-  assert.notEqual(failedChannel?.status, '正常');
-  const afterFailure = source.list().channels.filter((c) => c.status === '正常').length;
-  assert.equal(afterFailure, before - 1);
 
   source.trigger('source_recovered');
   const recoveredEvent = events.at(-1);
   assert.equal(recoveredEvent?.type, 'source_recovered');
-  const recoveredChannel = source
-    .list()
-    .channels.find((c) => c.id === recoveredEvent?.sourceId);
-  assert.equal(recoveredChannel?.status, '正常');
-  const afterRecovery = source.list().channels.filter((c) => c.status === '正常').length;
-  assert.equal(afterRecovery, before);
+  assert.ok(recoveredEvent?.sourceId);
+  const afterChannels = source.list().channels.length;
+  assert.equal(afterChannels, beforeChannels);
 });
 
 test('pause/resume only affects automatic events, manual trigger still works', () => {

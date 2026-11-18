@@ -16,6 +16,7 @@ const NEWS_RSS_URL = 'https://free-llm-intel.aishort.top/feeds/llm-news-all.xml'
 const README_URL = 'https://raw.githubusercontent.com/rockbenben/free-llm-intel/main/README.md';
 const WOOL_JSON_PATH = 'public/data/wool.json';
 const NEWS_JSON_PATH = 'public/data/news.json';
+const SOURCES_JSON_PATH = 'public/data/sources.json';
 const SOURCE_NAME = 'free-llm-intel 公开订阅';
 const SOURCE_URL = 'https://free-llm-intel.aishort.top/';
 
@@ -30,6 +31,15 @@ export interface RssItem {
   category?: string;
   source?: string;
   description: string;
+}
+
+export interface SourceInfo {
+  id: string;
+  name: string;
+  type: string;
+  url: string;
+  entryCount: number;
+  fetchedAt: string;
 }
 
 export interface OfficialLink {
@@ -470,6 +480,21 @@ export function writeWoolJson(path: string, items: WoolItem[], nowMs: number, st
   writeFileSync(path, JSON.stringify(out, null, 2) + '\n', 'utf8');
 }
 
+/** 把来源聚合信息写入指定的 JSON 文件。 */
+export function writeSourceJson(path: string, sources: SourceInfo[], nowMs: number): void {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+
+  const out: Record<string, unknown> = {
+    source: SOURCE_NAME,
+    sourceUrl: SOURCE_URL,
+    fetchedAt: new Date(nowMs).toISOString(),
+    count: sources.length,
+    sources,
+  };
+  writeFileSync(path, JSON.stringify(out, null, 2) + '\n', 'utf8');
+}
+
 /** 把单条 RSS 条目转为 WoolItem。缺失字段不编造，核验状态固定“未核验”。 */
 export function convertToWoolItem(
   rss: RssItem,
@@ -584,7 +609,26 @@ export async function main(): Promise<void> {
     );
   }
 
-  writeWoolJson(WOOL_JSON_PATH, todayItems, nowMs, finalStats);
+  // 聚合每个来源的条目数，写入 sources.json
+  const sourceMap = new Map<string, SourceInfo>();
+  for (const it of todayItems) {
+    const key = it.sourceId;
+    const existing = sourceMap.get(key);
+    if (existing) {
+      existing.entryCount += 1;
+    } else {
+      sourceMap.set(key, {
+        id: it.sourceId,
+        name: it.sourceName,
+        type: it.category,
+        url: it.sourceUrl,
+        entryCount: 1,
+        fetchedAt: new Date(nowMs).toISOString(),
+      });
+    }
+  }
+  const sources = Array.from(sourceMap.values()).sort((a, b) => b.entryCount - a.entryCount);
+  writeSourceJson(SOURCES_JSON_PATH, sources, nowMs);
 
   // 新闻订阅 → 单独“动态”分区，不进今日羊毛（news）
   const newsXml = await fetchRssText(NEWS_RSS_URL);

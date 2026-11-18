@@ -15,7 +15,7 @@ export interface WoolSeedItem
 /**
  * 种子来源：lastSyncOffsetMinutes 表示上次同步发生在多少分钟前。
  */
-export interface SourceChannelSeed extends Omit<SourceChannel, 'lastSyncAt'> {
+export interface SourceChannelSeed extends Omit<SourceChannel, 'lastFetchAt'> {
   lastSyncOffsetMinutes: number;
 }
 
@@ -726,116 +726,68 @@ export const WOOL_SEED_ITEMS: WoolSeedItem[] = [
 
 export const SOURCE_CHANNEL_SEEDS: SourceChannelSeed[] = [
   {
-    "id": "src-anthropic",
-    "name": "Anthropic 开发者公告",
-    "type": "官方公告",
-    "url": "https://console.anthropic.com",
-    "status": "正常",
-    "intervalMinutes": 15,
-    "todayCount": 2,
-    "totalCount": 38,
-    "verifiedRate": 100,
-    "enabled": true,
-    "description": "监测 Claude API 官方账单促销、Build Tier 算力补贴与开发者赛事赠金。",
-    "lastSyncOffsetMinutes": 5
+    id: 'src-anthropic',
+    name: 'Anthropic 开发者公告',
+    type: '官方公告',
+    url: 'https://console.anthropic.com',
+    entryCount: 2,
+    lastSyncOffsetMinutes: 5,
   },
   {
-    "id": "src-aliyun",
-    "name": "阿里云官方活动中心",
-    "type": "官方公告",
-    "url": "https://bailian.console.aliyun.com",
-    "status": "正常",
-    "intervalMinutes": 30,
-    "todayCount": 3,
-    "totalCount": 94,
-    "verifiedRate": 98,
-    "enabled": true,
-    "description": "追踪百炼大模型 Token 免费包、ECS 开发者试用与无门槛算力抵扣券。",
-    "lastSyncOffsetMinutes": 10
+    id: 'src-aliyun',
+    name: '阿里云官方活动中心',
+    type: '官方公告',
+    url: 'https://bailian.console.aliyun.com',
+    entryCount: 3,
+    lastSyncOffsetMinutes: 10,
   },
   {
-    "id": "src-cloudflare",
-    "name": "Cloudflare 开发者博客",
-    "type": "官方公告",
-    "url": "https://developers.cloudflare.com",
-    "status": "正常",
-    "intervalMinutes": 30,
-    "todayCount": 1,
-    "totalCount": 45,
-    "verifiedRate": 100,
-    "enabled": true,
-    "description": "同步 Workers、R2、Pages 独立开发者孵化计划与黑客松账单赠金。",
-    "lastSyncOffsetMinutes": 18
+    id: 'src-cloudflare',
+    name: 'Cloudflare 开发者博客',
+    type: '官方公告',
+    url: 'https://developers.cloudflare.com',
+    entryCount: 1,
+    lastSyncOffsetMinutes: 18,
   },
   {
-    "id": "src-linuxdo",
-    "name": "Linux.do 福利专区",
-    "type": "技术社区",
-    "url": "https://linux.do",
-    "status": "正常",
-    "intervalMinutes": 10,
-    "todayCount": 6,
-    "totalCount": 312,
-    "verifiedRate": 74,
-    "enabled": true,
-    "description": "高活跃度中文开发者羊毛社区，涵盖 SaaS 兑换码、API 额度与开源福利实测。",
-    "lastSyncOffsetMinutes": 2
+    id: 'src-linuxdo',
+    name: 'Linux.do 福利专区',
+    type: '技术社区',
+    url: 'https://linux.do',
+    entryCount: 6,
+    lastSyncOffsetMinutes: 2,
   },
   {
-    "id": "src-v2ex",
-    "name": "V2EX 程序员节点",
-    "type": "技术社区",
-    "url": "https://www.v2ex.com/go/programmer",
-    "status": "正常",
-    "intervalMinutes": 15,
-    "todayCount": 4,
-    "totalCount": 218,
-    "verifiedRate": 81,
-    "enabled": true,
-    "description": "聚合独立开发者工具折扣、教育邮箱认证技巧与云厂商隐藏促销线索。",
-    "lastSyncOffsetMinutes": 12
+    id: 'src-v2ex',
+    name: 'V2EX 程序员节点',
+    type: '技术社区',
+    url: 'https://www.v2ex.com/go/programmer',
+    entryCount: 4,
+    lastSyncOffsetMinutes: 12,
   },
   {
-    "id": "src-unionpay",
-    "name": "银联卡券监测站",
-    "type": "金融卡券监测",
-    "url": "https://www.95516.com",
-    "status": "正常",
-    "intervalMinutes": 10,
-    "todayCount": 5,
-    "totalCount": 420,
-    "verifiedRate": 92,
-    "enabled": true,
-    "description": "实时跟踪云闪付数字人民币红包、各大银行微信立减金与咖啡餐饮神券库存。",
-    "lastSyncOffsetMinutes": 4
+    id: 'src-unionpay',
+    name: '银联卡券监测站',
+    type: '金融卡券监测',
+    url: 'https://www.95516.com',
+    entryCount: 5,
+    lastSyncOffsetMinutes: 4,
   },
   {
-    "id": "src-github",
-    "name": "GitHub Education 官方",
-    "type": "开源与教育计划",
-    "url": "https://education.github.com/pack",
-    "status": "维护中",
-    "intervalMinutes": 60,
-    "todayCount": 1,
-    "totalCount": 67,
-    "verifiedRate": 100,
-    "enabled": true,
-    "description": "监控 GitHub 学生包新增合作厂商、JetBrains 与 Figma 开源/教育授权政策更新。",
-    "lastSyncOffsetMinutes": 90
+    id: 'src-github',
+    name: 'GitHub Education 官方',
+    type: '开源与教育计划',
+    url: 'https://education.github.com/pack',
+    entryCount: 1,
+    lastSyncOffsetMinutes: 90,
   },
   {
-    "id": "src-reddit",
-    "name": "Reddit r/LocalLLaMA 线索",
-    "type": "聚合频道",
-    "url": "https://www.reddit.com/r/LocalLLaMA",
-    "status": "延迟",
-    "intervalMinutes": 45,
-    "todayCount": 2,
-    "totalCount": 129,
-    "verifiedRate": 58,
-    "enabled": true,
-    "description": "海外 AI 算力与模型路由平台早期空投线索，时效快但需二次核验防钓鱼。",
-    "lastSyncOffsetMinutes": 165
+    id: 'src-reddit',
+    name: 'Reddit r/LocalLLaMA 线索',
+    type: '聚合频道',
+    url: 'https://www.reddit.com/r/LocalLLaMA',
+    entryCount: 2,
+    lastSyncOffsetMinutes: 165,
   }
 ];
 
@@ -868,13 +820,13 @@ export function materializeSeedData(nowMs: number): {
 
   const channels: SourceChannel[] = SOURCE_CHANNEL_SEEDS.map((seed) => {
     const { lastSyncOffsetMinutes, ...rest } = seed;
-    const lastSyncAt = new Date(
+    const lastFetchAt = new Date(
       nowMs - lastSyncOffsetMinutes * MINUTE_MS
     ).toISOString();
 
     return {
       ...rest,
-      lastSyncAt: formatShanghaiDateTime(lastSyncAt),
+      lastFetchAt: formatShanghaiDateTime(lastFetchAt),
     };
   });
 

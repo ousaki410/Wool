@@ -143,27 +143,8 @@ export default function App() {
     );
   };
 
-  // 来源通道状态来自 useWools；本地仅保存启用/停用偏好
-  const [channelEnabledOverrides, setChannelEnabledOverrides] = useState<
-    Record<string, boolean>
-  >({});
-
-  const channels = useMemo<SourceChannel[]>(
-    () =>
-      sourceChannels.map((ch) =>
-        channelEnabledOverrides[ch.id] === undefined
-          ? ch
-          : { ...ch, enabled: channelEnabledOverrides[ch.id] }
-      ),
-    [sourceChannels, channelEnabledOverrides]
-  );
-
-  const handleToggleChannel = (id: string) => {
-    setChannelEnabledOverrides((prev) => ({
-      ...prev,
-      [id]: !(prev[id] ?? sourceChannels.find((c) => c.id === id)?.enabled ?? true),
-    }));
-  };
+  // 来源通道状态来自 useWools（已从 sources.json 加载）
+  const channels = sourceChannels;
 
   // Push Settings State
   const [pushSettings, setPushSettings] = useState<PushSettingsConfig>(() => {
@@ -262,11 +243,6 @@ export default function App() {
           getDeadlineState(getItemExpiresAt(i), nowIso) !== 'expired'
       ),
     [allItems, nowIso]
-  );
-
-  const normalSourceCount = useMemo(
-    () => channels.filter((c) => c.status === '正常').length,
-    [channels]
   );
 
   const activeSourceObj = useMemo(
@@ -428,9 +404,9 @@ export default function App() {
                 className="inline-flex items-center gap-1.5 font-medium text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors cursor-pointer"
               >
                 <Activity className="w-3.5 h-3.5" />
-                <span>来源正常</span>
+                <span>来源数量</span>
                 <strong className="font-mono tabular-nums">
-                  {normalSourceCount}/{channels.length}
+                  {channels.length}
                 </strong>
               </button>
 
@@ -611,9 +587,8 @@ export default function App() {
         {/* TAB 3: 来源状态 */}
         {activeTab === 'sources' && (
           <SourcesStatusView
+            items={allItems}
             channels={channels}
-            onToggleChannel={handleToggleChannel}
-            onSyncAll={trigger}
             onSelectSourceItems={(srcId) => {
               handleResetFilters();
               setSourceIdFilter(srcId);

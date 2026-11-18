@@ -7,6 +7,8 @@ const BASE_URL =
     ? import.meta.env.BASE_URL
     : '/';
 const WOOL_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/wool.json`;
+const SOURCES_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/sources.json`;
+const SOURCE_URL = 'https://free-llm-intel.aishort.top/';
 
 export interface RealSourceStatus {
   /** 上一次抓取是否成功 */
@@ -29,6 +31,23 @@ export interface WoolJson {
   items: WoolItem[];
 }
 
+export interface SourceInfo {
+  id: string;
+  name: string;
+  type: string;
+  url: string;
+  entryCount: number;
+  fetchedAt: string;
+}
+
+export interface SourcesJson {
+  source: string;
+  sourceUrl: string;
+  fetchedAt: string;
+  count: number;
+  sources: SourceInfo[];
+}
+
 function isWoolItem(value: unknown): value is WoolItem {
   if (!value || typeof value !== 'object') return false;
   const it = value as Record<string, unknown>;
@@ -37,6 +56,19 @@ function isWoolItem(value: unknown): value is WoolItem {
     typeof it.title === 'string' &&
     typeof it.sourceId === 'string' &&
     typeof it.sourceName === 'string'
+  );
+}
+
+function isSourceInfo(value: unknown): value is SourceInfo {
+  if (!value || typeof value !== 'object') return false;
+  const it = value as Record<string, unknown>;
+  return (
+    typeof it.id === 'string' &&
+    typeof it.name === 'string' &&
+    typeof it.type === 'string' &&
+    typeof it.url === 'string' &&
+    typeof it.entryCount === 'number' &&
+    (it.fetchedAt === null || typeof it.fetchedAt === 'string')
   );
 }
 
@@ -75,48 +107,20 @@ function normalizeItem(it: unknown, index: number): WoolItem {
   };
 }
 
-function buildChannel(items: WoolItem[], status: RealSourceStatus): SourceChannel[] {
-  const names = new Set<string>();
-  for (const it of items) names.add(it.sourceName);
-  const channelNames = Array.from(names);
-
-  return channelNames.map((name) => ({
-    id: `src-real-${name.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`,
-    name,
-    type: '聚合频道' as const,
-    url: SOURCE_URL,
-    status: status.ok ? ('正常' as const) : ('延迟' as const),
-    lastSyncAt: status.lastSyncAt || status.fetchedAt || '',
-    intervalMinutes: 1440,
-    todayCount: status.ok ? items.length : 0,
-    totalCount: status.ok ? items.length : 0,
-    verifiedRate: 0,
-    enabled: true,
-    description:
-      '来自 free-llm-intel 公开 RSS 订阅，条目核验状态均为“未核验”，不自动生成兑换码。',
+function buildChannels(sources: SourceInfo[], status: RealSourceStatus): SourceChannel[] {
+  return sources.map((src) => ({
+    id: src.id,
+    name: src.name,
+    type: src.type,
+    url: src.url,
+    entryCount: src.entryCount,
+    lastFetchAt: src.fetchedAt || null,
   }));
 }
 
-function buildFailedChannel(status: RealSourceStatus): SourceChannel[] {
-  return [
-    {
-      id: 'src-real-free-llm-intel',
-      name: 'free-llm-intel 公开订阅',
-      type: '聚合频道',
-      url: SOURCE_URL,
-      status: '延迟',
-      lastSyncAt: status.lastSyncAt || '',
-      intervalMinutes: 1440,
-      todayCount: 0,
-      totalCount: 0,
-      verifiedRate: 0,
-      enabled: true,
-      description: `抓取失败：${status.error || '未知错误'}。已清空列表，不展示旧数据冒充新数据。`,
-    },
-  ];
+function buildFailedChannels(status: RealSourceStatus): SourceChannel[] {
+  return [];
 }
-
-const SOURCE_URL = 'https://free-llm-intel.aishort.top/';
 
 /**
  * 真实数据源：运行时读取 public/data/wool.json（由 scripts/fetch-source.ts 生成并通过 Actions 发布）。
@@ -143,19 +147,29 @@ export class RealSource implements WoolSource {
   async refresh(): Promise<void> {
     const prevOk = this.status.ok;
     try {
-      const res = await fetch(WOOL_JSON_URL, { cache: 'no-store' });
-      if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
-      const data = (await res.json()) as WoolJson;
-      const rawItems = Array.isArray(data.items) ? data.items : [];
+      const [woolRes, sourcesRes] = await Promise.all([
+        fetch(WOOL_JSON_URL, { cache: 'no-store' }),
+        fetch(SOURCES_JSON_URL, { cache: 'no-store' }),
+      ]);
+
+      if (!woolRes.ok) throw new Error(`HTTP ${woolRes.status} ${woolRes.statusText}`);
+      if (!sourcesRes.ok) throw new Error(`HTTP ${sourcesRes.status} ${sourcesRes.statusText}`);
+
+      const woolData = (await woolRes.json()) as WoolJson;
+      const sourcesData = (await sourcesRes.json()) as SourcesJson;
+
+      const rawItems = Array.isArray(woolData.items) ? woolData.items : [];
       this.items = rawItems.filter(isWoolItem).map(normalizeItem);
+      this.sources = Array.isArray(sourcesData.sources) ? sourcesData.sources.filter(isSourceInfo) : [];
+      this.channels = buildChannels(this.sources, this.status);
+
       this.status = {
         ok: true,
-        lastSyncAt: data.fetchedAt || new Date().toISOString(),
+        lastSyncAt: woolData.fetchedAt || new Date().toISOString(),
         error: null,
-        fetchedAt: data.fetchedAt || new Date().toISOString(),
+        fetchedAt: woolData.fetchedAt || new Date().toISOString(),
         count: this.items.length,
       };
-      this.channels = buildChannel(this.items, this.status);
 
       if (!prevOk) {
         this.emit('source_recovered', undefined, 'src-real');
@@ -164,6 +178,8 @@ export class RealSource implements WoolSource {
     } catch (e) {
       // 抓取失败：不展示旧数据冒充新数据，清空列表，错误上报至 UI
       this.items = [];
+      this.sources = [];
+      this.channels = [];
       this.status = {
         ok: false,
         lastSyncAt: this.status.lastSyncAt,
@@ -171,10 +187,18 @@ export class RealSource implements WoolSource {
         fetchedAt: null,
         count: 0,
       };
-      this.channels = buildFailedChannel(this.status);
       this.emit('source_failed', undefined, 'src-real');
     }
     this.notifyListeners();
+  }
+
+  /** 来源列表（来自 sources.json）。 */
+  private _sources: SourceInfo[] = [];
+  get sources(): SourceInfo[] {
+    return this._sources;
+  }
+  set sources(value: SourceInfo[]) {
+    this._sources = value;
   }
 
   list(): { items: WoolItem[]; channels: SourceChannel[] } {
