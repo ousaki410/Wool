@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ExternalLink } from 'lucide-react';
+import React, { useId, useState } from 'react';
+import { ChevronDown, ExternalLink } from 'lucide-react';
 import { SourceChannel, WoolItem } from '../data/woolData';
 import { formatShanghaiDateTime } from '../data/shanghaiTime';
 
@@ -15,6 +15,7 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
   onSelectSourceItems,
 }) => {
   const [vendorCollapsed, setVendorCollapsed] = useState(true);
+  const vendorListId = useId();
 
   const sourceCount = channels.length;
   // “已收录条目”只统计 wool 线索（今日羊毛），新闻在订阅表里单独显示
@@ -33,17 +34,19 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
   // 按来源名聚合“涉及厂商”数据，数据来自 wool.json 条目，按条目数降序
   const vendorMap = new Map<
     string,
-    { name: string; entryCount: number; url: string }
+    { name: string; entryCount: number; url: string; hasOfficialLink: boolean }
   >();
   for (const item of items) {
     const existing = vendorMap.get(item.sourceName);
     if (existing) {
       existing.entryCount += 1;
+      existing.hasOfficialLink = existing.hasOfficialLink || Boolean(item.hasOfficialLink);
     } else {
       vendorMap.set(item.sourceName, {
         name: item.sourceName,
         entryCount: 1,
         url: item.sourceUrl,
+        hasOfficialLink: Boolean(item.hasOfficialLink),
       });
     }
   }
@@ -164,30 +167,36 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
       {/* 涉及厂商折叠区 */}
       {vendors.length > 0 && (
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
-          <div
+          <button
+            type="button"
             onClick={() => setVendorCollapsed(!vendorCollapsed)}
-            className="cursor-pointer flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-slate-950/60"
+            aria-expanded={!vendorCollapsed}
+            aria-controls={vendorListId}
+            className="w-full cursor-pointer flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-slate-950/60 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-500 focus-visible:outline-offset-[-2px]"
           >
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <span className="text-base font-bold text-slate-900 dark:text-slate-100">
               涉及厂商（{vendors.length}）
-            </h3>
-            <span
-              className={`text-xs transition-transform ${vendorCollapsed ? '' : 'rotate-180'}`}
-            >
-              ▾
             </span>
-          </div>
-          {!vendorCollapsed && (
-            <div className="divide-y divide-slate-100 dark:divide-slate-800/80">
-              {vendors.map((v) => (
-                <div
-                  key={v.name}
-                  className="px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-slate-900 dark:text-slate-100">
-                      {v.name}
-                    </span>
+            <ChevronDown
+              aria-hidden="true"
+              className={`w-4 h-4 text-slate-500 dark:text-slate-400 transition-transform ${vendorCollapsed ? '' : 'rotate-180'}`}
+            />
+          </button>
+          <div
+            id={vendorListId}
+            hidden={vendorCollapsed}
+            className="divide-y divide-slate-100 dark:divide-slate-800/80"
+          >
+            {vendors.map((v) => (
+              <div
+                key={v.name}
+                className="px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
+                    {v.name}
+                  </span>
+                  {v.hasOfficialLink && (
                     <a
                       href={v.url}
                       target="_blank"
@@ -196,14 +205,14 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
                     >
                       {v.url}
                     </a>
-                  </div>
-                  <span className="text-xs font-mono text-slate-600 dark:text-slate-400 tabular-nums">
-                    {v.entryCount} 条
-                  </span>
+                  )}
                 </div>
-              ))}
-            </div>
-          )}
+                <span className="text-xs font-mono text-slate-600 dark:text-slate-400 tabular-nums">
+                  {v.entryCount} 条
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
