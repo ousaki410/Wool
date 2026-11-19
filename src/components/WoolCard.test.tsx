@@ -44,11 +44,12 @@ function makeEvidence(overrides: Partial<EvidenceRecord> = {}): EvidenceRecord {
     httpStatus: 200,
     finalUrl: 'https://example.com/pricing',
     textHash: 'abc123',
-    status: '有证据',
+    status: '强命中',
     matches: [
       {
-        keyword: '免费额度',
-        snippet: '新用户注册即赠送免费额度，每月可用 200 次请求。',
+        keyword: '$5',
+        snippet: '新用户注册即赠送 $5 免费额度。',
+        strength: 'strong',
       },
     ],
     ...overrides,
@@ -92,9 +93,23 @@ test('WoolCard 显示证据状态与原文片段，但不自动升级为官方�
       />
     );
 
-    assert.ok(screen.getByText('有证据'));
-    assert.ok(screen.getByText('官方页面原文'));
-    assert.ok(screen.getByText(/新用户注册即赠送免费额度/));
+    assert.ok(screen.getByText('强命中'));
+    assert.ok(screen.getByText('官方页面摘录'));
+    assert.ok(screen.getByText(/新用户注册即赠送 \$5 免费额度/));
+    assert.ok(screen.getByText(/抓取于/), '片段旁应显示抓取时间');
+
+    const link = screen.getByRole('link', {
+      name: 'https://example.com/pricing',
+    });
+    assert.equal(link.getAttribute('href'), 'https://example.com/pricing');
+
+    for (const forbidden of ['有证据', '已证实', '已核验']) {
+      assert.equal(
+        screen.queryByText(new RegExp(forbidden)),
+        null,
+        `证据文案不得出现“${forbidden}”`
+      );
+    }
     assert.equal(screen.queryByText('✓ 官方已核验'), null);
     assert.ok(screen.getByText('? 未核验'));
 

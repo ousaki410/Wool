@@ -87,26 +87,15 @@ export const WoolCard: React.FC<WoolCardProps> = ({
   const directionLabel = formatDirectionLabel(item.direction ?? 'neutral');
   const directionColor = formatDirectionColor(item.direction ?? 'neutral');
 
-  // 官方页面存证只作佐证，不改变 verificationStatus。
+  // 官方页面摘录只作佐证，不改变 verificationStatus。
   const evidence = item.evidence;
   const EvidenceIcon =
-    evidence?.status === '有证据'
+    evidence?.status === '强命中'
       ? CheckCircle2
-      : evidence?.status === '证据不足'
-        ? AlertCircle
-        : XCircle;
-  const evidenceBadgeColor =
-    evidence?.status === '有证据'
-      ? 'text-emerald-700 dark:text-emerald-400'
-      : evidence?.status === '证据不足'
-        ? 'text-amber-700 dark:text-amber-400'
-        : 'text-rose-700 dark:text-rose-400';
-  const evidencePanelClass =
-    evidence?.status === '有证据'
-      ? 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-900/60 dark:bg-emerald-950/20'
-      : evidence?.status === '证据不足'
-        ? 'border-amber-200 bg-amber-50/70 dark:border-amber-900/60 dark:bg-amber-950/20'
-        : 'border-rose-200 bg-rose-50/70 dark:border-rose-900/60 dark:bg-rose-950/20';
+      : evidence?.status === '无法访问'
+        ? XCircle
+        : AlertCircle;
+  const evidencePageUrl = evidence?.finalUrl ?? evidence?.sourceUrl ?? null;
 
   const handleCopyCode = async () => {
     if (!item.promoCode) return;
@@ -177,11 +166,11 @@ export const WoolCard: React.FC<WoolCardProps> = ({
               </span>
             )}
 
-            {/* 官方页面存证状态（只作佐证，不改变核验状态） */}
+            {/* 官方页面摘录状态（只作佐证，不改变核验状态） */}
             {evidence && (
               <span
-                title={`官方页面存证：${evidence.status} · 抓取于 ${formatShanghaiDateTime(evidence.fetchedAt)}`}
-                className={`inline-flex items-center gap-1 font-semibold whitespace-nowrap shrink-0 ${evidenceBadgeColor}`}
+                title={`官方页面摘录：${evidence.status} · 抓取于 ${formatShanghaiDateTime(evidence.fetchedAt)}`}
+                className="inline-flex items-center gap-1 font-semibold whitespace-nowrap shrink-0 text-slate-600 dark:text-slate-400"
               >
                 <EvidenceIcon className="w-4 h-4 shrink-0" aria-hidden="true" />
                 <span>{evidence.status}</span>
@@ -264,20 +253,20 @@ export const WoolCard: React.FC<WoolCardProps> = ({
           {item.title}
         </h3>
 
-        {/* 官方页面存证：命中片段或失败原因；不会自动改变核验状态 */}
+        {/* 官方页面摘录：命中片段或抓取结果；不会自动改变核验状态 */}
         {evidence && (
-          <div className={`mt-3 rounded-lg border px-3 py-2 text-xs ${evidencePanelClass}`}>
-            {evidence.status === '有证据' ? (
+          <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50/80 px-3 py-2 text-xs dark:border-slate-700/80 dark:bg-slate-800/40">
+            {evidence.matches.length > 0 ? (
               <div className="space-y-1">
                 <div className="font-semibold text-slate-700 dark:text-slate-200">
-                  官方页面原文
+                  官方页面摘录
                 </div>
                 {evidence.matches.map((match, index) => (
                   <p
                     key={`${match.keyword}-${index}`}
                     className="leading-relaxed text-slate-600 dark:text-slate-300 break-words"
                   >
-                    <span className="font-semibold text-emerald-700 dark:text-emerald-400">
+                    <span className="font-semibold text-slate-700 dark:text-slate-200">
                       [{match.keyword}]
                     </span>{' '}
                     “{match.snippet}”
@@ -286,14 +275,24 @@ export const WoolCard: React.FC<WoolCardProps> = ({
               </div>
             ) : (
               <p className="text-slate-600 dark:text-slate-300">
-                {evidence.status === '证据不足'
-                  ? '官方页面可访问，但未命中标题中的关键事实。'
+                {evidence.status === '页面未提及'
+                  ? '官方页面可访问，但未提及标题中的具体数字、日期或金额。'
                   : `官方页面无法访问${evidence.httpStatus ? `（HTTP ${evidence.httpStatus}）` : ''}。`}
               </p>
             )}
-            <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">
-              抓取于 {formatShanghaiDateTime(evidence.fetchedAt)} · 仅作佐证，不改变核验状态
-            </p>
+            <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[11px] text-slate-500 dark:text-slate-400">
+              {evidencePageUrl && (
+                <a
+                  href={evidencePageUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="break-all underline decoration-slate-300 underline-offset-2 hover:text-slate-700 dark:decoration-slate-600 dark:hover:text-slate-200"
+                >
+                  {evidencePageUrl}
+                </a>
+              )}
+              <span>抓取于 {formatShanghaiDateTime(evidence.fetchedAt)}</span>
+            </div>
           </div>
         )}
 

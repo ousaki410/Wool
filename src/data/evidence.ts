@@ -1,17 +1,22 @@
-/** 官方页面存证：只记录页面是否命中原标题里的关键事实，不改变条目的核验状态。 */
-export type EvidenceStatus = '有证据' | '证据不足' | '无法访问';
+/** 官方页面摘录：只记录页面是否提到标题里的具体事实，不改变条目的核验状态。 */
+export type EvidenceStatus = '强命中' | '弱相关' | '页面未提及' | '无法访问';
 
 export const EVIDENCE_STATUSES: EvidenceStatus[] = [
-  '有证据',
-  '证据不足',
+  '强命中',
+  '弱相关',
+  '页面未提及',
   '无法访问',
 ];
 
+export type EvidenceStrength = 'strong' | 'weak';
+
 export interface EvidenceMatch {
-  /** 命中的关键事实类别，例如“免费额度”“赠送”“截止日期”。 */
+  /** 命中的关键事实类别，例如“免费额度”“$5”“2026-11-23”。 */
   keyword: string;
   /** 命中位置前后各 80 字的原文片段。 */
   snippet: string;
+  /** strong 表示具体数字/日期/金额；weak 表示通用词或非数字短语。 */
+  strength: EvidenceStrength;
 }
 
 export interface EvidenceRecord {
@@ -51,6 +56,7 @@ export interface PageEvidenceInput {
 interface FactTerm {
   label: string;
   terms: string[];
+  strength: EvidenceStrength;
 }
 
 interface KeywordGroup {
@@ -58,7 +64,7 @@ interface KeywordGroup {
   synonyms: string[];
 }
 
-/** 标题中的关键事实词表。英文同义词用于官方英文页面。 */
+/** 标题中的关键事实词表。英文短词匹配时使用单词边界。 */
 const KEYWORD_GROUPS: KeywordGroup[] = [
   {
     label: '免费额度',
@@ -95,6 +101,19 @@ const KEYWORD_GROUPS: KeywordGroup[] = [
   { label: '美元', synonyms: ['美元', 'usd'] },
 ];
 
+/** 标题中的具体数字/日期/金额；只有这些命中才可能得到“强命中”。 */
+const STRONG_FACT_PATTERNS: RegExp[] = [
+  /\d{4}-\d{2}-\d{2}/g,
+  /\d{4}\.\d{1,2}\.\d{1,2}/g,
+  /\d{4}\s*年\s*\d{1,2}\s*月(?:\s*\d{1,2}\s*日)?/g,
+  /\d{1,2}\s*月\s*\d{1,2}\s*日/g,
+  /\d{1,2}\/\d{1,2}(?:\/\d{2,4})?/g,
+  /[$¥€£]\s?\d[\d,]*(?:\.\d+)?\s*[KMB]?/gi,
+  /\d[\d,]*(?:\.\d+)?\s*(?:美元|元|万|亿)/g,
+  /\d[\d,]*(?:\.\d+)?\s*(?:次|天|个月|小时|分钟|%|折|tokens?|requests?|pages?)/gi,
+  /[一二三四五六七八九十百千万亿]+\s*折/g,
+];
+
 const TITLE_PREFIX_PATTERN =
   /^(额度变化|价格变化|厂商新闻|其他变化|厂商动态)\s*[·:：]\s*/;
 
@@ -111,27 +130,51 @@ export function extractKeywords(title: string): string[] {
   return extractFactTerms(title).map((term) => term.label);
 }
 
+/** 英文词按单词边界判断，避免 freedom 被当成 free、unlimited 被当成 limit。 */
+function containsKeyword(haystack: string, term: string): boolean {
+  if (!/[A-Za-z]/.test(term)) {
+    return haystack.includes(term);
+  }
+  const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`(?<![A-Za-z0-9])${escaped}(?![A-Za-z0-9])`, 'i').test(
+    haystack
+  );
+}
+
 function extractFactTerms(title: string): FactTerm[] {
   const cleaned = stripTitlePrefix(title);
   const lower = cleaned.toLowerCase();
   const terms: FactTerm[] = [];
+  const seen = new Set<string>();
 
   for (const group of KEYWORD_GROUPS) {
-    if (group.synonyms.some((synonym) => lower.includes(synonym.toLowerCase()))) {
-      terms.push({ label: group.label, terms: group.synonyms });
+    if (group.synonyms.some((synonym) => containsKeyword(lower, synonym.toLowerCase()))) {
+      terms.push({
+        label: group.label,
+        terms: group.synonyms,
+        strength: 'weak',
+      });
+      seen.add(group.label);
     }
   }
 
-  // 标题里的明确日期与带单位数字也作为关键事实（如 2026-11-23、$5、200 次、30 天、六折）。
-  const numericFacts = cleaned.match(
-    /\d{4}-\d{2}-\d{2}|\$?\d+(?:\.\d+)?\s*(?:美元|次|天|个月|%|折)/g
-  );
-  if (numericFacts) {
-    for (const fact of numericFacts) {
-      const normalized = fact.replace(/\s+/g, ' ').trim();
-      if (normalized && !terms.some((term) => term.label === normalized)) {
-        terms.push({ label: normalized, terms: [normalized] });
+  const claimedRanges: Array<{ start: number; end: number }> = [];
+
+  for (const pattern of STRONG_FACT_PATTERNS) {
+    for (const match of cleaned.matchAll(pattern)) {
+      const fact = match[0].replace(/\s+/g, ' ').trim();
+      if (!fact || seen.has(fact)) continue;
+
+      const start = match.index ?? 0;
+      const end = start + match[0].length;
+      // 跳过与更完整日期/金额重叠的片段，例如“2026 年 11 月 1 日”里的“11 月 1 日”。
+      if (claimedRanges.some((range) => start < range.end && end > range.start)) {
+        continue;
       }
+
+      seen.add(fact);
+      claimedRanges.push({ start, end });
+      terms.push({ label: fact, terms: [fact], strength: 'strong' });
     }
   }
 
@@ -173,6 +216,46 @@ function decodeEntity(code: string): string {
   return named[lower] ?? '';
 }
 
+/**
+ * 构造匹配正则：
+ * - 英文短词使用单词边界，freedom 不会命中 free；
+ * - 数字事实使用前后邻接限制，$5 不会命中 $50；
+ * - 空白允许灵活匹配。
+ */
+function buildMatchRegex(term: string, strength: EvidenceStrength): RegExp {
+  let source = '';
+
+  for (let i = 0; i < term.length; i += 1) {
+    const char = term[i];
+    if (/\s/.test(char)) {
+      source += '\\s*';
+      while (i + 1 < term.length && /\s/.test(term[i + 1])) i += 1;
+    } else if (/[.*+?^${}()|[\]\\]/.test(char)) {
+      source += `\\${char}`;
+    } else {
+      source += char;
+    }
+  }
+
+  const first = term[0];
+  const last = term[term.length - 1];
+
+  if (strength === 'strong' && /\d/.test(first)) {
+    source = `(?<![\\d,])${source}`;
+  } else if (/[A-Za-z0-9]/.test(first)) {
+    source = `\\b${source}`;
+  }
+
+  if (/[A-Za-z]/.test(last)) {
+    source += '\\b';
+  } else if (/\d/.test(last)) {
+    // 允许数字后跟句号/逗号，但不能是更长数字（$5 不命中 $50、$5.50、$5,000）。
+    source += '(?!\\d|,\\d|\\.\\d)';
+  }
+
+  return new RegExp(source, 'i');
+}
+
 /** 在页面文本里查找标题关键事实，返回最多 3 条前后各 80 字的原文片段。 */
 export function findEvidenceMatches(
   title: string,
@@ -182,43 +265,55 @@ export function findEvidenceMatches(
   const terms = extractFactTerms(title);
   if (terms.length === 0 || !pageText) return [];
 
-  const haystack = pageText.toLowerCase();
-  const hits: Array<{ index: number; keyword: string; snippet: string }> = [];
+  const hits: Array<{
+    index: number;
+    keyword: string;
+    snippet: string;
+    strength: EvidenceStrength;
+  }> = [];
 
   for (const term of terms) {
-    if (hits.length >= maxMatches) break;
-
     const candidates = [...term.terms].sort((a, b) => b.length - a.length);
     for (const candidate of candidates) {
-      const index = haystack.indexOf(candidate.toLowerCase());
-      if (index < 0) continue;
+      const match = buildMatchRegex(candidate, term.strength).exec(pageText);
+      if (!match) continue;
 
-      const start = Math.max(0, index - CONTEXT_RADIUS);
+      const start = Math.max(0, match.index - CONTEXT_RADIUS);
       const end = Math.min(
         pageText.length,
-        index + candidate.length + CONTEXT_RADIUS
+        match.index + match[0].length + CONTEXT_RADIUS
       );
       let snippet = pageText.slice(start, end).replace(/\s+/g, ' ').trim();
       if (start > 0) snippet = `…${snippet}`;
       if (end < pageText.length) snippet = `${snippet}…`;
 
-      hits.push({ index, keyword: term.label, snippet });
+      hits.push({
+        index: match.index,
+        keyword: term.label,
+        snippet,
+        strength: term.strength,
+      });
       break;
     }
   }
 
+  // 强事实优先，确保数字/日期/金额命中不会被通用词挤出前 3 条。
   return hits
-    .sort((a, b) => a.index - b.index)
+    .sort((a, b) => {
+      if (a.strength !== b.strength) return a.strength === 'strong' ? -1 : 1;
+      return a.index - b.index;
+    })
     .slice(0, maxMatches)
-    .map(({ keyword, snippet }) => ({ keyword, snippet }));
+    .map(({ keyword, snippet, strength }) => ({ keyword, snippet, strength }));
 }
 
 /**
- * 根据抓取结果判断证据状态：
+ * 根据抓取结果判断状态：
  * - 无响应、超时、4xx/5xx、robots 禁止 → 无法访问
- * - 2xx 但未命中关键事实 → 证据不足
- * - 2xx 且命中至少一条关键事实 → 有证据
- * 没有命中片段时绝不会返回“有证据”。
+ * - 2xx 且命中具体数字/日期/金额 → 强命中
+ * - 2xx 仅命中通用词或非数字短语 → 弱相关
+ * - 2xx 但没有任何关键词命中 → 页面未提及
+ * 没有命中片段时绝不会返回“强命中”。
  */
 export function evaluateEvidence(
   title: string,
@@ -229,10 +324,13 @@ export function evaluateEvidence(
   }
 
   const matches = findEvidenceMatches(title, page.text);
-  return {
-    status: matches.length > 0 ? '有证据' : '证据不足',
-    matches,
-  };
+  if (matches.some((match) => match.strength === 'strong')) {
+    return { status: '强命中', matches };
+  }
+  if (matches.length > 0) {
+    return { status: '弱相关', matches };
+  }
+  return { status: '页面未提及', matches: [] };
 }
 
 /** 校验 evidence.json 中的单条记录，防止异常数据进入页面。 */
@@ -248,11 +346,13 @@ export function isEvidenceRecord(value: unknown): value is EvidenceRecord {
   if (record.textHash !== null && typeof record.textHash !== 'string') return false;
   if (record.httpStatus !== null && typeof record.httpStatus !== 'number') return false;
   if (!Array.isArray(record.matches)) return false;
-  return record.matches.every(
-    (match) =>
-      Boolean(match) &&
-      typeof match === 'object' &&
-      typeof (match as EvidenceMatch).keyword === 'string' &&
-      typeof (match as EvidenceMatch).snippet === 'string'
-  );
+  return record.matches.every((match) => {
+    if (!match || typeof match !== 'object') return false;
+    const item = match as EvidenceMatch;
+    return (
+      typeof item.keyword === 'string' &&
+      typeof item.snippet === 'string' &&
+      (item.strength === 'strong' || item.strength === 'weak')
+    );
+  });
 }

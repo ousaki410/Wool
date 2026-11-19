@@ -4,8 +4,9 @@
  *
  * - 每个域名两次请求之间至少间隔 1 秒，并遵守 robots.txt（含 Crawl-delay）。
  * - 请求带超时与重试；4xx/5xx、超时、robots 禁止记为“无法访问”。
- * - 页面可访问但标题关键事实未命中记为“证据不足”；命中则保存前后各 80 字原文片段。
- * - 只输出证据，不修改任何条目的 verificationStatus（不会自动升为“官方已核验”）。
+ * - 页面命中标题里的具体数字/日期/金额记为“强命中”；仅命中通用词记为“弱相关”；
+ *   页面可打开但没有任何命中记为“页面未提及”。
+ * - 只输出页面摘录，不修改任何条目的 verificationStatus（不会自动升为“官方已核验”）。
  */
 
 import { createHash } from 'crypto';
@@ -487,8 +488,9 @@ export async function verifyItem(
 
 function countStatuses(records: EvidenceRecord[]): Record<EvidenceStatus, number> {
   const counts: Record<EvidenceStatus, number> = {
-    有证据: 0,
-    证据不足: 0,
+    强命中: 0,
+    弱相关: 0,
+    页面未提及: 0,
     无法访问: 0,
   };
   for (const record of records) {
@@ -563,7 +565,7 @@ export async function main(): Promise<void> {
 
   // eslint-disable-next-line no-console
   console.log(
-    `[verify-sources] 完成：有证据 ${statusCounts['有证据']}，证据不足 ${statusCounts['证据不足']}，无法访问 ${statusCounts['无法访问']}`
+    `[verify-sources] 完成：强命中 ${statusCounts['强命中']}，弱相关 ${statusCounts['弱相关']}，页面未提及 ${statusCounts['页面未提及']}，无法访问 ${statusCounts['无法访问']}`
   );
   // eslint-disable-next-line no-console
   console.log(`[verify-sources] 已写入 ${EVIDENCE_JSON_PATH}`);

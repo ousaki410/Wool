@@ -121,7 +121,7 @@ test('realSource: evidence.json 正常时条目挂载存证，但不改变核验
   const evidence = {
     generatedAt: new Date().toISOString(),
     count: 1,
-    statusCounts: { 有证据: 1, 证据不足: 0, 无法访问: 0 },
+    statusCounts: { 强命中: 1, 弱相关: 0, 页面未提及: 0, 无法访问: 0 },
     records: [
       {
         itemId: 'fli-evidence-test',
@@ -132,8 +132,14 @@ test('realSource: evidence.json 正常时条目挂载存证，但不改变核验
         httpStatus: 200,
         finalUrl: 'https://example.com',
         textHash: 'abc123',
-        status: '有证据',
-        matches: [{ keyword: '免费额度', snippet: '新用户可领取免费额度' }],
+        status: '强命中',
+        matches: [
+          {
+            keyword: '免费额度',
+            snippet: '新用户可领取免费额度',
+            strength: 'weak',
+          },
+        ],
       },
     ],
   };
@@ -145,7 +151,7 @@ test('realSource: evidence.json 正常时条目挂载存证，但不改变核验
 
     const snapshot = source.list();
     assert.equal(snapshot.items.length, 1);
-    assert.equal(snapshot.items[0].evidence?.status, '有证据');
+    assert.equal(snapshot.items[0].evidence?.status, '强命中');
     assert.equal(snapshot.items[0].evidence?.matches[0].snippet, '新用户可领取免费额度');
     assert.equal(
       snapshot.items[0].verificationStatus,
