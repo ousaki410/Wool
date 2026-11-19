@@ -52,10 +52,10 @@ test('seed demo keeps the same deadline structure at different load times', () =
     assert.ok(snapshot.expiredCount >= 2 && snapshot.expiredCount <= 3);
     assert.ok(snapshot.recent24hCount >= 3);
 
-    const statuses = new Set(snapshot.channels.map((channel) => channel.status));
-    assert.ok(statuses.has('正常'));
-    assert.ok(statuses.has('延迟'));
-    assert.ok(statuses.has('维护中'));
+    const types = new Set(snapshot.channels.map((channel) => channel.type));
+    assert.ok(types.has('官方公告'));
+    assert.ok(types.has('技术社区'));
+    assert.ok(types.has('聚合频道'));
   }
 
   const structure = (snapshot: ReturnType<typeof snapshotAt>) => ({

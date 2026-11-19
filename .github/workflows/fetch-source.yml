@@ -37,15 +37,15 @@ jobs:
       - name: Fetch free-llm-intel subscription
         run: npx tsx scripts/fetch-source.ts
 
-      - name: Commit wool.json and news.json if changed
+      - name: Commit wool.json, news.json and sources.json if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet public/data/wool.json public/data/news.json; then
-            echo "public/data/wool.json 和 public/data/news.json 未变更，无需提交"
+          if git diff --quiet public/data/wool.json public/data/news.json public/data/sources.json; then
+            echo "public/data/wool.json、public/data/news.json 和 public/data/sources.json 未变更，无需提交"
           else
-            git add public/data/wool.json public/data/news.json
-            git commit -m "data(source): refresh free-llm-intel wool.json and news.json"
+            git add public/data/wool.json public/data/news.json public/data/sources.json
+            git commit -m "data(source): refresh free-llm-intel wool.json, news.json and sources.json"
             git push
           fi
 

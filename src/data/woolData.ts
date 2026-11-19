@@ -90,16 +90,10 @@ export interface WoolItem {
 export interface SourceChannel {
   id: string;
   name: string;
-  type: '官方公告' | '技术社区' | '金融卡券监测' | '开源与教育计划' | '聚合频道';
+  type: string;
   url: string;
-  status: '正常' | '延迟' | '维护中';
-  lastSyncAt: string;
-  intervalMinutes: number;
-  todayCount: number;
-  totalCount: number;
-  verifiedRate: number; // percentage 0-100
-  enabled: boolean;
-  description: string;
+  entryCount: number;
+  lastFetchAt: string | null;
 }
 
 export interface PushSettingsConfig {

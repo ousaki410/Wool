@@ -1,8 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import type { WoolItem } from '../../src/data/woolData';
 import { truncateReward } from '../../src/components/WoolCard';
 import {
+  main,
   parseRss,
   parseVendorFromTitle,
   classifyKind,
@@ -341,4 +343,116 @@ test('classifyDirection: 正向/负向/中性分类', () => {
     }),
     'negative'
   );
+});
+
+test('main() writes wool.json, news.json and sources.json; sources entryCount matches wool count', async () => {
+  const CHANGES_RSS = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>LLM 免费额度 · 新活动与新额度变化</title>
+    <item>
+      <title>额度变化 · Google Gemini：免费层新增可用的 Gemini Decision 1</title>
+      <link>https://github.com/rockbenben/free-llm-intel#28-google-gemini</link>
+      <guid isPermaLink="false">test-main-changes-1</guid>
+      <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
+      <description>免费层新增可用的 Gemini Decision 1</description>
+    </item>
+    <item>
+      <title>额度变化 · Anthropic Claude：免费额度新增 5 美元</title>
+      <link>https://github.com/rockbenben/free-llm-intel#29-anthropic</link>
+      <guid isPermaLink="false">test-main-changes-2</guid>
+      <pubDate>Tue, 17 Nov 2026 01:00:00 +0000</pubDate>
+      <description>免费额度新增 5 美元</description>
+    </item>
+  </channel>
+</rss>`;
+
+  const NEWS_RSS = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>LLM 新闻</title>
+    <item>
+      <title>某厂商发布新模型</title>
+      <link>https://example.com/news1</link>
+      <guid isPermaLink="false">test-main-news-1</guid>
+      <pubDate>Tue, 17 Nov 2026 02:00:00 +0000</pubDate>
+      <description>新闻描述</description>
+    </item>
+  </channel>
+</rss>`;
+
+  const dir = 'public/data';
+  const woolPath = `${dir}/wool.json`;
+  const newsPath = `${dir}/news.json`;
+  const sourcesPath = `${dir}/sources.json`;
+
+  // 备份原始内容，测试结束后恢复，避免污染工作区
+  const backup: Record<string, string> = {};
+  for (const p of [woolPath, newsPath, sourcesPath]) {
+    backup[p] = existsSync(p) ? readFileSync(p, 'utf8') : '';
+  }
+
+  const origFetch = globalThis.fetch;
+  let changesFetched = false;
+  let newsFetched = false;
+  (globalThis as any).fetch = async (url: string) => {
+    const u = String(url);
+    if (u.includes('llm-intel-changes.xml')) {
+      changesFetched = true;
+      return { ok: true, status: 200, statusText: 'OK', text: async () => CHANGES_RSS } as Response;
+    }
+    if (u.includes('llm-news-all.xml')) {
+      newsFetched = true;
+      return { ok: true, status: 200, statusText: 'OK', text: async () => NEWS_RSS } as Response;
+    }
+    // README 厂商映射页，返回空
+    return { ok: true, status: 200, statusText: 'OK', text: async () => '' } as Response;
+  };
+
+  try {
+    await main();
+
+    assert.ok(changesFetched, '应抓取变化订阅 RSS');
+    assert.ok(newsFetched, '应抓取新闻订阅 RSS');
+
+    const wool = JSON.parse(readFileSync(woolPath, 'utf8'));
+    const news = JSON.parse(readFileSync(newsPath, 'utf8'));
+    const sources = JSON.parse(readFileSync(sourcesPath, 'utf8'));
+
+    // 三个文件都被写出
+    assert.equal(typeof wool.count, 'number');
+    assert.equal(typeof news.count, 'number');
+    assert.ok(Array.isArray(sources.sources));
+
+    // wool.json count 等于条目数（2 条变化订阅都进入今日羊毛）
+    assert.equal(wool.count, 2, 'wool.json count 应等于变化订阅条目数');
+    assert.equal(wool.items.length, 2);
+
+    // news.json
+    assert.equal(news.count, 1);
+
+    // sources.json 里变化订阅的 entryCount 等于 wool.json 的 count
+    const changesSource = (sources.sources as Array<{ id: string; entryCount: number }>).find(
+      (s) => s.id === 'src-fli-changes'
+    );
+    assert.ok(changesSource, 'sources.json 应包含 src-fli-changes 订阅');
+    assert.equal(
+      changesSource.entryCount,
+      wool.count,
+      '变化订阅 entryCount 应等于 wool.json count'
+    );
+
+    // sources 里也有新闻订阅
+    const newsSource = (sources.sources as Array<{ id: string; entryCount: number }>).find(
+      (s) => s.id === 'src-fli-news'
+    );
+    assert.ok(newsSource, 'sources.json 应包含 src-fli-news 订阅');
+    assert.equal(newsSource.entryCount, news.count);
+  } finally {
+    (globalThis as any).fetch = origFetch;
+    // 恢复原始文件内容
+    for (const p of [woolPath, newsPath, sourcesPath]) {
+      writeFileSync(p, backup[p], 'utf8');
+    }
+  }
 });

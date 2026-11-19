@@ -1,7 +1,7 @@
 {
   "source": "free-llm-intel 公开订阅",
   "sourceUrl": "https://free-llm-intel.aishort.top/",
-  "fetchedAt": "2026-11-18T09:31:11.801Z",
+  "fetchedAt": "2026-11-18T14:26:13.453Z",
   "count": 66,
   "stats": {
     "unknownVendorCount": 0,
@@ -13,9 +13,9 @@
       "news": 0
     },
     "directionCount": {
-      "positive": 34,
-      "negative": 14,
-      "neutral": 18
+      "positive": 29,
+      "negative": 31,
+      "neutral": 6
     },
     "kindPct": {
       "deal": 39,
@@ -24,9 +24,9 @@
       "news": 0
     },
     "directionPct": {
-      "positive": 52,
-      "negative": 21,
-      "neutral": 27
+      "positive": 44,
+      "negative": 47,
+      "neutral": 9
     }
   },
   "items": [
@@ -278,7 +278,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#47-relace",
       "linkText": "定价页（含 free tier 说明）"
@@ -386,7 +386,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai",
       "linkText": "定价页面"
@@ -493,7 +493,7 @@
         "官方动态"
       ],
       "kind": "change",
-      "direction": "neutral",
+      "direction": "positive",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#46-morph-labs",
       "linkText": "定价页（免费层说明）"
@@ -565,7 +565,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "positive",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#28-google-gemini-google-ai-studio",
       "linkText": "API 定价文档"
@@ -601,7 +601,7 @@
         "官方动态"
       ],
       "kind": "deal",
-      "direction": "positive",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#4-kimi-月之暗面",
       "linkText": "K3 定价"
@@ -674,7 +674,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#2-通义千问-阿里云",
       "linkText": "免费额度官方文档"
@@ -1143,7 +1143,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#1-deepseek-深度求索",
       "linkText": "定价文档（人民币峰谷价）"
@@ -1179,7 +1179,7 @@
         "官方动态"
       ],
       "kind": "deal",
-      "direction": "positive",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai",
       "linkText": "定价页面"
@@ -1323,7 +1323,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#33-openrouter-模型统一网关",
       "linkText": "官方主页"
@@ -1359,7 +1359,7 @@
         "官方动态"
       ],
       "kind": "deal",
-      "direction": "positive",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#40-fireworks-ai",
       "linkText": "定价说明"
@@ -1395,7 +1395,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "positive",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#28-google-gemini-google-ai-studio",
       "linkText": "API 定价文档"
@@ -1754,7 +1754,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "negative",
       "hasOfficialLink": false,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#9-文心-ernie-百度千帆"
     },
@@ -1789,7 +1789,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "negative",
       "hasOfficialLink": false,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#8-腾讯云混元-tokenhub"
     },
@@ -1860,7 +1860,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "positive",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai",
       "linkText": "定价页面"
@@ -2004,7 +2004,7 @@
         "官方动态"
       ],
       "kind": "deal",
-      "direction": "positive",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#39-together-ai",
       "linkText": "定价页面"
@@ -2040,7 +2040,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#26-anthropic-claude",
       "linkText": "定价中心"
@@ -2076,7 +2076,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "negative",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#26-anthropic-claude",
       "linkText": "定价中心"
@@ -2220,7 +2220,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "positive",
       "hasOfficialLink": true,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#46-morph-labs",
       "linkText": "定价页（免费层说明）"
@@ -2256,7 +2256,7 @@
         "官方动态"
       ],
       "kind": "deal",
-      "direction": "positive",
+      "direction": "negative",
       "hasOfficialLink": true,
       "deadlineHint": "2026-10-01",
       "intelSource": "https://github.com/rockbenben/free-llm-intel#42-nebius-token-factory--ai-cloud",
@@ -2401,7 +2401,7 @@
         "官方动态"
       ],
       "kind": "price_change",
-      "direction": "neutral",
+      "direction": "positive",
       "hasOfficialLink": false,
       "intelSource": "https://github.com/rockbenben/free-llm-intel#6-火山引擎-火山方舟--豆包"
     }

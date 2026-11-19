@@ -16,6 +16,7 @@ const NEWS_RSS_URL = 'https://free-llm-intel.aishort.top/feeds/llm-news-all.xml'
 const README_URL = 'https://raw.githubusercontent.com/rockbenben/free-llm-intel/main/README.md';
 const WOOL_JSON_PATH = 'public/data/wool.json';
 const NEWS_JSON_PATH = 'public/data/news.json';
+const SOURCES_JSON_PATH = 'public/data/sources.json';
 const SOURCE_NAME = 'free-llm-intel 公开订阅';
 const SOURCE_URL = 'https://free-llm-intel.aishort.top/';
 
@@ -30,6 +31,15 @@ export interface RssItem {
   category?: string;
   source?: string;
   description: string;
+}
+
+export interface SourceInfo {
+  id: string;
+  name: string;
+  type: string;
+  url: string;
+  entryCount: number;
+  fetchedAt: string;
 }
 
 export interface OfficialLink {
@@ -470,6 +480,21 @@ export function writeWoolJson(path: string, items: WoolItem[], nowMs: number, st
   writeFileSync(path, JSON.stringify(out, null, 2) + '\n', 'utf8');
 }
 
+/** 把来源聚合信息写入指定的 JSON 文件。 */
+export function writeSourceJson(path: string, sources: SourceInfo[], nowMs: number): void {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+
+  const out: Record<string, unknown> = {
+    source: SOURCE_NAME,
+    sourceUrl: SOURCE_URL,
+    fetchedAt: new Date(nowMs).toISOString(),
+    count: sources.length,
+    sources,
+  };
+  writeFileSync(path, JSON.stringify(out, null, 2) + '\n', 'utf8');
+}
+
 /** 把单条 RSS 条目转为 WoolItem。缺失字段不编造，核验状态固定“未核验”。 */
 export function convertToWoolItem(
   rss: RssItem,
@@ -584,9 +609,11 @@ export async function main(): Promise<void> {
     );
   }
 
+  // 今日羊毛 → 写入 public/data/wool.json
   writeWoolJson(WOOL_JSON_PATH, todayItems, nowMs, finalStats);
 
   // 新闻订阅 → 单独“动态”分区，不进今日羊毛（news）
+  // 需在 sources 聚合前先拿到 newsItems 的条目数
   const newsXml = await fetchRssText(NEWS_RSS_URL);
   const newsRss = parseRss(newsXml);
   const newsItems: WoolItem[] = [];
@@ -594,6 +621,29 @@ export async function main(): Promise<void> {
     stats.kindCount['news'] += 1;
     newsItems.push(convertToWoolItem(r, 'news', nowMs, null, null, null));
   }
+
+  // 聚合每个来源的条目数，写入 sources.json
+  // 固定 2 条订阅：额度/活动变化、厂商新闻
+  const sources: SourceInfo[] = [
+    {
+      id: 'src-fli-changes',
+      name: '免费额度/活动变化',
+      type: '额度/活动变化',
+      url: CHANGES_RSS_URL,
+      entryCount: todayItems.length,
+      fetchedAt: new Date(nowMs).toISOString(),
+    },
+    {
+      id: 'src-fli-news',
+      name: '厂商新闻',
+      type: '厂商新闻',
+      url: NEWS_RSS_URL,
+      entryCount: newsItems.length,
+      fetchedAt: new Date(nowMs).toISOString(),
+    },
+  ];
+  writeSourceJson(SOURCES_JSON_PATH, sources, nowMs);
+
   writeWoolJson(NEWS_JSON_PATH, deduplicate(newsItems), nowMs);
 
   // eslint-disable-next-line no-console
@@ -605,7 +655,7 @@ export async function main(): Promise<void> {
     `[fetch-source] 统计：未知厂商 ${finalStats.unknownVendorCount} 条，无官方链接 ${finalStats.noOfficialLinkCount} 条，kind=${JSON.stringify(finalStats.kindCount)}，kind占比=${JSON.stringify(finalStats.kindPct)}，direction=${JSON.stringify(finalStats.directionCount)}，direction占比=${JSON.stringify(finalStats.directionPct)}`
   );
   // eslint-disable-next-line no-console
-  console.log(`[fetch-source] 已写入 ${WOOL_JSON_PATH} 与 ${NEWS_JSON_PATH}`);
+  console.log(`[fetch-source] 已写入 ${WOOL_JSON_PATH}、${NEWS_JSON_PATH} 与 ${SOURCES_JSON_PATH}`);
 }
 
 if (typeof process !== 'undefined' && process.argv[1] && process.argv[1].endsWith('fetch-source.ts')) {
