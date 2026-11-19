@@ -20,9 +20,8 @@ export const SourcesStatusView: React.FC<SourcesStatusViewProps> = ({
   const sourceCount = channels.length;
   // “已收录条目”只统计 wool 线索（今日羊毛），新闻在订阅表里单独显示
   const totalEntries = items.length;
-  const verifiedCount = items.filter(
-    (i) => i.verificationStatus === '官方已核验'
-  ).length;
+  // “已核验条目”只统计 verified.json 中有效的人工确认记录
+  const verifiedCount = items.filter((i) => i.verification != null).length;
   // 最后抓取时间取所有来源中最新的一个
   const lastFetchAt = channels.length > 0
     ? channels.map((c) => c.lastFetchAt).filter(Boolean).sort().pop() || null

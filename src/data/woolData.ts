@@ -8,6 +8,7 @@ import {
 } from './shanghaiTime';
 import { materializeSeedData } from './woolSeed';
 import type { EvidenceRecord } from './evidence';
+import type { ManualVerification, VerificationIssue } from './verified';
 
 export type WoolCategory =
   | 'AI 与大模型'
@@ -88,6 +89,10 @@ export interface WoolItem {
   linkText?: string;
   /** 官方页面摘录（evidence.json）；仅作佐证，不改变 verificationStatus。 */
   evidence?: EvidenceRecord | null;
+  /** 有效的人工确认记录（verified.json）；仅有效记录会挂载。 */
+  verification?: ManualVerification | null;
+  /** 存在记录但已失效时的原因，供线索卡展示。 */
+  verificationIssue?: VerificationIssue | null;
 }
 
 export interface SourceChannel {

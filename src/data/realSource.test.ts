@@ -48,12 +48,15 @@ async function mockFetchWith(
   sourcesStatus: number,
   sourcesBody?: unknown,
   evidenceStatus = 404,
-  evidenceBody?: unknown
+  evidenceBody?: unknown,
+  verifiedStatus = 404,
+  verifiedBody?: unknown
 ) {
   const origFetch = globalThis.fetch;
   let woolCalled = false;
   let sourcesCalled = false;
   let evidenceCalled = false;
+  let verifiedCalled = false;
   (globalThis as any).fetch = async (url: string) => {
     const u = String(url);
     if (u.endsWith('/data/wool.json')) {
@@ -83,9 +86,32 @@ async function mockFetchWith(
         json: async () => evidenceBody,
       } as Response;
     }
+    if (u.endsWith('/data/verified.json')) {
+      verifiedCalled = true;
+      return {
+        ok: verifiedStatus >= 200 && verifiedStatus < 300,
+        status: verifiedStatus,
+        statusText: verifiedStatus >= 200 && verifiedStatus < 300 ? 'OK' : 'Not Found',
+        json: async () => verifiedBody,
+      } as Response;
+    }
     throw new Error(`unexpected fetch: ${u}`);
   };
-  return { origFetch, woolCalled, sourcesCalled, evidenceCalled };
+  return {
+    origFetch,
+    get woolCalled() {
+      return woolCalled;
+    },
+    get sourcesCalled() {
+      return sourcesCalled;
+    },
+    get evidenceCalled() {
+      return evidenceCalled;
+    },
+    get verifiedCalled() {
+      return verifiedCalled;
+    },
+  };
 }
 
 test('realSource: sources.json 404 时 wool 条目仍正常显示，channels 为空', async () => {
@@ -192,6 +218,115 @@ test('realSource: sources.json 正常时 channels 与 items 都有数据', async
     assert.equal(snapshot.channels.length, 1);
     assert.equal(snapshot.channels[0].id, 'src-fli-changes');
     assert.equal(snapshot.channels[0].entryCount, 66);
+  } finally {
+    (globalThis as any).fetch = origFetch;
+  }
+});
+
+test('realSource: verified.json 404 时条目仍然显示，状态都是未核验', async () => {
+  const items = [
+    makeWoolItem({
+      id: 'fli-no-verified',
+      title: '额度变化 · Example AI：免费层新增每月 200 次请求',
+      sourceUrl: 'https://example.com/pricing',
+    }),
+  ];
+  const mock = await mockFetchWith(items, 404);
+
+  try {
+    const source = new RealSource();
+    await source.refresh();
+
+    const snapshot = source.list();
+    assert.equal(mock.verifiedCalled, true, '应尝试加载 verified.json');
+    assert.equal(snapshot.items.length, 1);
+    assert.equal(snapshot.items[0].verificationStatus, '未核验');
+    assert.equal(snapshot.items[0].verification, null);
+    assert.equal(snapshot.items[0].verificationIssue, null);
+  } finally {
+    (globalThis as any).fetch = mock.origFetch;
+  }
+});
+
+test('realSource: verified.json 有效记录升级为官方已核验并附确认信息', async () => {
+  const title = '额度变化 · Example AI：免费层新增每月 200 次请求';
+  const sourceUrl = 'https://example.com/pricing';
+  const items = [makeWoolItem({ id: 'fli-valid-verified', title, sourceUrl })];
+  const record = {
+    itemId: 'fli-valid-verified',
+    titleSnapshot: title,
+    officialUrl: sourceUrl,
+    quote: '新用户注册即赠送每月 200 次免费请求。',
+    note: '已在官方定价页核对',
+    confirmedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+    confirmedBy: '测试确认人',
+    revokedAt: null,
+  };
+  const { origFetch } = await mockFetchWith(
+    items,
+    404,
+    undefined,
+    404,
+    undefined,
+    200,
+    { version: 1, records: [record] }
+  );
+
+  try {
+    const source = new RealSource();
+    await source.refresh();
+
+    const snapshot = source.list();
+    assert.equal(snapshot.items[0].verificationStatus, '官方已核验');
+    assert.deepEqual(snapshot.items[0].verification, {
+      confirmedAt: record.confirmedAt,
+      confirmedBy: '测试确认人',
+      quote: record.quote,
+      note: record.note,
+      officialUrl: sourceUrl,
+    });
+    assert.equal(snapshot.items[0].verificationIssue, null);
+  } finally {
+    (globalThis as any).fetch = origFetch;
+  }
+});
+
+test('realSource: verified.json 中标题变化的记录不升级，并给出失效原因', async () => {
+  const items = [
+    makeWoolItem({
+      id: 'fli-stale-verified',
+      title: '额度变化 · Example AI：免费层新增每月 200 次请求',
+      sourceUrl: 'https://example.com/pricing',
+    }),
+  ];
+  const record = {
+    itemId: 'fli-stale-verified',
+    titleSnapshot: '额度变化 · Example AI：免费层新增每月 100 次请求',
+    officialUrl: 'https://example.com/pricing',
+    quote: '新用户注册即赠送每月 200 次免费请求。',
+    note: '',
+    confirmedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+    confirmedBy: '测试确认人',
+    revokedAt: null,
+  };
+  const { origFetch } = await mockFetchWith(
+    items,
+    404,
+    undefined,
+    404,
+    undefined,
+    200,
+    { version: 1, records: [record] }
+  );
+
+  try {
+    const source = new RealSource();
+    await source.refresh();
+
+    const snapshot = source.list();
+    assert.equal(snapshot.items[0].verificationStatus, '未核验');
+    assert.equal(snapshot.items[0].verification, null);
+    assert.equal(snapshot.items[0].verificationIssue?.reason, '标题已变化');
   } finally {
     (globalThis as any).fetch = origFetch;
   }

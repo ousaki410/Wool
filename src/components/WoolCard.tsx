@@ -21,7 +21,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import { copyToClipboard } from '../utils/clipboard';
-import { formatShanghaiDateTime } from '../data/shanghaiTime';
+import { formatShanghaiDate, formatShanghaiDateTime } from '../data/shanghaiTime';
 import {
   WoolItem,
   formatDeadlineLabel,
@@ -252,6 +252,52 @@ export const WoolCard: React.FC<WoolCardProps> = ({
         >
           {item.title}
         </h3>
+
+        {/* 人工确认：仅 verified.json 中的有效记录会挂载 verification */}
+        {item.verification && (
+          <div className="mt-3 rounded-lg border border-emerald-200 bg-emerald-50/70 px-3 py-2 text-xs dark:border-emerald-900/70 dark:bg-emerald-950/30">
+            <div className="font-semibold text-emerald-800 dark:text-emerald-300">
+              人工确认于 {formatShanghaiDate(item.verification.confirmedAt)} ·{' '}
+              {item.verification.confirmedBy}
+            </div>
+            <p className="mt-1 leading-relaxed text-emerald-900 dark:text-emerald-200 break-words">
+              “{item.verification.quote}”
+            </p>
+            {item.verification.note && (
+              <p className="mt-1 leading-relaxed text-emerald-800/90 dark:text-emerald-300/90 break-words">
+                核对说明：{item.verification.note}
+              </p>
+            )}
+            <a
+              href={item.verification.officialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 inline-block break-all text-emerald-800 underline decoration-emerald-300 underline-offset-2 hover:text-emerald-700 dark:text-emerald-300 dark:decoration-emerald-700 dark:hover:text-emerald-200"
+            >
+              官方链接：{item.verification.officialUrl}
+            </a>
+          </div>
+        )}
+
+        {/* 存在人工确认记录但已失效：说明原因，不进入主列表 */}
+        {item.verificationIssue && item.verificationStatus !== '官方已核验' && (
+          <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50/70 px-3 py-2 text-xs dark:border-amber-900/60 dark:bg-amber-950/30">
+            <div className="font-semibold text-amber-800 dark:text-amber-300">
+              人工确认已失效：{item.verificationIssue.reason}
+            </div>
+            <p className="mt-1 leading-relaxed text-amber-800/90 dark:text-amber-300/90">
+              该条目曾有确认记录，但未通过有效性校验，因此不进入主列表。
+            </p>
+            {item.verificationIssue.confirmedAt && (
+              <p className="mt-1 text-[11px] text-amber-700/90 dark:text-amber-400/80">
+                原确认于 {formatShanghaiDate(item.verificationIssue.confirmedAt)}
+                {item.verificationIssue.confirmedBy
+                  ? ` · ${item.verificationIssue.confirmedBy}`
+                  : ''}
+              </p>
+            )}
+          </div>
+        )}
 
         {/* 官方页面摘录：命中片段或抓取结果；不会自动改变核验状态 */}
         {evidence && (

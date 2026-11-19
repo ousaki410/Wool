@@ -118,3 +118,121 @@ test('WoolCard 显示证据状态与原文片段，但不自动升级为官方�
     window.close();
   }
 });
+
+test('WoolCard 对有效人工确认显示日期、原文和官方链接', async () => {
+  const dom = new JSDOM('<!doctype html><html><body></body></html>', {
+    url: 'http://localhost/',
+  });
+  const { window } = dom;
+  const globals: Record<string, unknown> = {
+    window,
+    document: window.document,
+    navigator: window.navigator,
+    HTMLElement: window.HTMLElement,
+    Element: window.Element,
+    Node: window.Node,
+    Event: window.Event,
+    MouseEvent: window.MouseEvent,
+    KeyboardEvent: window.KeyboardEvent,
+    MutationObserver: window.MutationObserver,
+    getComputedStyle: window.getComputedStyle.bind(window),
+  };
+  for (const [key, value] of Object.entries(globals)) {
+    Object.defineProperty(globalThis, key, { value, configurable: true });
+  }
+  (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT =
+    true;
+
+  try {
+    const { render, cleanup } = await import('@testing-library/react');
+    const { WoolCard } = await import('./WoolCard');
+
+    const view = render(
+      <WoolCard
+        item={makeItem({
+          verificationStatus: '官方已核验',
+          verificationNote: '已在官方定价页核对',
+          verification: {
+            confirmedAt: '2026-11-18T00:00:00.000Z',
+            confirmedBy: '测试确认人',
+            quote: '新用户注册即赠送每月 200 次免费请求。',
+            note: '已在官方定价页核对',
+            officialUrl: 'https://example.com/pricing',
+          },
+        })}
+        isBookmarked={false}
+        onToggleBookmark={() => {}}
+        nowIso="2026-11-19T03:00:00.000Z"
+      />
+    );
+
+    assert.ok(view.getByText('✓ 官方已核验'));
+    assert.ok(view.getByText(/人工确认于 2026-11-18/));
+    assert.ok(view.getByText(/新用户注册即赠送每月 200 次免费请求。/));
+    assert.ok(view.getByText(/核对说明：已在官方定价页核对/));
+
+    const link = view.getByRole('link', {
+      name: /官方链接：https:\/\/example\.com\/pricing/,
+    });
+    assert.equal(link.getAttribute('href'), 'https://example.com/pricing');
+
+    cleanup();
+  } finally {
+    window.close();
+  }
+});
+
+test('WoolCard 在线索卡显示失效记录原因，且不进入已核验状态', async () => {
+  const dom = new JSDOM('<!doctype html><html><body></body></html>', {
+    url: 'http://localhost/',
+  });
+  const { window } = dom;
+  const globals: Record<string, unknown> = {
+    window,
+    document: window.document,
+    navigator: window.navigator,
+    HTMLElement: window.HTMLElement,
+    Element: window.Element,
+    Node: window.Node,
+    Event: window.Event,
+    MouseEvent: window.MouseEvent,
+    KeyboardEvent: window.KeyboardEvent,
+    MutationObserver: window.MutationObserver,
+    getComputedStyle: window.getComputedStyle.bind(window),
+  };
+  for (const [key, value] of Object.entries(globals)) {
+    Object.defineProperty(globalThis, key, { value, configurable: true });
+  }
+  (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT =
+    true;
+
+  try {
+    const { render, cleanup } = await import('@testing-library/react');
+    const { WoolCard } = await import('./WoolCard');
+
+    const view = render(
+      <WoolCard
+        item={makeItem({
+          verificationStatus: '未核验',
+          verificationIssue: {
+            reason: '标题已变化',
+            confirmedAt: '2026-11-01T00:00:00.000Z',
+            confirmedBy: '测试确认人',
+          },
+        })}
+        isBookmarked={false}
+        onToggleBookmark={() => {}}
+        nowIso="2026-11-19T03:00:00.000Z"
+      />
+    );
+
+    assert.ok(view.getByText('人工确认已失效：标题已变化'));
+    assert.ok(view.getByText(/该条目曾有确认记录/));
+    assert.ok(view.getByText('? 未核验'));
+    assert.equal(view.queryByText('✓ 官方已核验'), null);
+
+    cleanup();
+  } finally {
+    window.close();
+  }
+});

@@ -5,6 +5,11 @@ import {
   type EvidenceJson,
   type EvidenceRecord,
 } from './evidence';
+import {
+  applyManualVerification,
+  parseVerifiedRecords,
+  type VerifiedRecord,
+} from './verified';
 
 const BASE_URL =
   typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL
@@ -13,6 +18,7 @@ const BASE_URL =
 const WOOL_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/wool.json`;
 const SOURCES_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/sources.json`;
 const EVIDENCE_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/evidence.json`;
+const VERIFIED_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/verified.json`;
 
 export interface RealSourceStatus {
   /** 上一次抓取是否成功 */
@@ -197,10 +203,28 @@ export class RealSource implements WoolSource {
       const evidenceById = new Map(
         evidenceRecords.map((record) => [record.itemId, record])
       );
-      this.items = items.map((item) => {
+      let itemsWithEvidence = items.map((item) => {
         const evidence = evidenceById.get(item.id);
         return evidence ? { ...item, evidence } : item;
       });
+
+      // 4. 抓取 verified.json（可选，失败只导致没有人工确认记录）
+      let verifiedRecords: VerifiedRecord[] = [];
+      try {
+        const verifiedRes = await fetch(VERIFIED_JSON_URL, { cache: 'no-store' });
+        if (verifiedRes.ok) {
+          verifiedRecords = parseVerifiedRecords(await verifiedRes.json());
+        }
+      } catch {
+        verifiedRecords = [];
+      }
+      // 只有有效记录才能升级为“官方已核验”；失效记录只在线索卡展示原因。
+      itemsWithEvidence = applyManualVerification(
+        itemsWithEvidence,
+        verifiedRecords,
+        new Date()
+      );
+      this.items = itemsWithEvidence;
 
       this._sources = sources;
       this.channels = buildChannels(this._sources);

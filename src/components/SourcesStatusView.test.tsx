@@ -80,11 +80,21 @@ test('涉及厂商折叠区可用按钮展开，且仅对官方链接显示厂�
         sourceName: '官方厂商',
         sourceUrl: 'https://official.example.com/pricing',
         hasOfficialLink: true,
+        verificationStatus: '官方已核验',
+        verification: {
+          confirmedAt: '2026-11-18T00:00:00.000Z',
+          confirmedBy: '测试确认人',
+          quote: '新用户注册即赠送每月 200 次免费请求。',
+          note: '',
+          officialUrl: 'https://official.example.com/pricing',
+        },
       }),
       makeWoolItem({
         sourceName: '镜像厂商',
         sourceUrl: 'https://github.com/example/mirror',
         hasOfficialLink: false,
+        // 上游自带状态但没有有效确认记录，不应计入“已核验条目”
+        verificationStatus: '官方已核验',
       }),
     ];
 
@@ -95,6 +105,9 @@ test('涉及厂商折叠区可用按钮展开，且仅对官方链接显示厂�
         onSelectSourceItems={() => {}}
       />
     );
+
+    const verifiedCard = screen.getByText('已核验条目').parentElement;
+    assert.match(verifiedCard?.textContent ?? '', /1/);
 
     const toggle = screen.getByRole('button', { name: /涉及厂商/ });
     assert.equal(toggle.getAttribute('aria-expanded'), 'false');
