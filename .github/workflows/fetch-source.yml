@@ -37,16 +37,20 @@ jobs:
       - name: Fetch free-llm-intel subscription
         run: npx tsx scripts/fetch-source.ts
 
-      - name: Commit wool.json, news.json and sources.json if changed
+      - name: Verify official sources
+        run: npx tsx scripts/verify-sources.ts
+
+      - name: Commit data files if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet public/data/wool.json public/data/news.json public/data/sources.json; then
-            echo "public/data/wool.json、public/data/news.json 和 public/data/sources.json 未变更，无需提交"
-          else
-            git add public/data/wool.json public/data/news.json public/data/sources.json
-            git commit -m "data(source): refresh free-llm-intel wool.json, news.json and sources.json"
+          DATA_FILES="public/data/wool.json public/data/news.json public/data/sources.json public/data/evidence.json"
+          if git status --porcelain -- $DATA_FILES | grep -q .; then
+            git add $DATA_FILES
+            git commit -m "data(source): refresh wool.json, news.json, sources.json and evidence.json"
             git push
+          else
+            echo "public/data 数据文件未变更，无需提交"
           fi
 
       - name: Trigger Pages deployment

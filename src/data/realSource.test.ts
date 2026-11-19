@@ -46,11 +46,14 @@ function makeWoolJson(items: WoolItem[]) {
 async function mockFetchWith(
   woolItems: WoolItem[],
   sourcesStatus: number,
-  sourcesBody?: unknown
+  sourcesBody?: unknown,
+  evidenceStatus = 404,
+  evidenceBody?: unknown
 ) {
   const origFetch = globalThis.fetch;
   let woolCalled = false;
   let sourcesCalled = false;
+  let evidenceCalled = false;
   (globalThis as any).fetch = async (url: string) => {
     const u = String(url);
     if (u.endsWith('/data/wool.json')) {
@@ -71,9 +74,18 @@ async function mockFetchWith(
         json: async () => sourcesBody,
       } as Response;
     }
+    if (u.endsWith('/data/evidence.json')) {
+      evidenceCalled = true;
+      return {
+        ok: evidenceStatus >= 200 && evidenceStatus < 300,
+        status: evidenceStatus,
+        statusText: evidenceStatus >= 200 && evidenceStatus < 300 ? 'OK' : 'Not Found',
+        json: async () => evidenceBody,
+      } as Response;
+    }
     throw new Error(`unexpected fetch: ${u}`);
   };
-  return { origFetch, woolCalled, sourcesCalled };
+  return { origFetch, woolCalled, sourcesCalled, evidenceCalled };
 }
 
 test('realSource: sources.json 404 时 wool 条目仍正常显示，channels 为空', async () => {
@@ -93,6 +105,59 @@ test('realSource: sources.json 404 时 wool 条目仍正常显示，channels 为
     assert.equal(status.count, 66);
     assert.equal(status.error, null);
     assert.ok(status.fetchedAt, 'fetchedAt 应不为 null');
+  } finally {
+    (globalThis as any).fetch = origFetch;
+  }
+});
+
+test('realSource: evidence.json 正常时条目挂载存证，但不改变核验状态', async () => {
+  const items = [
+    makeWoolItem({
+      id: 'fli-evidence-test',
+      hasOfficialLink: true,
+      verificationStatus: '未核验',
+    }),
+  ];
+  const evidence = {
+    generatedAt: new Date().toISOString(),
+    count: 1,
+    statusCounts: { 强命中: 1, 弱相关: 0, 页面未提及: 0, 无法访问: 0 },
+    records: [
+      {
+        itemId: 'fli-evidence-test',
+        title: '测试条目',
+        sourceName: '测试来源',
+        sourceUrl: 'https://example.com',
+        fetchedAt: new Date().toISOString(),
+        httpStatus: 200,
+        finalUrl: 'https://example.com',
+        textHash: 'abc123',
+        status: '强命中',
+        matches: [
+          {
+            keyword: '免费额度',
+            snippet: '新用户可领取免费额度',
+            strength: 'weak',
+          },
+        ],
+      },
+    ],
+  };
+  const { origFetch } = await mockFetchWith(items, 404, undefined, 200, evidence);
+
+  try {
+    const source = new RealSource();
+    await source.refresh();
+
+    const snapshot = source.list();
+    assert.equal(snapshot.items.length, 1);
+    assert.equal(snapshot.items[0].evidence?.status, '强命中');
+    assert.equal(snapshot.items[0].evidence?.matches[0].snippet, '新用户可领取免费额度');
+    assert.equal(
+      snapshot.items[0].verificationStatus,
+      '未核验',
+      '存证不得自动升级核验状态'
+    );
   } finally {
     (globalThis as any).fetch = origFetch;
   }

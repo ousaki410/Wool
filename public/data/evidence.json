@@ -1,0 +1,1203 @@
+{
+  "generatedAt": "2026-11-19T08:53:27.047Z",
+  "count": 61,
+  "statusCounts": {
+    "强命中": 14,
+    "弱相关": 26,
+    "页面未提及": 7,
+    "无法访问": 14
+  },
+  "records": [
+    {
+      "itemId": "fli-7f7cc46f",
+      "title": "额度变化 · Google Gemini：免费层新增可用的 Gemini Decision 1 并公开其限额；同时 Gemini 4 Carbon 明确不在免费层。",
+      "sourceName": "Google Gemini",
+      "sourceUrl": "https://aistudio.google.com/docs/pricing",
+      "fetchedAt": "2026-11-19T08:52:28.078Z",
+      "httpStatus": 200,
+      "finalUrl": "https://aistudio.google.com/docs/pricing",
+      "textHash": "bc76b790be6997a34c9cb987aa7357dcaf4135140ddfbfd1d917cc4fc793c027",
+      "status": "页面未提及",
+      "matches": []
+    },
+    {
+      "itemId": "fli-1c473d54",
+      "title": "额度变化 · Google Gemini Enterprise Agent Platform：免费页新增「Gemini Enterprise Plus 版 30 天免费试用」这一限时活动，$300 赠金、Always Free 与 Startups 赠金数额未变，其余改动均为措辞调整。",
+      "sourceName": "Google Gemini Enterprise Agent Platform",
+      "sourceUrl": "https://cloud.google.com/products/gemini-enterprise-agent-platform/pricing",
+      "fetchedAt": "2026-11-19T08:52:36.597Z",
+      "httpStatus": 200,
+      "finalUrl": "https://cloud.google.com/products/gemini-enterprise-agent-platform/pricing",
+      "textHash": "0e99052a64124d7c17c8270cfa4acb90e15d57d03b9dc0cef12797644a0cd855",
+      "status": "页面未提及",
+      "matches": []
+    },
+    {
+      "itemId": "fli-7d723c69",
+      "title": "额度变化 · Morph Labs：免费层「每月 200 次请求」与首充送 $5 未变，但托管模型阵容已更新（Kimi K3 → Kimi K3.1、新增 GLM-5.3-Flash 与多个 DeepSeek V4.1 Flash 变体，页面不再列出 Qwen/MiniMax），并新增 $200/月不限量 Kimi K3.1 与 DeepSeek V4.1 Flash 的 Ultra 订阅。",
+      "sourceName": "Morph Labs",
+      "sourceUrl": "https://www.morphllm.com/pricing",
+      "fetchedAt": "2026-11-19T08:52:27.927Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.morphllm.com/pricing",
+      "textHash": "2f9efa5bad54473385942ac13ee564ed375bd18e4678078305e96491826387e1",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$200",
+          "snippet": "Pricing | Morph Announcing Morph Ultra - Unlimited Kimi and DeepSeek for $200 Morph Models Open Source Models Kimi K3.1 Fable-tier, 100 tok/s. GLM-5.3 Opus-t…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…ing. Book a Call Sign Up / Log In Inference Compute Usage-based pricing · start free 🇺🇸 Pricing Billing Billing is prepaid. Load credits, and each request draws d…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-4b6b0b16",
+      "title": "额度变化 · Anyscale：Anyscale pricing 页新增 KubeRay 专项 $500 Credits 与 KubeRay Connect 免费试用，并把项目模板额度细化为 $3 / $5 / $5，原有 $100 注册额度仍在。",
+      "sourceName": "Anyscale",
+      "sourceUrl": "https://www.anyscale.com/pricing",
+      "fetchedAt": "2026-11-19T08:52:29.002Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.anyscale.com/pricing",
+      "textHash": "2324be0929331ffa71fe9234541c38f63015c1ef8c18307c29144f7fc4dc5ab0",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$500",
+          "snippet": "…rial. Learn More Anyscale Product Use Cases Developers Customers Pricing Log in $500 in Credits for KubeRay Get started with $100 credit Anyscale Pricing Maximize G…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "$100",
+          "snippet": "…evelopers Customers Pricing Log in $500 in Credits for KubeRay Get started with $100 credit Anyscale Pricing Maximize GPU utilization with Ray on Anyscale. Start fo…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "$3",
+          "snippet": "…, batch inference, distributed training and online serving. Launch project with $3 LLM training and inference Fine-tune an LLM to perform batch inference and onli…",
+          "strength": "strong"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-66b7d3d4",
+      "title": "额度变化 · Parallel Web API：免费档由「Developer」更名为「Build」（额度仍为每月 5,000 次请求 + 留卡每月 $5 + 注册最高 $80），并新增「最高 $250 startup credits」，付费档由 Business 更名为 Scale、年付赠金升至 $12,000。",
+      "sourceName": "Parallel Web API",
+      "sourceUrl": "https://parallel.ai/pricing",
+      "fetchedAt": "2026-11-19T08:52:30.550Z",
+      "httpStatus": 200,
+      "finalUrl": "https://parallel.ai/pricing",
+      "textHash": "41dc3e02e8cf99bb4cb68c3d18b5511ec3df211f88318188897b2c95b48ac6f1",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$5",
+          "snippet": "…more - Variable limits, enough for personal use Popular ### Build Pay-as-you-go $5 free monthly with a card on file, plus up to $80 at signup. Start building [ St…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "$80",
+          "snippet": "…Popular ### Build Pay-as-you-go $5 free monthly with a card on file, plus up to $80 at signup. Start building [ Start building ] ( https://platform.parallel.ai/ )…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "$250",
+          "snippet": "…tegrations - Search and Extract: 600/min - Auto-reload and spend limits - Up to $250 in startup credits - SOC 2 Type II - Support: Docs / Discord - Specialized Data…",
+          "strength": "strong"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-19b9ffa7",
+      "title": "额度变化 · 阶跃星辰 StepFun：StepAudio 3 系列限时免费截止时间由北京时间 2026-11-17 11:59:59 顺延至 2026-11-23 11:59:59（12:00:00 起按新价格计费）。",
+      "sourceName": "阶跃星辰 StepFun",
+      "sourceUrl": "https://platform.stepfun.com/docs/zh/guides/pricing/details",
+      "fetchedAt": "2026-11-19T08:52:33.802Z",
+      "httpStatus": 200,
+      "finalUrl": "https://platform.stepfun.com/docs/zh/guides/pricing/details",
+      "textHash": "5d9fe80e6bc503aaad9a6c418afc45e7e0bf9290c2dcd35450a37117a569c3d8",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "定价/计费",
+          "snippet": "API 定价 - StepFun 开放平台文档中心 Documentation Index Fetch the complete documentation index a…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "截止日期",
+          "snippet": "…3 系列模型及相关服务自北京时间 2026 年 11 月 23 日 中午12:00:00 起按下表新价格计费。生效前，已收费的模型及服务继续按原有标准计费，适用限时免费政策的模型限免至北京时间 2026 年 11 月 23 日上午11:59:59。同时，受上游算力资源成本上涨影响，为持续保障服务稳定性与推理质量，我们对部分…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…系列模型及相关服务自北京时间 2026 年 11 月 23 日 中午12:00:00 起按下表新价格计费。生效前，已收费的模型及服务继续按原有标准计费，适用限时免费政策的模型限免至北京时间 2026 年 11 月 23 日上午11:59:59。同时，受上游算力资源成本上涨影响，为持续保障服务稳定性与推理质量，我们对部分语音…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-1f577256",
+      "title": "额度变化 · Relace：官方定价页已改为全部模型按 token 计费（无订阅、无最低消费），不再出现免费套餐（free tier）与 compact/apply/rank/search 免费编程模型，模型阵容换成 DeepSeek V4、Kimi K3、GLM 5.3 等通用模型。",
+      "sourceName": "Relace",
+      "sourceUrl": "https://relace.ai/pricing",
+      "fetchedAt": "2026-11-19T08:52:30.572Z",
+      "httpStatus": 200,
+      "finalUrl": "https://relace.ai/pricing",
+      "textHash": "cb9fea1dd7e6d774cfc7fa06721584a377a147a50eed98620519339ead1d3726",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "定价/计费",
+          "snippet": "Pricing - Relace Relace Blog Docs Pricing Careers Sign up Pricing All models are billed…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "token",
+          "snippet": "…s you go, with no subscription or minimum. Prices are in US dollars per million tokens. Model Input Cached input Output DeepSeek V4 Pro $0.50 $0.05 $2.00 DeepSeek V4…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-5c25a7d3",
+      "title": "额度变化 · 通义千问 Qwen：官方文档移除了未实名老用户自动锁定开启「用尽即停」的规则描述，统一明确用尽即停默认关闭且需手动开启。",
+      "sourceName": "通义千问 Qwen",
+      "sourceUrl": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+      "fetchedAt": "2026-11-19T08:52:41.599Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-24695aef",
+      "title": "额度变化 · 复旦 MOSS (MOSI)：MOSS 开放平台付费模型开启六折优惠（TTS/转写/文生图单价下调），语言与视觉等 4 款模型仍维持限时免费 0 积分。",
+      "sourceName": "复旦 MOSS (MOSI)",
+      "sourceUrl": "https://platform.mosi.cn/docs/models",
+      "fetchedAt": "2026-11-19T08:52:41.442Z",
+      "httpStatus": 200,
+      "finalUrl": "https://platform.moss.cn/docs/models",
+      "textHash": "fdb27acfda49b54a5f2f93e624a8fe9d2986fae67a6d32ff6defafb1784a31d7",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "六折",
+          "snippet": "…odel ID 作为 model 传入。 全部 语言模型 最新 语音生成 最新 语音识别 多模态理解 图像生成 最新 实时交互 最新 模型名称 说明 计费标准 六折优惠 流式输出 异步 nex-n2.6 最新 snapshot: nex-n2.6-2026-11-05 多模态语言模型 · 文本、图片、视频 → 文本 POS…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "优惠",
+          "snippet": "…el ID 作为 model 传入。 全部 语言模型 最新 语音生成 最新 语音识别 多模态理解 图像生成 最新 实时交互 最新 模型名称 说明 计费标准 六折优惠 流式输出 异步 nex-n2.6 最新 snapshot: nex-n2.6-2026-11-05 多模态语言模型 · 文本、图片、视频 → 文本 POST…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "截止日期",
+          "snippet": "…snapshot: nex-n2.6-2026-11-05 多模态语言模型 · 文本、图片、视频 → 文本 POST /v1/chat/completions 限时免费 0 积分 ✓ — moss-tts-2.0-flash-preview 最新 snapshot: moss-tts-2.0-flash-preview-2…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-08c0e840",
+      "title": "额度变化 · Together AI：Tev1 4B Experimental 的输入计费微调为 $0.042/1M tokens（输出仍免费）；官方计费文档补充说明账户中的免费赠额不计入最低 $15 的充值门槛。",
+      "sourceName": "Together AI",
+      "sourceUrl": "https://www.together.ai/pricing",
+      "fetchedAt": "2026-11-19T08:52:36.293Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.together.ai/pricing",
+      "textHash": "d8b87e91c3fe50fdfe9407ec53d75b2a09e87372a94c1aae3cd1d52dea8f9ae0",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "定价/计费",
+          "snippet": "Pricing | Together AI Introducing Polymorphic Inference, starting with Together Compile…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "token",
+          "snippet": "…en received! Oops! Something went wrong while submitting the form. Price per 1M tokens Batch API price Model Input output GLM-5.3 $1.40 $0.26 (cached) $4.40 DeepSeek…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…Qwen3.7-Plus $0.32 $1.28 GLM-5.2 $1.40 $0.26 (cached) $4.40 Ternary Bonsai 27B Free Free Kimi K3 $3.00 $0.30 (cached) $15.00 Muse Glimmer 30B $0.35 $0.04 (cached)…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-0549a532",
+      "title": "额度变化 · DeepSeek：新增文件解析与 OCR 计费规则，新增语音合成（TTS）与语音识别（ASR）5 折限时折扣，更新联网搜索与抓取适用范围说明。",
+      "sourceName": "DeepSeek",
+      "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "fetchedAt": "2026-11-19T08:52:41.406Z",
+      "httpStatus": 200,
+      "finalUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "textHash": "7992c5a4341cd7984ce5ee6d2747c1bfc844516e70477bbcaef963b91331c9c2",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "5 折",
+          "snippet": "…解析与 OCR 价格 ​ 项目 计费单位 价格 文件解析 、 OCR API 每 1,000 页 1.5元 语音价格 ​ API 计费单位 刊例价 限时折扣价（5 折） 语音合成（TTS） 每 10,000 字符 3元 1.5元 语音识别（ASR） 每小时音频 0.78元 0.39元 扣费规则 ​ 模型调用费用 = toke…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "定价/计费",
+          "snippet": "…ens”为单位。Token 是模型用来表示自然语言文本的的最小单位，可以是一个词、一个数字或一个标点符号等。我们将根据模型输入和输出的总 token 数进行计量计费。 模型细节 ​ 模型 deepseek-flash (1) deepseek-v4-pro BASE URL (OpenAI 格式) https://api.…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "截止日期",
+          "snippet": "…具 。 文件解析与 OCR 价格 ​ 项目 计费单位 价格 文件解析 、 OCR API 每 1,000 页 1.5元 语音价格 ​ API 计费单位 刊例价 限时折扣价（5 折） 语音合成（TTS） 每 10,000 字符 3元 1.5元 语音识别（ASR） 每小时音频 0.78元 0.39元 扣费规则 ​ 模型调用费用…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-61ad7f5a",
+      "title": "额度变化 · Morph Labs：初创企业扶持额度（Startup Credits）由最高 $5K 调整为最高 $1K",
+      "sourceName": "Morph Labs",
+      "sourceUrl": "https://www.morphllm.com/pricing",
+      "fetchedAt": "2026-11-19T08:52:37.990Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.morphllm.com/pricing",
+      "textHash": "2f9efa5bad54473385942ac13ee564ed375bd18e4678078305e96491826387e1",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$1K",
+          "snippet": "…esources Blog Engineering deep dives and product updates. Startup Credits Up to $1K in API credits for startups. Contact Us Talk to the team about your use case. A…",
+          "strength": "strong"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-1e49e439",
+      "title": "额度变化 · GitHub Copilot：GitHub Copilot 移除了 Free 层固定 50 次聊天请求的表述，更新为受限的聊天与 Agent 用量（Limited chat and agent usage）并提供 Haiku 4.5、GPT-5 mini 等入门级模型访问，代码补全维持每月 2,000 次。",
+      "sourceName": "GitHub Copilot",
+      "sourceUrl": "https://github.com/features/copilot/plans",
+      "fetchedAt": "2026-11-19T08:52:40.168Z",
+      "httpStatus": 200,
+      "finalUrl": "https://github.com/features/copilot/plans",
+      "textHash": "44e702f8e55a43686dec2f6d92f307277c2c52bd36fc1e6c1a61f3c95e9187e9",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…rt Take flight with GitHub Copilot Pricing plans For individuals For businesses Free For getting started with GitHub Copilot. $ 0 USD Get started Open in VS Code Wh…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "每月额度",
+          "snippet": "…Copilot. $ 0 USD Get started Open in VS Code What's included: 2,000 completions per month Access to Haiku 4.5, GPT-5 mini, and more Community Support Access to Copilot F…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-0839af2f",
+      "title": "额度变化 · Google Gemini：官方限速文档新增 Gemini Omni Flash (gemini-omni-1.2-flash) 限速表，明确标注该模型在 Free 层不受支持（Not supported）。",
+      "sourceName": "Google Gemini",
+      "sourceUrl": "https://aistudio.google.com/docs/pricing",
+      "fetchedAt": "2026-11-19T08:52:41.516Z",
+      "httpStatus": 200,
+      "finalUrl": "https://aistudio.google.com/docs/pricing",
+      "textHash": "bc76b790be6997a34c9cb987aa7357dcaf4135140ddfbfd1d917cc4fc793c027",
+      "status": "页面未提及",
+      "matches": []
+    },
+    {
+      "itemId": "fli-1965a26c",
+      "title": "额度变化 · 月之暗面 Kimi：新用户认证赠送的 15 元代金券规则调整：现已支持用于 Kimi K3.1 Pro 和 Kimi K3，但不可用于高速版 Kimi K3.1 Pro Highspeed。",
+      "sourceName": "月之暗面 Kimi",
+      "sourceUrl": "https://platform.kimi.com/docs/pricing/chat",
+      "fetchedAt": "2026-11-19T08:52:52.407Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-7c1b8152",
+      "title": "额度变化 · DeepSeek：经 DeepSeek Harness/Claude Code/Codex 的 Server 端工具调用访问的 Search/Fetch 接口，官方标注的免费期已于北京时间 2026-11-01 00:00 结束；网页搜索与抓取按次计费，每 1,000 次成功请求 5 元。",
+      "sourceName": "DeepSeek",
+      "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "fetchedAt": "2026-11-19T08:52:47.776Z",
+      "httpStatus": 200,
+      "finalUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "textHash": "7992c5a4341cd7984ce5ee6d2747c1bfc844516e70477bbcaef963b91331c9c2",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "5 元",
+          "snippet": "…万tokens输入 （缓存命中） 空闲时段 0.02元 0.15元 高峰时段 0.04元 0.30元 百万tokens输入 （缓存未命中） 空闲时段 1元 4.5元 高峰时段 2元 9.0元 百万tokens输出 空闲时段 4元 13.5元 高峰时段 8元 27.0元 并发限制 (3) 2500 500 (1) 模型名请使…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "1,000 次",
+          "snippet": "…。 Search 与 Fetch API 价格 ​ Search 与 Fetch API 按次计费。 项目 计费单位 价格 Search API（文字） 每 1,000 次成功请求 5元 Fetch API 每 1,000 次成功请求 5元 计费规则见 网页搜索与抓取 。 自北京时间 2026 年 11 月 18 日 12:00…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "定价/计费",
+          "snippet": "…ens”为单位。Token 是模型用来表示自然语言文本的的最小单位，可以是一个词、一个数字或一个标点符号等。我们将根据模型输入和输出的总 token 数进行计量计费。 模型细节 ​ 模型 deepseek-flash (1) deepseek-v4-pro BASE URL (OpenAI 格式) https://api.…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-07f0748a",
+      "title": "额度变化 · 通义千问 Qwen：新用户获取免费额度要求变更为必须先完成实名认证，开通后「免费额度用尽即停」默认关闭需自行开启。",
+      "sourceName": "通义千问 Qwen",
+      "sourceUrl": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+      "fetchedAt": "2026-11-19T08:52:41.599Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-288dba62",
+      "title": "额度变化 · 云知声 Token Hub：快速入门页下线了原实名认证赠送具体 Token 资源包的说明与 U2 Flash 限时免费横幅，改版上线 U Plan 体系并提供 Free 档免费领取。",
+      "sourceName": "云知声 Token Hub",
+      "sourceUrl": "https://maas.unisound.com/docs/guide/quickstart",
+      "fetchedAt": "2026-11-19T08:52:52.600Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-2af4dd92",
+      "title": "额度变化 · 小米 MiMo：MiMo-V2.5-Pro 与 MiMo-V2.5 已于 2026-10-21 10:00（UTC+8）正式下线且模型名称已失效",
+      "sourceName": "小米 MiMo",
+      "sourceUrl": "https://mimo.mi.com/",
+      "fetchedAt": "2026-11-19T08:52:44.296Z",
+      "httpStatus": 200,
+      "finalUrl": "https://mimo.mi.com/",
+      "textHash": "1ef3248d3354667b277697503005cba064ff6e0b9225c088244a63b2b19c65fe",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "下线/失效",
+          "snippet": "Xiaomi MiMo Home Xiaomi MiMo-V2.5-Pro and MiMo-V2.5 were retired on Oct 21, 2026, at 10:00 (UTC+8), and their model IDs no longer work. Please u…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-3e9128fb",
+      "title": "额度变化 · Anthropic Claude：官方调整高级订阅体系并细化限额：新增 Ultra 计划（$200/月，含 $200 API 额度），Max 计划固定为 $100/月（含 $100 API 额度），并明确免费版同时存在每 5 小时和每周限额。",
+      "sourceName": "Anthropic Claude",
+      "sourceUrl": "https://claude.com/pricing",
+      "fetchedAt": "2026-11-19T08:52:46.669Z",
+      "httpStatus": 200,
+      "finalUrl": "https://claude.com/pricing",
+      "textHash": "22f58d936fbb58558a5c67d03af001dea440211f3605e67ea872cfb7fad831fa",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$200",
+          "snippet": "…s, Docs Pro For everyday work $17 Per month with annual subscription discount ( $200 billed up front). $20 if billed monthly. Try Claude Everything in Free, plus: M…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "$100",
+          "snippet": "…ects More Claude models Claude in Chrome and Microsoft 365 Max For all-day work $100 Per month Try Claude Everything in Pro, plus: 5x Pro usage every 5 hours and ev…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…tions about this page Copy as markdown Pricing Individual Team & Enterprise API Free Try Claude $0 Free for everyone Try Claude Limited usage every 5 hours and ever…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-110e197a",
+      "title": "额度变化 · 通义千问 Qwen：官方移除文本类累计超 7000 万 Token 描述，新增模型额度下架机制说明，欠费规则放宽为仅停止欠费服务而不再全局封锁其他服务",
+      "sourceName": "通义千问 Qwen",
+      "sourceUrl": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+      "fetchedAt": "2026-11-19T08:52:46.669Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-78759c1b",
+      "title": "额度变化 · 云知声 Token Hub：视觉模型认证礼包赠送模型由 U1-OCR、U1-OCR-Med 升级为 U2-OCR、U2-OCR-Med（额度仍为各 500 万 tokens）。",
+      "sourceName": "云知声 Token Hub",
+      "sourceUrl": "https://maas.unisound.com/docs/guide/quickstart",
+      "fetchedAt": "2026-11-19T08:52:52.600Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-7dbe8e2f",
+      "title": "额度变化 · 月之暗面 Kimi：新上线 Kimi K3.1 Pro 且明确与 K3 均不支持使用新用户 15 元代金券；公布 K2 系列模型将于 2026 年 10 月 31 日起停止向新用户开放并计划 12 月底下线",
+      "sourceName": "月之暗面 Kimi",
+      "sourceUrl": "https://platform.kimi.com/docs/pricing/chat",
+      "fetchedAt": "2026-11-19T08:52:52.407Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-2945b11a",
+      "title": "额度变化 · Cloudflare Workers AI：付费前沿模型名单新增 @cf/deepseek-ai/deepseek-v4.1-flash-1017，该模型不享受免费额度，需付费订阅或预付额度才能访问",
+      "sourceName": "Cloudflare Workers AI",
+      "sourceUrl": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "fetchedAt": "2026-11-19T08:52:53.989Z",
+      "httpStatus": 200,
+      "finalUrl": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "textHash": "f79e1a973a7bdf052e40d65cfaf3c6c6c3894db7695fbb839811b898cdfd8856",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…ut still billing in neurons in the back end. Workers AI is included in both the Free and Paid Workers plans and is priced at $0.011 per 1,000 Neurons . Our free all…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-71faacfa",
+      "title": "额度变化 · Together AI：Muse Spark Open 限时免费活动已结束，恢复为正常收费模型（输入 $1.25/1M tokens，输出 $4.25/1M tokens）",
+      "sourceName": "Together AI",
+      "sourceUrl": "https://www.together.ai/pricing",
+      "fetchedAt": "2026-11-19T08:52:53.828Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.together.ai/pricing",
+      "textHash": "d8b87e91c3fe50fdfe9407ec53d75b2a09e87372a94c1aae3cd1d52dea8f9ae0",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$4.25",
+          "snippet": "…$1.00 Qwen3.8 Flash $0.15 $0.47 Muse Spark Open 816B A42B $1.25 $0.15 (cached) $4.25 Beam 1.0 501B A23B $0.40 $0.04 (cached) $1.20 MiniMax M3.1 Flash $0.15 $0.015 (…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "token",
+          "snippet": "…en received! Oops! Something went wrong while submitting the form. Price per 1M tokens Batch API price Model Input output GLM-5.3 $1.40 $0.26 (cached) $4.40 DeepSeek…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "活动",
+          "snippet": "…4 (cached) $1.20 MiniMax M3.1 Flash $0.15 $0.015 (cached) $0.60 Qwen4 Max PROMO Promotion valid until 11/23/2026 $1.50 $1.05 $0.075 (cached) $4.50 $3.15 GLM-5.3-Flash $0…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-5cf6fc1b",
+      "title": "额度变化 · InceptionLabs：官方主推模型升级为 Mercury 3（文档快速入门已切为 mercury-3），并上线 launch 50% 折扣定价，涵盖 Mercury 3、Mercury Voice 与 Mercury Decide。",
+      "sourceName": "InceptionLabs",
+      "sourceUrl": "https://docs.inceptionlabs.ai/get-started",
+      "fetchedAt": "2026-11-19T08:52:54.257Z",
+      "httpStatus": 200,
+      "finalUrl": "https://docs.inceptionlabs.ai/get-started",
+      "textHash": "2601d939c7a894e11385498a6d254fb0438d8ef62b6bfa4f19cc1a9ed356459d",
+      "status": "页面未提及",
+      "matches": []
+    },
+    {
+      "itemId": "fli-3ecf4be9",
+      "title": "额度变化 · Mancer：更正免费模型范围：官方模型列表中仅 MythoLite 标注为 FREE（上下文 2560、输出上限 150），MythoMax 及 Magnum 72B 均为付费模型；且官方说明账户积分负额度下仍可使用免费模型。",
+      "sourceName": "Mancer",
+      "sourceUrl": "https://mancer.tech/models",
+      "fetchedAt": "2026-11-19T08:52:55.796Z",
+      "httpStatus": 200,
+      "finalUrl": "https://mancer.tech/models",
+      "textHash": "8bada2a8301a819fa611ca2ea7fc54667c7c1f5145dae226581b86e4ce6a054e",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…99 MythoLite Click for details online LLaMA 2 | 13B Creative, Roleplay 2560 150 FREE FREE 166.22372894390276 49.47500261686561 MythoMax Click for details online LLa…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-3dcdf3bb",
+      "title": "额度变化 · 科大讯飞星火：星火API新增 Spark-X2.5-1.7B 免费及 Spark-X2.5-4B 限时免费领取，均支持在产品页免费领取。",
+      "sourceName": "科大讯飞星火",
+      "sourceUrl": "https://xinghuo.xfyun.cn/sparkapi",
+      "fetchedAt": "2026-11-19T08:52:59.729Z",
+      "httpStatus": 200,
+      "finalUrl": "https://xinghuo.xfyun.cn/sparkapi",
+      "textHash": "7f33e20df1278d875174370b46d7b057d9fc1ef110bd54894cf20646ae44071e",
+      "status": "页面未提及",
+      "matches": []
+    },
+    {
+      "itemId": "fli-41833d3f",
+      "title": "额度变化 · NVIDIA NIM：官网首页代表性免费模型更新，展示了 Nemotron 3.5 Super VL、Nemotron 3.5 Lightning、DeepSeek V4.1 Flash 等最新模型。",
+      "sourceName": "NVIDIA NIM",
+      "sourceUrl": "https://build.nvidia.com/models?filters=nimType%3Anim_type_preview",
+      "fetchedAt": "2026-11-19T08:53:04.992Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-0c5d0df2",
+      "title": "额度变化 · DeepSeek：deepseek-flash 底层版本更新为 DeepSeek-V4.1-Flash-1017；DeepSeek Harness/Claude Code/Codex 中访问 Search/Fetch 接口目前未计费，明确将于 2026 年 11 月 1 日起开始收费",
+      "sourceName": "DeepSeek",
+      "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "fetchedAt": "2026-11-19T08:52:59.534Z",
+      "httpStatus": 200,
+      "finalUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "textHash": "7992c5a4341cd7984ce5ee6d2747c1bfc844516e70477bbcaef963b91331c9c2",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "定价/计费",
+          "snippet": "…ens”为单位。Token 是模型用来表示自然语言文本的的最小单位，可以是一个词、一个数字或一个标点符号等。我们将根据模型输入和输出的总 token 数进行计量计费。 模型细节 ​ 模型 deepseek-flash (1) deepseek-v4-pro BASE URL (OpenAI 格式) https://api.…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-04351763",
+      "title": "额度变化 · Together AI：官方定价页新增 Muse Spark Open 限时免费活动（输入/输出均为 $0.00，有效期至 2026 年 10 月 18 日），但调用仍受平台最低 $15 充值门槛约束。",
+      "sourceName": "Together AI",
+      "sourceUrl": "https://www.together.ai/pricing",
+      "fetchedAt": "2026-11-19T08:52:56.214Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.together.ai/pricing",
+      "textHash": "d8b87e91c3fe50fdfe9407ec53d75b2a09e87372a94c1aae3cd1d52dea8f9ae0",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$0.00",
+          "snippet": "…$3.00 Ripple-65B Preview $0.20 $0.02 (cached) $0.60 Tev1 4B Experimental $0.042 $0.00 DeepSeek V4 Pro 0813 $1.32 $0.13 (cached) $3.96 Qwen3.7-Max $2.50 $0.50 (cached…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "定价/计费",
+          "snippet": "Pricing | Together AI Introducing Polymorphic Inference, starting with Together Compile…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "活动",
+          "snippet": "…4 (cached) $1.20 MiniMax M3.1 Flash $0.15 $0.015 (cached) $0.60 Qwen4 Max PROMO Promotion valid until 11/23/2026 $1.50 $1.05 $0.075 (cached) $4.50 $3.15 GLM-5.3-Flash $0…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-4f36a5d1",
+      "title": "额度变化 · xAI Grok：新增最新旗舰模型 grok-4.7 及 grok-build-0.1，API 全线模型依然需充值使用，无免费层",
+      "sourceName": "xAI Grok",
+      "sourceUrl": "https://docs.x.ai/developers/pricing",
+      "fetchedAt": "2026-11-19T08:52:57.941Z",
+      "httpStatus": 200,
+      "finalUrl": "https://docs.x.ai/developers/pricing",
+      "textHash": "5f0087284cf1df0baaac6d3b909f3466cdc64f80e31a5833dea34e09c190c65b",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…gh your plan there. It is not available on the public xAI API, and Grok Build's free tier does not include it. Prompt tokens Input Cached input Output Below 200k $4.00 /…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-00a67f11",
+      "title": "额度变化 · DeepSeek：新增网页搜索与抓取（Search & Fetch）API 定价，并上线 Claude Code 与 Codex 网页搜索两周限时免费活动",
+      "sourceName": "DeepSeek",
+      "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+      "fetchedAt": "2026-11-19T08:53:00.180Z",
+      "httpStatus": 200,
+      "finalUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "textHash": "7992c5a4341cd7984ce5ee6d2747c1bfc844516e70477bbcaef963b91331c9c2",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "定价/计费",
+          "snippet": "…ens”为单位。Token 是模型用来表示自然语言文本的的最小单位，可以是一个词、一个数字或一个标点符号等。我们将根据模型输入和输出的总 token 数进行计量计费。 模型细节 ​ 模型 deepseek-flash (1) deepseek-v4-pro BASE URL (OpenAI 格式) https://api.…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "截止日期",
+          "snippet": "…具 。 文件解析与 OCR 价格 ​ 项目 计费单位 价格 文件解析 、 OCR API 每 1,000 页 1.5元 语音价格 ​ API 计费单位 刊例价 限时折扣价（5 折） 语音合成（TTS） 每 10,000 字符 3元 1.5元 语音识别（ASR） 每小时音频 0.78元 0.39元 扣费规则 ​ 模型调用费用…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-68e3fa87",
+      "title": "额度变化 · Hugging Face：Hugging Face 取消了免费用户每月 $0.10 的 Inference Providers 免费额度，免费用户需充值或升级 PRO 才能使用 API。",
+      "sourceName": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/docs/inference-providers/pricing",
+      "fetchedAt": "2026-11-19T08:53:02.060Z",
+      "httpStatus": 200,
+      "finalUrl": "https://huggingface.co/docs/inference-providers/pricing",
+      "textHash": "aa88d5ce1adf71e24fb3f7bf9226112e6f44aeeb351d62959f1313195ad969f0",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "每月额度",
+          "snippet": "…required—just pay for what you use, with no markup from Hugging Face. Included Monthly Credits PRO users and Team or Enterprise organizations receive monthly credits…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…terprise organizations receive monthly credits to use with Inference Providers. Free users can use Inference Providers by purchasing credits, or by upgrading to PRO…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-0228b2de",
+      "title": "额度变化 · OpenRouter：官方定价 FAQ 明确免费模型数量为 25+ 款（4 家供应商），并补充失败请求同样计入每日额度上限、账户负余额会阻断免费模型调用等规则。",
+      "sourceName": "OpenRouter",
+      "sourceUrl": "https://openrouter.ai/",
+      "fetchedAt": "2026-11-19T08:53:01.532Z",
+      "httpStatus": 200,
+      "finalUrl": "https://openrouter.ai/",
+      "textHash": "98c01f54e2a159f7f9b8545d587417010c003963b252657468f0cbcdf85c4388",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "定价/计费",
+          "snippet": "OpenRouter Skip to content Alpha Search ⌘ K Models Rankings Ori Docs Chat Chat Pricing Dashboard Talk to sales Sign in Sign up Sign Up Dashboard The future is multi-m…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…irst request in a few minutes. Pay as you go, no subscriptions. Get started for free Use your agent Footer © 2026 OpenRouter, Inc Product Chat Ori Labs Pricing Busi…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-0996c3ba",
+      "title": "额度变化 · Fireworks AI：Muse Glimmer 30B SFT 限时免费微调活动的截止日期从 10/31 延长至 11/30。",
+      "sourceName": "Fireworks AI",
+      "sourceUrl": "https://fireworks.ai/pricing",
+      "fetchedAt": "2026-11-19T08:53:02.902Z",
+      "httpStatus": 200,
+      "finalUrl": "https://fireworks.ai/pricing",
+      "textHash": "ff6c5f8b895186d783946dee7ebe68ad7179e0916aa9ae6f14d21922f4131e49",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…nference rates or talk to us about a custom deployment. Muse Glimmer 30B SFT is free through November 30 In the UI and the Serverless Training API. No credit card r…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-52a75c73",
+      "title": "额度变化 · Google Gemini：Google 上线新旗舰推理模型 Gemini 4 Argon，官方明确注明其不适用于免费层级",
+      "sourceName": "Google Gemini",
+      "sourceUrl": "https://aistudio.google.com/docs/pricing",
+      "fetchedAt": "2026-11-19T08:53:02.925Z",
+      "httpStatus": 200,
+      "finalUrl": "https://aistudio.google.com/docs/pricing",
+      "textHash": "bc76b790be6997a34c9cb987aa7357dcaf4135140ddfbfd1d917cc4fc793c027",
+      "status": "页面未提及",
+      "matches": []
+    },
+    {
+      "itemId": "fli-058c17bf",
+      "title": "额度变化 · MiniMax：订阅体系由 Token Plan 更新为 M Plan（Go/Explore/Build 档位）；上线 M3.1 Flash Preview 文本模型并发布 M2.5/M2.7 系列模型下线通知；Free 档不支持 API Key 接入，无免费 API 额度。",
+      "sourceName": "MiniMax",
+      "sourceUrl": "https://platform.minimax.cn/docs/m-plan/intro",
+      "fetchedAt": "2026-11-19T08:53:13.063Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-50cfdf69",
+      "title": "额度变化 · Fireworks AI：官方页面移除了新账号 $1 免费额度并转为预付费充值模式，同时新增 Muse Glimmer 30B SFT 限时免信用卡免费训练活动",
+      "sourceName": "Fireworks AI",
+      "sourceUrl": "https://fireworks.ai/pricing",
+      "fetchedAt": "2026-11-19T08:53:03.447Z",
+      "httpStatus": 200,
+      "finalUrl": "https://fireworks.ai/pricing",
+      "textHash": "ff6c5f8b895186d783946dee7ebe68ad7179e0916aa9ae6f14d21922f4131e49",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…nference rates or talk to us about a custom deployment. Muse Glimmer 30B SFT is free through November 30 In the UI and the Serverless Training API. No credit card r…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-60c90270",
+      "title": "额度变化 · Cursor：定价体系全面调整，免费层包含有限智能体与 Grok 聊天/Imagine 用量且额度每周重置，付费档改为 Plus ($8/月) 至 Ultra ($200/月)",
+      "sourceName": "Cursor",
+      "sourceUrl": "https://cursor.com/pricing",
+      "fetchedAt": "2026-11-19T08:53:04.736Z",
+      "httpStatus": 200,
+      "finalUrl": "https://cursor.com/pricing",
+      "textHash": "253c58989be6833ef3f88d31b8a206698d1b2951d9e8c95047b127573d8f2327",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$8",
+          "snippet": "…ed agent requests Limited Chat requests Features ✓ Post, reply, and follow Plus $8 /month Get Plus Our introductory plan: Shared AI usage pool AI Features Cursor…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "$200",
+          "snippet": "…mes *3rd party models are available in Cursor, billed separately by usage Ultra $200 /month Get Ultra Everything in Super, and: 50x more usage compared to Plus AI F…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "定价/计费",
+          "snippet": "Cursor · Pricing Skip to content Cursor Models ↓ Grok Evals Product ↓ Agents Cloud Grok Bot ↗ Mo…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-2c82040d",
+      "title": "额度变化 · SiliconFlow 硅基流动：定价页新增 0 元对话模型 Xing4.0-29B 与 bge-large 系列向量模型，并明确语音仅 ASR/GSR 与 SenseVoiceSmall 免费（TTS 合成收费）",
+      "sourceName": "SiliconFlow 硅基流动",
+      "sourceUrl": "https://www.siliconflow.cn/pricing",
+      "fetchedAt": "2026-11-19T08:53:11.329Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.siliconflow.cn/pricing",
+      "textHash": "5c5dc8030453b996bd8a91ff5df553bcb26b1abfdd567ba6d91d74181f7fb6ee",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "定价/计费",
+          "snippet": "…定，企业级管理更省心， 了解详情 www.tokenplus.cn 产品 模型 价格 文档 生态合作 关于 登录 登录 产品 模型 价格 文档 生态合作 关于 PRICING · 模型价格中心 模型 价格总览 面向生产选型的模型价格页：一屏对比主流厂商与模型的输入、输出、缓存命中成本，帮助你快速判断性价比。 搜索 实时价格同步 仅展…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…B-0414 THUDM/GLM-4-32B-0414 ¥ 1.89 ¥ 1.89 - GLM-Z1-9B-0414 THUDM/GLM-Z1-9B-0414 免费 免费 - 展开更多 1 个模型 hunyuan Hy4 preview tencent/Hy4-preview ¥ 6.00 ¥ 18.00 ¥ 0.30 H…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-7c35114c",
+      "title": "额度变化 · Nebius：官网移除了旧按需单价及 2026 年远期生效价标注，GPU 云按需价格调整为 B300 $9.50/h、B200 $8.50/h、H200 $5.40/h 等",
+      "sourceName": "Nebius",
+      "sourceUrl": "https://nebius.com/",
+      "fetchedAt": "2026-11-19T08:53:07.688Z",
+      "httpStatus": 200,
+      "finalUrl": "https://nebius.com/",
+      "textHash": "70f5ff9f52caf89e23aaba82ba50af98e92e4bf917e5bfdc2990de35303f6128",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "定价/计费",
+          "snippet": "…Ultimate AI Cloud Skip to main content Products Solutions Why Nebius Developers Pricing Company Investors Contact sales Log in The Ultimate AI Cloud Build and scale AI…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-6c318e02",
+      "title": "额度变化 · Qoder：Qwen3.8-Flash 限免活动已延长超过 9 月 30 日，具体截止日期改为待公布",
+      "sourceName": "Qoder",
+      "sourceUrl": "https://docs.qoder.com/account/pricing",
+      "fetchedAt": "2026-11-19T08:53:07.807Z",
+      "httpStatus": 200,
+      "finalUrl": "https://docs.qoder.com/account/pricing",
+      "textHash": "b9f81a506ef66032f761a47a2287290378eb1f3d0ca33b5ce14aabebe075b8e3",
+      "status": "页面未提及",
+      "matches": []
+    },
+    {
+      "itemId": "fli-02206282",
+      "title": "额度变化 · 文心快码 Comate：个人标准版首次赠送额度由「¥10 智能体请求券」调整为「7 天有效期 5000 积分」",
+      "sourceName": "文心快码 Comate",
+      "sourceUrl": "https://cloud.baidu.com/doc/COMATE/s/rlnvnio4a",
+      "fetchedAt": "2026-11-19T08:53:18.691Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-0c240cd8",
+      "title": "额度变化 · Zed：Pro 14 天免费试用包含的托管模型由 GPT-5.6 Luna 调整为 GPT-6 Luna",
+      "sourceName": "Zed",
+      "sourceUrl": "https://zed.dev/pricing",
+      "fetchedAt": "2026-11-19T08:53:09.655Z",
+      "httpStatus": 200,
+      "finalUrl": "https://zed.dev/pricing",
+      "textHash": "fd958e0e748b96f9a281d6dc7f0c9f59f607d2742208195863974d0500781c70",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…at level up how you build. Personal $0 forever The next-generation code editor. Free forever. Unlimited use with your API keys or external agents like Claude Agent,…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "试用",
+          "snippet": "…or external agents like Claude Agent, Codex CLI, and more Download Now Pro Free Trial $10 per month The next-generation code editor + AI. Supercharge your developmen…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-307fae06",
+      "title": "额度变化 · Anthropic Claude：Claude Max 订阅新增每月 $100 至 $200 API 额度，Team 订阅新增最高 $500/月共享 API 额度。",
+      "sourceName": "Anthropic Claude",
+      "sourceUrl": "https://claude.com/pricing",
+      "fetchedAt": "2026-11-19T08:53:11.501Z",
+      "httpStatus": 200,
+      "finalUrl": "https://claude.com/pricing",
+      "textHash": "22f58d936fbb58558a5c67d03af001dea440211f3605e67ea872cfb7fad831fa",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$200",
+          "snippet": "…s, Docs Pro For everyday work $17 Per month with annual subscription discount ( $200 billed up front). $20 if billed monthly. Try Claude Everything in Free, plus: M…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "$100",
+          "snippet": "…ects More Claude models Claude in Chrome and Microsoft 365 Max For all-day work $100 Per month Try Claude Everything in Pro, plus: 5x Pro usage every 5 hours and ev…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "$500",
+          "snippet": "…app No model training on your content by default Mix and match seat types Up to $500 per month in pooled API credits † Enterprise For large businesses operating at…",
+          "strength": "strong"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-6fe31ca5",
+      "title": "额度变化 · Together AI：平台使用门槛调整：组织首次充值最低金额由 $5 提升至 $15（后续充值最低 $5）；仍然没有免费试用赠额。",
+      "sourceName": "Together AI",
+      "sourceUrl": "https://www.together.ai/pricing",
+      "fetchedAt": "2026-11-19T08:53:17.767Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.together.ai/pricing",
+      "textHash": "d8b87e91c3fe50fdfe9407ec53d75b2a09e87372a94c1aae3cd1d52dea8f9ae0",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…Qwen3.7-Plus $0.32 $1.28 GLM-5.2 $1.40 $0.26 (cached) $4.40 Ternary Bonsai 27B Free Free Kimi K3 $3.00 $0.30 (cached) $15.00 Muse Glimmer 30B $0.35 $0.04 (cached)…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-0f5feda0",
+      "title": "额度变化 · 云知声 Token Hub：官方页首活动更新为 U2 Flash 限时免费无限量调用（2026.09.30-2026.10.31），社群活动变更为扫码入群领 5 亿 Token",
+      "sourceName": "云知声 Token Hub",
+      "sourceUrl": "https://maas.unisound.com/docs/guide/quickstart",
+      "fetchedAt": "2026-11-19T08:53:11.501Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-0c4d1e1a",
+      "title": "额度变化 · InceptionLabs：官网更新模型定价，Mercury 2.5 输入价格由 $0.25 降至 $0.20/1M tokens，并列出 Mercury Voice 等新模型定价",
+      "sourceName": "InceptionLabs",
+      "sourceUrl": "https://docs.inceptionlabs.ai/get-started",
+      "fetchedAt": "2026-11-19T08:53:12.761Z",
+      "httpStatus": 200,
+      "finalUrl": "https://docs.inceptionlabs.ai/get-started",
+      "textHash": "2601d939c7a894e11385498a6d254fb0438d8ef62b6bfa4f19cc1a9ed356459d",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "token",
+          "snippet": "…s and what to do → Get Started Free Every new account includes 100 million free tokens — no payment details required. Account Setup Create an Inception Platform accou…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-629feaf7",
+      "title": "额度变化 · Mistral AI：付费订阅 Vibe Pro 附带的 API credits 调整为 $25.5/月，免费 API 端点与无新用户赠金政策保持不变",
+      "sourceName": "Mistral AI",
+      "sourceUrl": "https://docs.mistral.ai/inference/pricing",
+      "fetchedAt": "2026-11-19T08:53:15.509Z",
+      "httpStatus": 200,
+      "finalUrl": "https://docs.mistral.ai/inference/pricing",
+      "textHash": "2bb2e7e476532dc36e6307e019a414254e6e7a40bd75a47dc8422278af27cc65",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…tion, and policy checks. Model Input Cached input Output Mistral Moderation 2 ↗ Free Free Free Shieldstral 1.0 ↗ Self-hosted · Open weights Costs depend on your own…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-684b33c0",
+      "title": "额度变化 · Together AI：官方价目表新增 Tev1 4B Experimental 模型，其输出 token 标为 Free（输入仍收取 $0.04/1M tokens），平台仍需最低充值 $5 方可调用。",
+      "sourceName": "Together AI",
+      "sourceUrl": "https://www.together.ai/pricing",
+      "fetchedAt": "2026-11-19T08:53:14.559Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.together.ai/pricing",
+      "textHash": "d8b87e91c3fe50fdfe9407ec53d75b2a09e87372a94c1aae3cd1d52dea8f9ae0",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "token",
+          "snippet": "…en received! Oops! Something went wrong while submitting the form. Price per 1M tokens Batch API price Model Input output GLM-5.3 $1.40 $0.26 (cached) $4.40 DeepSeek…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…Qwen3.7-Plus $0.32 $1.28 GLM-5.2 $1.40 $0.26 (cached) $4.40 Ternary Bonsai 27B Free Free Kimi K3 $3.00 $0.30 (cached) $15.00 Muse Glimmer 30B $0.35 $0.04 (cached)…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-154839b7",
+      "title": "额度变化 · Anthropic Claude：最新模型更新为 Sonnet 5.5，Sonnet 5 已移入 Legacy models；网页端免费版明确支持 Sonnet 与 Haiku（不支持 Opus 与 Fable）。",
+      "sourceName": "Anthropic Claude",
+      "sourceUrl": "https://claude.com/pricing",
+      "fetchedAt": "2026-11-19T08:53:15.062Z",
+      "httpStatus": 200,
+      "finalUrl": "https://claude.com/pricing",
+      "textHash": "22f58d936fbb58558a5c67d03af001dea440211f3605e67ea872cfb7fad831fa",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…tions about this page Copy as markdown Pricing Individual Team & Enterprise API Free Try Claude $0 Free for everyone Try Claude Limited usage every 5 hours and ever…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "下线/失效",
+          "snippet": "…For asynchronous workloads that can be processed together for better efficiency Legacy models Learn more (opens in new tab) Explore detailed pricing (opens in new tab…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-7f9c790a",
+      "title": "额度变化 · Anthropic Claude：官方定价页当前代际已变为 Opus 5.5（Opus 5 与 Fable 5 移入 legacy models），档案所列当前代际模型与“官方建议从 Opus 5 起步”的表述已过时",
+      "sourceName": "Anthropic Claude",
+      "sourceUrl": "https://claude.com/pricing",
+      "fetchedAt": "2026-11-19T08:53:16.046Z",
+      "httpStatus": 200,
+      "finalUrl": "https://claude.com/pricing",
+      "textHash": "22f58d936fbb58558a5c67d03af001dea440211f3605e67ea872cfb7fad831fa",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "定价/计费",
+          "snippet": "Plans & pricing | Claude by Anthropic Skip to main content Product Products Claude Claude Code…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "下线/失效",
+          "snippet": "…For asynchronous workloads that can be processed together for better efficiency Legacy models Learn more (opens in new tab) Explore detailed pricing (opens in new tab…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-0f155ad2",
+      "title": "额度变化 · Amazon Bedrock：AWS 免费套餐抵扣金为开户立得 $100、最高再得 $100，6 个月内合计最高 $200，档案与攻略中“$100+最高 $200/合计 $300”的数字与官方页不符",
+      "sourceName": "Amazon Bedrock",
+      "sourceUrl": "https://aws.amazon.com/free/",
+      "fetchedAt": "2026-11-19T08:53:18.192Z",
+      "httpStatus": 200,
+      "finalUrl": "https://aws.amazon.com/free/",
+      "textHash": "d709393251e7b56740fb77ee3811b6f34347ba4e125c36bb25c6a9c7c270310c",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$200",
+          "snippet": "…Conditions More AWS AWS Free Tier AWS Free Tier Get started for free with up to $200 in credits Create a free account Start building in console Get up to $200 in cr…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "$100",
+          "snippet": "…credits for new customers When you create a new AWS Free Tier account, you get $100 in credits immediately. As you explore key services, you can earn up to $100 mo…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…tarted, paid plan to scale. Benefits Free plan Paid plan Receive up to $200 USD free credits ✔ ✔ Free usage of select services ✔ ✔ Access to all AWS services ✖ Limited to s…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-1939f248",
+      "title": "额度变化 · 中国电信 天翼云/息壤智算：天翼云大模型专项页当前显示 Token Plan 畅享版 29.9 元/月对应 4000 万 Tokens，档案“2500 万 tokens 对应 29.9 元畅享版”与页面数字不符，且页面新增编程 Token Plan 付费系列",
+      "sourceName": "中国电信 天翼云/息壤智算",
+      "sourceUrl": "https://www.teleai.com.cn/docOverview",
+      "fetchedAt": "2026-11-19T08:53:27.047Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-6b36c1c2",
+      "title": "额度变化 · Cloudflare Workers AI：官方定价页明确 kimi-k2.6/k2.7-code、glm-5.2/5.3/5.3-flash、deepseek-v4-flash-0731/v4-pro-0813 等模型需付费计费方式（Workers Paid 或预付 AI Gateway credits），不在每日 10,000 Neurons 免费层内，且这些付费模型限速仅 20/50 次每分钟，档案将其列为免费额度覆盖模型有误。",
+      "sourceName": "Cloudflare Workers AI",
+      "sourceUrl": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "fetchedAt": "2026-11-19T08:53:19.142Z",
+      "httpStatus": 200,
+      "finalUrl": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "textHash": "f79e1a973a7bdf052e40d65cfaf3c6c6c3894db7695fbb839811b898cdfd8856",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "定价/计费",
+          "snippet": "Pricing · Cloudflare Workers AI docs Skip to content Documentation Index Fetch the comp…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…ut still billing in neurons in the back end. Workers AI is included in both the Free and Paid Workers plans and is priced at $0.011 per 1,000 Neurons . Our free all…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-593eb713",
+      "title": "额度变化 · Morph Labs：官方定价页显示免费层仅为“每月 200 次请求”，$10 是付费充值起步价、新用户首次充值额外送 $5，并无随 WarpGrep/Glance 工具附带的“每月 $10 免费算力额度”。",
+      "sourceName": "Morph Labs",
+      "sourceUrl": "https://www.morphllm.com/pricing",
+      "fetchedAt": "2026-11-19T08:53:19.448Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.morphllm.com/pricing",
+      "textHash": "2f9efa5bad54473385942ac13ee564ed375bd18e4678078305e96491826387e1",
+      "status": "强命中",
+      "matches": [
+        {
+          "keyword": "$10",
+          "snippet": "…. Or go flat-rate with Ultra . Pay as you go Top up credits, use any model From $10 First top-up +$ 5 free Limits Practically no rate limits Get Started Ultra Unli…",
+          "strength": "strong"
+        },
+        {
+          "keyword": "定价/计费",
+          "snippet": "Pricing | Morph Announcing Morph Ultra - Unlimited Kimi and DeepSeek for $200 Morph Mod…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…ing. Book a Call Sign Up / Log In Inference Compute Usage-based pricing · start free 🇺🇸 Pricing Billing Billing is prepaid. Load credits, and each request draws d…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-4c380412",
+      "title": "额度变化 · Nebius：档案记 H200 按需 $4.55/时与官方价目表现价 $4.50/时矛盾，且页面新增 2026-10-01 生效的调价列（B300 $9.50、B200 $8.50、H200 $5.40）；免费额度事实（$25 首付转余额、promo code 送金）不变。",
+      "sourceName": "Nebius",
+      "sourceUrl": "https://nebius.com/",
+      "fetchedAt": "2026-11-19T08:53:20.109Z",
+      "httpStatus": 200,
+      "finalUrl": "https://nebius.com/",
+      "textHash": "70f5ff9f52caf89e23aaba82ba50af98e92e4bf917e5bfdc2990de35303f6128",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "免费额度",
+          "snippet": "…Security by design. 500+ AI experts at your fingertips 24/7 support by default Free white-glove PoC Enterprise-grade compliance Hear from Nebius customers Revolut…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-6af936a9",
+      "title": "额度变化 · Together AI：Together AI 官方价目表中 Ternary Bonsai 27B 输入/输出均为 $0.00/1M tokens，与档案“无免费模型层、均需充值后按量调用”的免费/付费属性判断矛盾（平台仍要求最低 $5 充值、无免费试用）。",
+      "sourceName": "Together AI",
+      "sourceUrl": "https://www.together.ai/pricing",
+      "fetchedAt": "2026-11-19T08:53:19.569Z",
+      "httpStatus": 200,
+      "finalUrl": "https://www.together.ai/pricing",
+      "textHash": "d8b87e91c3fe50fdfe9407ec53d75b2a09e87372a94c1aae3cd1d52dea8f9ae0",
+      "status": "弱相关",
+      "matches": [
+        {
+          "keyword": "token",
+          "snippet": "…en received! Oops! Something went wrong while submitting the form. Price per 1M tokens Batch API price Model Input output GLM-5.3 $1.40 $0.26 (cached) $4.40 DeepSeek…",
+          "strength": "weak"
+        },
+        {
+          "keyword": "免费额度",
+          "snippet": "…Qwen3.7-Plus $0.32 $1.28 GLM-5.2 $1.40 $0.26 (cached) $4.40 Ternary Bonsai 27B Free Free Kimi K3 $3.00 $0.30 (cached) $15.00 Muse Glimmer 30B $0.35 $0.04 (cached)…",
+          "strength": "weak"
+        }
+      ]
+    },
+    {
+      "itemId": "fli-27e26524",
+      "title": "额度变化 · 云知声 Token Hub：实名认证认证礼包在原有 U2/U2-Med/U1-OCR/ASR/TTS 之外新增 U2 Flash、U1-OCR-Med 各 500 万 tokens 与 U2-TTS-Clone、U2-TTS-Design 各 2 万字，且官方页首标注 U2 Flash 全新上线（注册即领 1 亿 Token 活动），免费模型清单需扩充。",
+      "sourceName": "云知声 Token Hub",
+      "sourceUrl": "https://maas.unisound.com/docs/guide/quickstart",
+      "fetchedAt": "2026-11-19T08:53:19.448Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    },
+    {
+      "itemId": "fli-30203944",
+      "title": "额度变化 · 通义千问 Qwen：更新为千问AI平台最新规则：文本模型免费额度累计超 7000 万 Token，新上线模型自发布起另享 90 天独立额度，明确区分未认证与已认证用户的用尽即停策略。",
+      "sourceName": "通义千问 Qwen",
+      "sourceUrl": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+      "fetchedAt": "2026-11-19T08:53:19.448Z",
+      "httpStatus": null,
+      "finalUrl": null,
+      "textHash": null,
+      "status": "无法访问",
+      "matches": [],
+      "error": "robots.txt 无法访问：请求超时（5000ms）"
+    }
+  ]
+}

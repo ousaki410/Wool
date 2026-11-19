@@ -1,6 +1,10 @@
 import type { SourceChannel, WoolItem } from './woolData';
 import type { WoolSource, WoolSourceEvent, WoolSourceEventType } from './source';
-import { formatShanghaiDateTime } from './shanghaiTime';
+import {
+  isEvidenceRecord,
+  type EvidenceJson,
+  type EvidenceRecord,
+} from './evidence';
 
 const BASE_URL =
   typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL
@@ -8,6 +12,7 @@ const BASE_URL =
     : '/';
 const WOOL_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/wool.json`;
 const SOURCES_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/sources.json`;
+const EVIDENCE_JSON_URL = `${BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL}/data/evidence.json`;
 
 export interface RealSourceStatus {
   /** 上一次抓取是否成功 */
@@ -157,7 +162,7 @@ export class RealSource implements WoolSource {
       const woolData = (await woolRes.json()) as WoolJson;
 
       const rawItems = Array.isArray(woolData.items) ? woolData.items : [];
-      this.items = rawItems.filter(isWoolItem).map(normalizeItem);
+      const items = rawItems.filter(isWoolItem).map(normalizeItem);
 
       // 2. 抓取 sources.json（可选，失败不影响 wool 条目显示）
       let sources: SourceInfo[] = [];
@@ -175,6 +180,27 @@ export class RealSource implements WoolSource {
         // sources.json 不可用，channels 保持空，wool 条目仍正常显示
         sources = [];
       }
+
+      // 3. 抓取 evidence.json（可选，失败只导致卡片不显示存证）
+      let evidenceRecords: EvidenceRecord[] = [];
+      try {
+        const evidenceRes = await fetch(EVIDENCE_JSON_URL, { cache: 'no-store' });
+        if (evidenceRes.ok) {
+          const evidenceData = (await evidenceRes.json()) as EvidenceJson;
+          evidenceRecords = Array.isArray(evidenceData.records)
+            ? evidenceData.records.filter(isEvidenceRecord)
+            : [];
+        }
+      } catch {
+        evidenceRecords = [];
+      }
+      const evidenceById = new Map(
+        evidenceRecords.map((record) => [record.itemId, record])
+      );
+      this.items = items.map((item) => {
+        const evidence = evidenceById.get(item.id);
+        return evidence ? { ...item, evidence } : item;
+      });
 
       this._sources = sources;
       this.channels = buildChannels(this._sources);
