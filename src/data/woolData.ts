@@ -7,6 +7,7 @@ import {
   isWithinPastHours,
 } from './shanghaiTime';
 import { materializeSeedData } from './woolSeed';
+import type { EvidenceRecord } from './evidence';
 
 export type WoolCategory =
   | 'AI 与大模型'
@@ -85,6 +86,8 @@ export interface WoolItem {
   intelSource?: string;
   /** 原始 README 中“官方直达”一栏的链接文字（用于审计链接是否对应正确厂商）。 */
   linkText?: string;
+  /** 官方页面存证（evidence.json）；仅作佐证，不改变 verificationStatus。 */
+  evidence?: EvidenceRecord | null;
 }
 
 export interface SourceChannel {
