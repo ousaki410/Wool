@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit && tsx scripts/validate-verified.ts",
     "confirm": "tsx scripts/confirm-item.ts",
     "validate:verified": "tsx scripts/validate-verified.ts",
     "test": "tsx scripts/validate-verified.ts && tsx --test src/data/*.test.ts src/components/*.test.tsx"

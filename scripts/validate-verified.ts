@@ -2,9 +2,10 @@
 /**
  * 校验 public/data/verified.json：
  * - 根格式、version、records 数组以及每条记录的字段类型错误 → exit 1；
- * - 记录本身格式正确但已失效（标题变化、过期、撤销、域名不符、quote 过短等）→ 只警告。
+ * - 记录本身与 wool.json 不一致（条目不存在、域名不符）→ exit 1；
+ * - 记录本身格式正确但自然失效（标题变化、过期、撤销、quote 过短等）→ 只警告。
  *
- * 该脚本会加入 npm test，保证仓库中的 verified.json 始终可解析。
+ * 该脚本会加入 npm test 和 lint，保证仓库中的 verified.json 始终可解析。
  */
 
 import { readFileSync } from 'fs';
@@ -28,7 +29,8 @@ export interface VerifiedValidationResult {
 }
 
 /**
- * 纯校验函数：格式问题进入 formatErrors，业务失效进入 warnings。
+ * 纯校验函数：格式问题及与 wool.json 不一致的记录进入 formatErrors；
+ * 业务失效进入 warnings。
  * 缺失记录（null）按格式错误处理，因为仓库必须提交 verified.json。
  */
 export function validateVerifiedDocument(
@@ -68,6 +70,14 @@ export function validateVerifiedDocument(
       now
     );
     if (reason) {
+      // 条目不存在或域名不符，说明记录本身与 wool.json 不一致，属于配置错误，
+      // 而非自然失效（如过期、撤销、标题变化），应直接阻断提交。
+      if (reason === '条目不存在' || reason === '域名不符') {
+        formatErrors.push(
+          `第 ${index + 1} 条记录（${raw.itemId}）与 wool.json 不一致：${reason}`
+        );
+        return;
+      }
       warnings.push(
         `第 ${index + 1} 条记录（${raw.itemId}）已失效：${reason}`
       );
